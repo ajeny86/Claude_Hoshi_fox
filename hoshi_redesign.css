@@ -489,8 +489,9 @@ body.rd[data-rd-chapter="1"] .final-note br{display:none}
 body.rd[data-rd-chapter="1"] .final-note strong{display:block;margin-bottom:6px;font:italic 600 clamp(32px,3.8vw,42px)/1.15 var(--rd-serif-it);color:#2f3b8f;text-shadow:0 0 16px rgba(255,255,255,.95)}
 /* подпись огонька — просто текст, без плашки */
 /* спящая лисичка на камне в углу */
-body.rd[data-rd-chapter="1"] .page[data-screen="6"]{padding-bottom:clamp(120px,16vw,210px)}
-body.rd[data-rd-chapter="1"] .page[data-screen="6"]::after{content:"";display:block!important;position:absolute;right:-6px;bottom:-4px;width:clamp(220px,33vw,400px);aspect-ratio:766/438;
+body.rd[data-rd-chapter="1"] .page[data-screen="6"]{padding-bottom:clamp(30px,4vw,48px)}
+body.rd[data-rd-chapter="1"] .page[data-screen="6"]::after{content:"";display:block!important;position:absolute;right:-6px;bottom:-4px;width:clamp(200px,28vw,340px);aspect-ratio:766/438;
   background:url(hoshi_final1_fox_v1.webp) right bottom/contain no-repeat;pointer-events:none}
 @media (max-width:700px){body.rd[data-rd-chapter="1"] .page[data-screen="6"]::after{opacity:.5}}
 @media (max-width:900px){body.rd[data-rd-chapter="1"] .story .breath{margin-left:0;margin-right:0}}
+@media (max-width:760px){body.rd[data-rd-chapter="1"] .page[data-screen="6"]{padding-bottom:clamp(110px,30vw,180px)}}
