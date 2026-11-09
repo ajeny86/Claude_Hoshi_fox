@@ -283,8 +283,8 @@
   let lang = 'ru';
   try { lang = localStorage.getItem('hoshi-language-choice') || sessionStorage.getItem('hoshi-language-choice') || 'ru'; } catch (e) {}
   const T = lang === 'en'
-    ? { tap: 'tap to join the parts', done: 'word joined' }
-    : { tap: 'коснись — слово соберётся', done: 'слово собрано' };
+    ? { tap: 'Tap — the word will join', done: 'Word joined' }
+    : { tap: 'Коснись — слово соберётся', done: 'Слово собрано' };
 
   document.querySelectorAll('.word-cards').forEach(box => {
     const page = box.closest('.page');
@@ -304,21 +304,37 @@
       card.setAttribute('tabindex', '0');
       const whole = card.querySelector('strong')?.textContent.trim() || '';
       card.setAttribute('aria-label', whole);
+      const knot = document.createElement('span'); knot.className = 'rd-knot'; knot.setAttribute('aria-hidden', 'true');
+      card.appendChild(knot);
       const hint = document.createElement('span');
       hint.className = 'rd-word-hint';
-      hint.textContent = T.tap;
+      const hintText = document.createElement('span');
+      const sakura = document.createElement('span'); sakura.className = 'rd-sakura'; sakura.setAttribute('aria-hidden', 'true');
+      hint.append(hintText, sakura);
       card.appendChild(hint);
-      const seal = document.createElement('span'); seal.className = 'rd-seal'; seal.setAttribute('aria-hidden', 'true'); seal.textContent = '✓';
-      card.appendChild(seal);
       const setJoined = on => {
         card.classList.toggle('rd-joined', on);
         card.setAttribute('aria-pressed', String(on));
-        hint.textContent = on ? T.done : T.tap;
+        hintText.textContent = on ? T.done : T.tap;
+      };
+      const petals = () => {
+        if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        for (let i = 0; i < 7; i++) {
+          const p = document.createElement('i'); p.className = 'rd-petal';
+          p.style.setProperty('--x', `${30 + Math.random() * 40}%`);
+          p.style.setProperty('--y', `${30 + Math.random() * 30}%`);
+          p.style.setProperty('--dx', `${(Math.random() - .5) * 180}px`);
+          p.style.setProperty('--dy', `${-30 - Math.random() * 60}px`);
+          p.style.setProperty('--rot', `${(Math.random() - .5) * 540}deg`);
+          p.style.animationDelay = `${Math.random() * .2}s`;
+          card.appendChild(p);
+          setTimeout(() => p.remove(), 2000);
+        }
       };
       setJoined(false);
       const toggle = () => {
-        card.classList.remove('rd-swing'); void card.offsetWidth; card.classList.add('rd-swing');
-        setJoined(!card.classList.contains('rd-joined')); unlockIfDone();
+                const on = !card.classList.contains('rd-joined');
+        setJoined(on); if (on) petals(); unlockIfDone();
       };
       card.addEventListener('click', toggle);
       card.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); } });
