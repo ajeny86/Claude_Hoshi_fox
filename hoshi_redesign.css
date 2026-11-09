@@ -401,3 +401,6 @@ body.rd .word-card.rd-word.rd-joined .rd-word-hint::before{content:"";width:0;he
 body.rd .rd-seal{position:absolute;right:14px;bottom:12px;width:38px;height:38px;display:grid;place-items:center;border:2px solid rgba(200,70,50,.85);border-radius:50%;color:rgba(200,70,50,.9);font:800 18px/1 var(--rd-sans);transform:rotate(-12deg) scale(.4);opacity:0;transition:transform .35s cubic-bezier(.2,.8,.25,1.4),opacity .25s}
 body.rd .word-card.rd-word.rd-joined .rd-seal{transform:rotate(-12deg) scale(1);opacity:1}
 @media (prefers-reduced-motion:reduce){body.rd .word-card.rd-word.rd-swing{animation:none}}
+/* тире между слогами — по середине строки */
+body.rd .word-card.rd-word .word-parts{line-height:1.3}
+body.rd .word-card.rd-word .word-parts .rd-dash{vertical-align:top;line-height:inherit;height:1.3em}
