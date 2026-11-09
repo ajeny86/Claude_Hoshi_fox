@@ -501,7 +501,7 @@
     const guide = btn.querySelector('.rd-guide');
     if (!guide || guide.querySelector('.rd-steps')) return;
     const steps = document.createElement('span'); steps.className = 'rd-steps';
-    steps.innerHTML = '<i></i><i></i><i></i>';
+    steps.innerHTML = '<i></i><i></i><i></i><i></i>';
     guide.appendChild(steps);
   });
   let lang = 'ru'; try { lang = localStorage.getItem('hoshi-language-choice') || 'ru'; } catch (e) {}

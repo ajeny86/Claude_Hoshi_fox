@@ -589,3 +589,13 @@ body.rd[data-rd-chapter="1"] .inari-complete{font:400 clamp(16px,1.8vw,18px)/1.5
 body.rd .reward-continue{display:flex!important;flex-direction:column;align-items:center;padding-top:8px!important}
 body.rd .reward-continue .rd-guide{position:relative!important;left:auto!important;top:auto!important;margin:8px auto 0!important;order:1;width:110px;height:54px}
 body.rd .reward-continue::after{position:static!important;transform:none!important;order:2;margin-top:2px}
+/* четыре следа */
+body.rd .reward-continue .rd-guide{width:150px}
+body.rd .rd-steps i:nth-child(4){animation-delay:.9s}
+/* пояснения крупнее — их читает ребёнок */
+body.rd[data-rd-chapter="1"] .inari-answer{font-size:clamp(19px,2.1vw,21px);line-height:1.5}
+body.rd[data-rd-chapter="1"] .reward-copy{font-size:clamp(19px,2.1vw,21px)}
+body.rd[data-rd-chapter="1"] .inari-complete{font-size:clamp(19px,2.1vw,21px);color:#45507e}
+body.rd[data-rd-chapter="1"] .inari-reward-hint{font-size:17px}
+body.rd[data-rd-chapter="1"] .next::after{font-size:15px}
+body.rd[data-rd-chapter="1"] .inari-fact{padding-right:30%}
