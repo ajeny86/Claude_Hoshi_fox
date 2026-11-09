@@ -633,8 +633,6 @@ body.rd .ponta-reward :has(>.inari-card-inner){width:min(560px,100%);margin-left
 body.rd .ponta-reward .inari-card-front .animated-reward-scene{width:100%!important;max-width:none!important}
 /* глава 2: следы и в «Путь открыт», и в полоске прогресса */
 body.rd[data-rd-chapter="2"] .next.opened::before{background-image:url(hoshi_paw_icon_v1.svg)!important;transform:rotate(90deg);filter:drop-shadow(0 0 6px rgba(47,143,240,.6))!important}
-body.rd[data-rd-chapter="2"] .dot{background-image:url(hoshi_paw_icon_v1.svg)!important;transform:rotate(90deg);animation:none!important}
-body.rd[data-rd-chapter="2"] .dot.on{filter:drop-shadow(0 0 4px rgba(47,143,240,.6))}
 /* глава 2: «Путь открыт» — четыре шагающих следа, как в награде главы 1 */
 body.rd[data-rd-chapter="2"] .next.opened::before{content:none!important;display:none!important}
 body.rd[data-rd-chapter="2"] .next.opened{flex-direction:column!important;gap:8px}
