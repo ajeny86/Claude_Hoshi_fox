@@ -716,3 +716,6 @@ body.rd[data-rd-chapter="2"] .answers:has(.answer:nth-child(3)) .rd-afl{width:34
 body.rd[data-rd-chapter="2"] .answers:has(.answer:nth-child(3)) .rd-afl img{width:26px;height:26px;margin:4px}
 body.rd[data-rd-chapter="2"] .answers:has(.answer:nth-child(3)) .answer:is(:hover,.correct-choice) .rd-afl{box-shadow:inset 0 0 0 2px rgba(64,160,240,.8)}
 body.rd[data-rd-chapter="2"] .answers:has(.answer:nth-child(3)) .answer.wrong-choice{color:#8a8eb0}
+/* без кружков: лапка появляется слева при наведении, как в других экранах */
+body.rd[data-rd-chapter="2"] .answers:has(.answer:nth-child(3)) .rd-afl,body.rd[data-rd-chapter="2"] .answers:has(.answer:nth-child(3)) .answer:is(:hover,.correct-choice) .rd-afl{box-shadow:none;border-radius:0}
+body.rd[data-rd-chapter="2"] .answers:has(.answer:nth-child(3)) .rd-afl img{width:30px;height:30px;margin:2px}
