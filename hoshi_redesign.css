@@ -419,8 +419,8 @@ body.rd[data-rd-chapter="1"] .answer.correct-choice.rd-sent .rd-afl img{opacity:
 @keyframes rdAFlare{0%{transform:scale(.8);opacity:1}50%{transform:scale(1.35);filter:brightness(1.6) drop-shadow(0 0 22px rgba(21,164,253,1)) drop-shadow(0 0 4px #fff);opacity:1}100%{transform:scale(1)}}
 /* неверный: вспыхивает и тухнет, идёт дымок */
 body.rd[data-rd-chapter="1"] .answer.wrong-choice{color:#7d82a8}
-body.rd[data-rd-chapter="1"] .answer.wrong-choice .rd-afl img{animation:rdAOut 1.1s ease-out forwards}
-@keyframes rdAOut{0%{filter:drop-shadow(0 0 10px rgba(21,164,253,.8));opacity:1}25%{filter:drop-shadow(0 0 8px rgba(21,164,253,.7));opacity:.9;transform:scale(1.1)}55%{transform:scale(.85) skewX(-6deg)}100%{filter:grayscale(1) brightness(.85);opacity:.22;transform:scale(.7) translateY(6px)}}
+body.rd[data-rd-chapter="1"] .answer.wrong-choice .rd-afl img{animation:rdAOut 1.3s ease-out forwards}
+@keyframes rdAOut{0%{filter:drop-shadow(0 0 10px rgba(21,164,253,.8));opacity:1}25%{filter:drop-shadow(0 0 8px rgba(21,164,253,.7));opacity:.9;transform:scale(1.1)}55%{transform:scale(.85) skewX(-6deg)}100%{filter:grayscale(1) brightness(.85);opacity:0;transform:scale(.4) translateY(8px)}}
 body.rd[data-rd-chapter="1"] .answer.wrong-choice .rd-afl::after{content:"";position:absolute;left:50%;top:6px;width:14px;height:22px;margin-left:-7px;border-radius:50%;background:radial-gradient(circle,rgba(150,155,185,.55),rgba(150,155,185,0) 70%);filter:blur(3px);opacity:0;animation:rdSmoke 1.4s ease-out .45s forwards}
 @keyframes rdSmoke{0%{opacity:0;transform:translateY(0) scale(.6)}30%{opacity:.9}100%{opacity:0;transform:translate(6px,-34px) scale(1.6)}}
 body.rd[data-rd-chapter="1"] .answer:disabled:not(.correct-choice){opacity:.4}
