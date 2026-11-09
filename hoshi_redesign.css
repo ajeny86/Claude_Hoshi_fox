@@ -349,3 +349,5 @@ body.rd .next.rd-going .rd-guide img{animation:rdFlare2 .65s cubic-bezier(.2,.8,
 /* 6 пройдено */
 body.rd .next.opened .rd-guide{display:none}
 @media (prefers-reduced-motion:reduce){body.rd .rd-glow,body.rd .rd-guide img{animation:none!important}}
+/* Без вспышки «загорается»: когда задание выполнено, огонёк сразу просто горит */
+body.rd .next.ready:not(.opened) .rd-guide img{animation:rdHover 2.6s ease-in-out infinite}
