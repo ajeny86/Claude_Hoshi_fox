@@ -426,7 +426,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;700&family=PT+Serif:wght@400;700&display=swap">
-  <link rel="stylesheet" href="hoshi_redesign.css?v=20261109-51">
+  <link rel="stylesheet" href="hoshi_redesign.css?v=20261109-52">
 </head>
 <body class="rd">
   <header class="top"><div class="top-inner">
@@ -1069,7 +1069,7 @@
         const card=document.createElement('div'),inner=document.createElement('div'),front=document.createElement('section'),back=document.createElement('section'),realImage=document.createElement('img'),hint=document.createElement('p');
         card.className='inari-reward-card';card.dataset.inariRewardCard='';card.setAttribute('role','button');card.tabIndex=0;card.setAttribute('aria-pressed','false');
         inner.className='inari-card-inner';front.className='inari-card-face inari-card-front';back.className='inari-card-face inari-card-back';
-        realImage.src='hoshi_chapter1_kitsune_traditional_v1.webp';realImage.loading='lazy';realImage.decoding='async';back.append(realImage);inner.append(front,back);card.append(inner);
+        realImage.src='hoshi_chapter1_kitsune_traditional_wide_v1.webp';realImage.loading='lazy';realImage.decoding='async';back.append(realImage);inner.append(front,back);card.append(inner);
         hint.className='inari-reward-hint';hint.dataset.inariRewardHint='';scene.replaceWith(card);front.append(scene);card.after(hint);
       }
       buildInariRewardCard();
@@ -1203,6 +1203,6 @@
       let reopenChapter=0;try{reopenChapter=Number(sessionStorage.getItem('hoshi-reopen-chapter'));sessionStorage.removeItem('hoshi-reopen-chapter')}catch(e){}[1,2,3,4].includes(reopenChapter)?showChapter(reopenChapter,false):(state.view==='chapter'?showChapter(state.current,false):showMap(false));
     })();
   </script>
-  <script src="hoshi_redesign.js?v=20261109-51"></script>
+  <script src="hoshi_redesign.js?v=20261109-52"></script>
 </body>
 </html>
