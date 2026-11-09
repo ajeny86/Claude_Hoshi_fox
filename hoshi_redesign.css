@@ -186,7 +186,7 @@ body.rd .rd-go:active{transform:translateZ(0) scale(.98)}
    ШАГ 2 — экраны глав части 1
    ===================================================================== */
 body.rd:not(.map-view-open){background:#e9eef9 url("hoshi_bg_map_v1.webp") center/cover fixed no-repeat;font-family:var(--rd-sans);color:var(--rd-text)}
-body.rd[data-rd-chapter="1"]:not(.map-view-open){background-image:url("hoshi_bg_chapter1_v1.webp")}
+body.rd[data-rd-chapter="1"]:not(.map-view-open){background-image:url("hoshi_bg_chapter1_v2.webp")}
 
 /* ---------- Верхняя панель главы ---------- */
 body.rd .top{position:sticky;top:calc(10px + env(safe-area-inset-top,0px));z-index:100;width:min(1080px,calc(100% - 32px));max-width:none;margin:10px auto 0;padding:8px;border:0;border-radius:24px;background:linear-gradient(180deg,rgba(255,255,255,.84),rgba(246,248,252,.66));backdrop-filter:var(--rd-blur);-webkit-backdrop-filter:var(--rd-blur);box-shadow:var(--rd-edge),var(--rd-shadow)}
