@@ -611,3 +611,4 @@ body.rd .rd-locked::before{content:"";display:block;width:110px;height:30px;marg
 body.rd .inari-complete:not([hidden])~.rd-locked{display:none}
 body.rd[data-rd-chapter="1"] .inari-card-back::before{content:none}
 body.rd[data-rd-chapter="1"] .inari-card-back img{object-fit:cover!important}
+body.rd .rd-locked::before{content:none!important;display:none!important}
