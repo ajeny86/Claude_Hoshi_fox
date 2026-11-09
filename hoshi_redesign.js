@@ -250,6 +250,16 @@
     });
   });
 
+  // Огонёк-проводник: картинка и мягкое сияние внутри каждой кнопки «дальше»
+  const FLAME = 'hoshi_flame_icon_v1.webp';
+  const addGuide = btn => {
+    if (btn.classList.contains('opened') || btn.querySelector('.rd-guide')) return;
+    const g = document.createElement('span'); g.className = 'rd-guide'; g.setAttribute('aria-hidden', 'true');
+    g.innerHTML = '<span class="rd-glow"></span><img src="' + FLAME + '" alt="">';
+    btn.prepend(g);
+  };
+  document.querySelectorAll('.next').forEach(addGuide);
+
   // Вспышка огонька при касании «дальше»
   document.addEventListener('click', e => {
     const btn = e.target.closest('.next');
@@ -257,7 +267,7 @@
     btn.classList.remove('rd-going'); void btn.offsetWidth; btn.classList.add('rd-going');
     for (let i = 0; i < 10; i++) {
       const s = document.createElement('i'); s.className = 'rd-spark';
-      s.style.left = '50%'; s.style.top = '46px';
+      s.style.left = '50%'; s.style.top = '50px';
       s.style.setProperty('--a', `${i * 36 + Math.random() * 14}deg`);
       s.style.setProperty('--d', `${-40 - Math.random() * 26}px`);
       btn.appendChild(s);
