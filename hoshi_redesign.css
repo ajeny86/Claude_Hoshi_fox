@@ -375,27 +375,27 @@ body.rd .word-cards:has(.rd-word){gap:14px 18px;padding-top:10px}
 body.rd .word-card.rd-word{
   isolation:isolate;aspect-ratio:772/380;min-height:0;gap:6px;padding:9% 9% 8%;border:0;border-radius:0;
   background:url(hoshi_word_cloud_v1.webp) center/100% 100% no-repeat;box-shadow:none;
-  filter:drop-shadow(0 8px 16px rgba(90,100,170,.16));transition:transform .2s ease,filter .35s ease}
+  filter:drop-shadow(0 8px 16px rgba(80,100,170,.14));transition:transform .2s ease,filter .35s ease}
 body.rd .word-card.rd-word:hover{box-shadow:none;transform:translateY(-2px)}
 body.rd .word-card.rd-word:active{transform:scale(.98)}
-body.rd .word-card.rd-word .word-parts{font:italic 600 clamp(21px,2.5vw,28px)/1.25 var(--rd-serif-it);color:#4a2a22;letter-spacing:0}
-body.rd .word-card.rd-word .word-parts .rd-dash{vertical-align:top;height:1.25em;line-height:1.25;color:#7a4a3a;font-style:normal}
+body.rd .word-card.rd-word .word-parts{font:italic 600 clamp(21px,2.5vw,28px)/1.25 var(--rd-serif-it);color:#2f3a72;letter-spacing:0}
+body.rd .word-card.rd-word .word-parts .rd-dash{vertical-align:top;height:1.25em;line-height:1.25;color:#6f86c8;font-style:normal}
 /* разделитель с узелком */
 body.rd .rd-knot{position:relative;display:block;width:62%;height:10px;flex:none;
-  background:linear-gradient(90deg,transparent,rgba(122,74,58,.55) 18%,rgba(122,74,58,.55) 42%,transparent 44% 56%,rgba(122,74,58,.55) 58%,rgba(122,74,58,.55) 82%,transparent) center/100% 1px no-repeat}
-body.rd .rd-knot::before{content:"";position:absolute;left:50%;top:50%;width:7px;height:7px;margin:-4.5px 0 0 -4.5px;border:1px solid rgba(122,74,58,.75);transform:rotate(45deg)}
-body.rd .rd-knot::after{content:"";position:absolute;left:50%;top:50%;width:2px;height:2px;margin:-1px 0 0 -1px;border-radius:50%;background:rgba(122,74,58,.8);box-shadow:-13px 0 0 rgba(122,74,58,.6),13px 0 0 rgba(122,74,58,.6)}
-body.rd .word-card.rd-word .rd-word-hint{gap:8px;font:italic 500 clamp(14px,1.5vw,16px)/1.2 var(--rd-serif-it);color:#6e4b3e}
+  background:linear-gradient(90deg,transparent,rgba(70,86,150,.55) 18%,rgba(70,86,150,.55) 42%,transparent 44% 56%,rgba(70,86,150,.55) 58%,rgba(70,86,150,.55) 82%,transparent) center/100% 1px no-repeat}
+body.rd .rd-knot::before{content:"";position:absolute;left:50%;top:50%;width:7px;height:7px;margin:-4.5px 0 0 -4.5px;border:1px solid rgba(70,86,150,.75);transform:rotate(45deg)}
+body.rd .rd-knot::after{content:"";position:absolute;left:50%;top:50%;width:2px;height:2px;margin:-1px 0 0 -1px;border-radius:50%;background:rgba(70,86,150,.8);box-shadow:-13px 0 0 rgba(70,86,150,.6),13px 0 0 rgba(70,86,150,.6)}
+body.rd .word-card.rd-word .rd-word-hint{gap:8px;font:italic 500 clamp(14px,1.5vw,16px)/1.2 var(--rd-serif-it);color:#56648f}
 body.rd .word-card.rd-word .rd-word-hint::before{display:none}
-body.rd .rd-sakura{display:inline-block;width:0;height:22px;flex:none;background:url(hoshi_sakura_v1.webp) center/contain no-repeat;opacity:0;transform:scale(.3) rotate(-40deg);transition:width .3s ease,opacity .3s ease,transform .45s cubic-bezier(.2,.8,.25,1.3)}
+body.rd .rd-sakura{display:inline-block;width:0;height:22px;flex:none;background:url(hoshi_flame_icon_v1.webp) center/contain no-repeat;opacity:0;transform:scale(.3) rotate(-40deg);transition:width .3s ease,opacity .3s ease,transform .45s cubic-bezier(.2,.8,.25,1.3)}
 /* собрано: тёплое свечение и цветок */
 body.rd .word-card.rd-word.rd-joined{background:url(hoshi_word_cloud_v1.webp) center/100% 100% no-repeat;box-shadow:none;
-  filter:drop-shadow(0 0 10px rgba(255,214,170,.95)) drop-shadow(0 0 22px rgba(255,190,150,.55)) drop-shadow(0 8px 16px rgba(160,110,110,.14))}
-body.rd .word-card.rd-word.rd-joined .rd-word-hint{color:#6e4b3e}
+  filter:drop-shadow(0 0 10px rgba(150,205,255,.9)) drop-shadow(0 0 24px rgba(90,170,250,.45)) drop-shadow(0 8px 16px rgba(80,100,170,.14))}
+body.rd .word-card.rd-word.rd-joined .rd-word-hint{color:#56648f}
 body.rd .word-card.rd-word.rd-joined .rd-word-hint::before{content:none}
 body.rd .word-card.rd-word.rd-joined .rd-sakura{width:22px;opacity:1;transform:none}
 /* лепестки */
-body.rd .rd-petal{position:absolute;left:var(--x);top:var(--y);width:11px;height:8px;border-radius:80% 0 80% 0;background:linear-gradient(135deg,#ffd3dc,#f29ab0);pointer-events:none;z-index:2;opacity:0;animation:rdPetal 1.6s ease-out forwards}
+body.rd .rd-petal{position:absolute;left:var(--x);top:var(--y);width:12px;height:12px;border-radius:50%;background:radial-gradient(circle,#fff 0 25%,#9fd3ff 55%,rgba(21,164,253,0) 72%);pointer-events:none;z-index:2;opacity:0;animation:rdPetal 1.6s ease-out forwards}
 @keyframes rdPetal{0%{opacity:0;transform:translate(0,0) rotate(0)}15%{opacity:1}100%{opacity:0;transform:translate(var(--dx),var(--dy)) rotate(var(--rot))}}
 body.rd .word-card.rd-word.rd-joined .word-parts{animation:rdJoin .45s ease}
 @media (prefers-reduced-motion:reduce){body.rd .rd-petal{display:none}body.rd .rd-sakura{transition:none}}
