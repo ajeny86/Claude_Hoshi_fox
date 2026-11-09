@@ -543,3 +543,18 @@
     new MutationObserver(() => ensure(btn)).observe(btn, { childList: true });
   });
 })();
+
+/* ---------- Следы: по очереди синеют 1, 2, 3, 4, держатся и снова белеют (скриптом — работает везде) ---------- */
+(() => {
+  'use strict';
+  if (!document.body.classList.contains('rd')) return;
+  const prep = () => document.querySelectorAll('.rd-steps i').forEach(i => { if (!i.querySelector('b')) i.appendChild(document.createElement('b')); });
+  let step = 0;
+  setInterval(() => {
+    prep();
+    step = (step + 1) % 7;               // 0 — все белые, 1..4 — по очереди синеют, 5..6 — все синие
+    document.querySelectorAll('.rd-steps').forEach(row => {
+      [...row.children].forEach((i, k) => i.classList.toggle('on', k < step));
+    });
+  }, 600);
+})();
