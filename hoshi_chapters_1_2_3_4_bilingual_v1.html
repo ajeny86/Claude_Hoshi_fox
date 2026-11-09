@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="ru">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
@@ -421,8 +421,12 @@
     @media(max-width:620px){.journey-part-switch{width:100%;margin:0;padding:calc(6px + env(safe-area-inset-top)) 7px 6px;border-width:0 0 1px;border-radius:0}.journey-part-switch a,.journey-part-switch span{min-height:42px;padding:7px 5px;font-size:11px}}
     .next{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
   </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Kurale&family=Manrope:wght@500;600;700;800&display=swap">
+  <link rel="stylesheet" href="hoshi_redesign.css?v=20261108">
 </head>
-<body>
+<body class="rd">
   <header class="top"><div class="top-inner">
     <button type="button" class="chapter-list-button" data-chapter-list aria-label="Открыть список глав" aria-expanded="false"><span class="chapter-list-icon" aria-hidden="true">☰</span><span>Главы</span></button>
     <div class="meta"><b>Хоси</b><small id="screen-label">Глава 1 · Экран 1</small></div>
@@ -461,23 +465,35 @@
 
   <main data-main>
     <section class="map-home" data-map-home aria-label="Карта путешествия Хоси">
-      <nav class="journey-part-switch" aria-label="Выбор части путешествия">
-        <span class="active" aria-current="page">Часть 1 · Японские духи</span>
-        <a href="hoshi_part2_map_prototype.html">Часть 2 · Японские традиции</a>
+      <nav class="rd-topline" aria-label="Меню">
+        <div class="rd-logo"><img src="hoshi_flame_icon_v1.webp" alt="" width="24" height="24">iHoshi</div>
+        <div class="rd-part-pick">
+          <button type="button" class="rd-part-btn" id="rd-part-btn" aria-haspopup="true" aria-expanded="false" aria-controls="rd-part-pop"><span class="rd-pn" data-rd-text="part1">Часть 1</span><span class="rd-pt" data-rd-text="part1name">Японские духи</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+          <div class="rd-part-pop" id="rd-part-pop" hidden>
+            <p class="rd-pop-h" data-rd-text="parts">Части путешествия</p>
+            <span class="rd-part-item current" aria-current="page"><span class="rd-pi-n">1</span><span><strong data-rd-text="part1name">Японские духи</strong><small data-rd-text="part1info">4 главы · ты здесь</small></span></span>
+            <a class="rd-part-item" href="hoshi_part2_map_prototype.html"><span class="rd-pi-n">2</span><span><strong data-rd-text="part2name">Японские традиции</strong><small data-rd-text="part2info">Ханами, Танабата, Цукими</small></span></a>
+          </div>
+        </div>
+        <nav class="map-language-progress rd-seg" data-map-language-progress hidden aria-label="Выбор языкового прогресса"><button type="button" class="map-progress-language" data-progress-language="ru" aria-label="Русский прогресс">RU</button><button type="button" class="map-progress-language" data-progress-language="en" aria-label="English progress">EN</button></nav>
+        <button type="button" class="rd-round" id="rd-guide" aria-label="Памятка для родителей">?</button>
       </nav>
       <div class="map-canvas">
-        <img src="hoshi_start_map_v5.jpg?v=5" alt="Карта путешествия Хоси: весенний храм, находка с красным мешочком и встреча с загадочным силуэтом в зимнем лесу" decoding="async">
-        <h1 class="map-title">Путь Хоси</h1>
-        <p class="map-map-hint">Выбери место на карте</p>
+        <img class="rd-map-img" src="hoshi_map_wide_v1.webp" alt="Карта путешествия Хоси: храм с сакурой, лисичка с красным мешочком, зимний лес с загадочным силуэтом и озеро в долине туманов" width="1672" height="941" decoding="async">
+        <div class="rd-trail" id="rd-trail" aria-hidden="true"></div>
+        <div class="rd-map-name"><h1 class="map-title">Путь Хоси</h1><p class="map-map-hint">Выбери место на карте</p></div>
         <section class="language-gate" data-language-gate role="dialog" aria-modal="true" aria-labelledby="language-title" aria-describedby="language-nudge"><div data-language-select><strong id="language-title">Выбери язык и прогресс</strong><small>Для каждого языка сохраняется свой прогресс</small><div class="language-options"><button type="button" class="language-option" data-language="ru">Русский</button><button type="button" class="language-option" data-language="en">English</button></div></div><div data-language-confirm hidden><strong data-confirm-title>Продолжить?</strong><small>Прогресс каждого языка сохраняется отдельно</small><div class="language-options"><button type="button" class="language-option" data-language-confirm-button>Продолжить</button><button type="button" class="language-option secondary" data-language-back>Назад</button></div></div><div class="language-nudge" id="language-nudge" data-language-nudge role="status" aria-live="polite" hidden><strong>Choose a language, please</strong><span>Пожалуйста, выберите язык</span></div></section>
-        <nav class="map-language-progress" data-map-language-progress hidden aria-label="Выбор языкового прогресса"><button type="button" class="map-progress-language" data-progress-language="ru">Русский прогресс</button><button type="button" class="map-progress-language" data-progress-language="en">English progress</button></nav>
-        <button type="button" class="map-stop map-stop--1" data-map-chapter="1" aria-label="Открыть главу 1: Храм белых лис"><span class="map-stop-label"><span class="map-kicker"><span class="map-complete-flame" aria-hidden="true"></span><b>Глава 1</b></span><strong>Храм белых лис</strong></span></button>
-        <button type="button" class="map-stop map-stop--2" data-map-chapter="2" aria-label="Открыть главу 2: Следы на снегу"><span class="map-stop-label"><span class="map-kicker"><span class="map-complete-flame" aria-hidden="true"></span><b>Глава 2</b></span><strong>Следы на снегу</strong></span></button>
-        <button type="button" class="map-stop map-stop--3" data-map-chapter="3" aria-label="Открыть главу 3: Лесная загадка"><span class="map-stop-label"><span class="map-kicker"><span class="map-complete-flame" aria-hidden="true"></span><b>Глава 3</b></span><strong>Лесная загадка</strong></span></button>
-        <button type="button" class="map-stop map-stop--4" data-map-chapter="4" aria-label="Открыть главу 4: Долина туманов"><span class="map-stop-label"><span class="map-kicker"><span class="map-complete-flame" aria-hidden="true"></span><b>Глава 4</b></span><strong>Долина туманов</strong></span></button>
-        <div class="map-credit">Designed by <a href="https://www.linkedin.com/in/marina-medved-design" target="_blank" rel="noopener noreferrer" aria-label="Marina Medved on LinkedIn">Marina Medved</a></div>
-  </div>
-
+        <button type="button" class="map-stop map-stop--1" data-map-chapter="1" aria-label="Открыть главу 1: Храм белых лис"><span class="rd-fx" aria-hidden="true"><img class="rd-fl" src="hoshi_flame_icon_v1.webp" alt="" width="40" height="40"></span><span class="rd-lab">Храм белых лис</span></button>
+        <button type="button" class="map-stop map-stop--2" data-map-chapter="2" aria-label="Открыть главу 2: Следы на снегу"><span class="rd-fx" aria-hidden="true"><img class="rd-fl" src="hoshi_flame_icon_v1.webp" alt="" width="40" height="40"></span><span class="rd-lab">Следы на снегу</span></button>
+        <button type="button" class="map-stop map-stop--3" data-map-chapter="3" aria-label="Открыть главу 3: Лесная загадка"><span class="rd-fx" aria-hidden="true"><img class="rd-fl" src="hoshi_flame_icon_v1.webp" alt="" width="40" height="40"></span><span class="rd-lab">Лесная загадка</span></button>
+        <button type="button" class="map-stop map-stop--4" data-map-chapter="4" aria-label="Открыть главу 4: Долина туманов"><span class="rd-fx" aria-hidden="true"><img class="rd-fl" src="hoshi_flame_icon_v1.webp" alt="" width="40" height="40"></span><span class="rd-lab">Долина туманов</span></button>
+      </div>
+      <div class="rd-strip">
+        <div class="rd-here"><small id="rd-here-s">Ты здесь · экран 1 из 6</small><strong id="rd-here-t">Глава 1 · Храм белых лис</strong></div>
+        <button type="button" class="rd-go" id="rd-go" data-rd-text="continue">Продолжить чтение</button>
+      </div>
+      <ol class="rd-rows" aria-label="Главы"><li><button type="button" class="rd-row" data-rd-row="1"><span class="rd-row-n">1</span><span><strong>Храм белых лис</strong><small data-rd-row-s="1">Впереди</small></span></button></li><li><button type="button" class="rd-row" data-rd-row="2"><span class="rd-row-n">2</span><span><strong>Следы на снегу</strong><small data-rd-row-s="2">Впереди</small></span></button></li><li><button type="button" class="rd-row" data-rd-row="3"><span class="rd-row-n">3</span><span><strong>Лесная загадка</strong><small data-rd-row-s="3">Впереди</small></span></button></li><li><button type="button" class="rd-row" data-rd-row="4"><span class="rd-row-n">4</span><span><strong>Долина туманов</strong><small data-rd-row-s="4">Впереди</small></span></button></li></ol>
+      <p class="rd-credit">Designed by <a href="https://www.linkedin.com/in/marina-medved-design" target="_blank" rel="noopener noreferrer" aria-label="Marina Medved on LinkedIn">Marina Medved</a></p>
     </section>
   <div class="restart-dialog" data-restart-dialog hidden><button type="button" class="restart-dialog-backdrop" data-restart-cancel aria-label="Отмена"></button><section class="restart-panel" role="dialog" aria-modal="true" aria-labelledby="restart-title"><span class="restart-dialog-icon" aria-hidden="true">↻</span><h2 id="restart-title">Начать главу заново?</h2><p>Прогресс текущей главы сбросится. Другие главы сохранятся.</p><div class="restart-actions"><button type="button" class="restart-confirm" data-restart-confirm>Начать заново</button><button type="button" class="restart-cancel" data-restart-cancel>Отмена</button></div></section></div>
     <section class="chapter" data-chapter="1">
@@ -1185,5 +1201,6 @@
       let reopenChapter=0;try{reopenChapter=Number(sessionStorage.getItem('hoshi-reopen-chapter'));sessionStorage.removeItem('hoshi-reopen-chapter')}catch(e){}[1,2,3,4].includes(reopenChapter)?showChapter(reopenChapter,false):(state.view==='chapter'?showChapter(state.current,false):showMap(false));
     })();
   </script>
+  <script src="hoshi_redesign.js?v=20261108"></script>
 </body>
 </html>
