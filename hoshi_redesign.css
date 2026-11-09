@@ -371,7 +371,7 @@ body.rd .word-card.rd-word.rd-joined .word-parts{animation:rdJoin .45s ease}
 body.rd .next::after{left:50%;right:auto;transform:translateX(-50%);white-space:nowrap}
 
 /* ---------- Глава 1: сиреневое стекло страницы ---------- */
-body.rd[data-rd-chapter="1"] .page{background:rgba(232,232,255,.6);-webkit-backdrop-filter:blur(14px) saturate(1.1);backdrop-filter:blur(14px) saturate(1.1);
+body.rd .page{background:rgba(232,232,255,.6);-webkit-backdrop-filter:blur(14px) saturate(1.1);backdrop-filter:blur(14px) saturate(1.1);
   box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.75),0 24px 70px rgba(70,80,160,.16)}
 
 /* ---------- Глава 1, экран 2: стеклянные карточки-«таблетки» (по референсу) ---------- */
@@ -401,29 +401,29 @@ body.rd .word-card.rd-word.rd-joined .word-parts{animation:rdJoin .45s ease}
 
 /* ---------- Глава 1: ответы без плашек — над каждым маленький огонёк ---------- */
 body.rd .rd-afl{display:none}
-body.rd[data-rd-chapter="1"] .feedback{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;margin:0;padding:0;border:0}
-body.rd[data-rd-chapter="1"] .answers{display:flex;justify-content:center;gap:clamp(36px,6vw,64px);max-width:none;margin:22px auto 4px}
-body.rd[data-rd-chapter="1"] .answer{position:relative;display:flex;flex-direction:row;align-items:center;gap:10px;flex:0 0 auto;width:auto;min-width:110px;min-height:0;padding:6px 14px 10px;border:0;border-radius:24px;
+body.rd .question:has(.answers) .feedback,body.rd .page:has([data-word-hunt]) .feedback[data-hunt-good]{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;margin:0;padding:0;border:0}
+body.rd .answers{display:flex;justify-content:center;gap:clamp(36px,6vw,64px);max-width:none;margin:22px auto 4px}
+body.rd .answer{position:relative;display:flex;flex-direction:row;align-items:center;gap:10px;flex:0 0 auto;width:auto;min-width:110px;min-height:0;padding:6px 14px 10px;border:0;border-radius:24px;
   background:none!important;box-shadow:none!important;font:500 clamp(30px,3.6vw,40px)/1.1 var(--rd-serif-it);color:#2f3b8f;text-shadow:0 0 10px rgba(255,255,255,.95);
   transition:transform .2s ease,opacity .35s ease,color .35s ease;-webkit-tap-highlight-color:transparent}
-body.rd[data-rd-chapter="1"] .answer:hover:not(:disabled){transform:translateY(-3px)}
-body.rd[data-rd-chapter="1"] .answer:active:not(:disabled){transform:scale(.96)}
-body.rd[data-rd-chapter="1"] .answer:focus-visible{outline:3px solid #8fb6f0;outline-offset:4px}
-body.rd[data-rd-chapter="1"] .rd-afl{position:relative;display:block;flex:none;width:58px;height:58px;margin-left:-14px}
-body.rd[data-rd-chapter="1"] .rd-afl img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 0 10px rgba(21,164,253,.8)) drop-shadow(0 0 3px #fff);opacity:0;transform:scale(.6);transform-origin:50% 85%;transition:opacity .25s ease,transform .3s cubic-bezier(.2,.8,.25,1.3)}
-body.rd[data-rd-chapter="1"] .answer:is(:hover,:focus-visible):not(:disabled) .rd-afl img{opacity:1;transform:none}
+body.rd .answer:hover:not(:disabled){transform:translateY(-3px)}
+body.rd .answer:active:not(:disabled){transform:scale(.96)}
+body.rd .answer:focus-visible{outline:3px solid #8fb6f0;outline-offset:4px}
+body.rd .rd-afl{position:relative;display:block;flex:none;width:58px;height:58px;margin-left:-14px}
+body.rd .rd-afl img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 0 10px rgba(21,164,253,.8)) drop-shadow(0 0 3px #fff);opacity:0;transform:scale(.6);transform-origin:50% 85%;transition:opacity .25s ease,transform .3s cubic-bezier(.2,.8,.25,1.3)}
+body.rd .answer:is(:hover,:focus-visible):not(:disabled) .rd-afl img{opacity:1;transform:none}
 /* верный: огонёк вспыхивает */
-body.rd[data-rd-chapter="1"] .answer.correct-choice{opacity:1}
-body.rd[data-rd-chapter="1"] .answer.correct-choice .rd-afl img{transform:none;filter:drop-shadow(0 0 10px rgba(21,164,253,.85)) drop-shadow(0 0 3px #fff);opacity:1;animation:rdAFlare .6s ease-out}
-body.rd[data-rd-chapter="1"] .answer.correct-choice.rd-sent .rd-afl img{opacity:0;transition:opacity .15s}
+body.rd .answer.correct-choice{opacity:1}
+body.rd .answer.correct-choice .rd-afl img{transform:none;filter:drop-shadow(0 0 10px rgba(21,164,253,.85)) drop-shadow(0 0 3px #fff);opacity:1;animation:rdAFlare .6s ease-out}
+body.rd .answer.correct-choice.rd-sent .rd-afl img{opacity:0;transition:opacity .15s}
 @keyframes rdAFlare{0%{transform:scale(.8);opacity:1}50%{transform:scale(1.35);filter:brightness(1.6) drop-shadow(0 0 22px rgba(21,164,253,1)) drop-shadow(0 0 4px #fff);opacity:1}100%{transform:scale(1)}}
 /* неверный: вспыхивает и тухнет, идёт дымок */
-body.rd[data-rd-chapter="1"] .answer.wrong-choice{color:#7d82a8}
-body.rd[data-rd-chapter="1"] .answer.wrong-choice .rd-afl img{animation:rdAOut 1.3s ease-out forwards}
+body.rd .answer.wrong-choice{color:#7d82a8}
+body.rd .answer.wrong-choice .rd-afl img{animation:rdAOut 1.3s ease-out forwards}
 @keyframes rdAOut{0%{filter:drop-shadow(0 0 10px rgba(21,164,253,.8));opacity:1}25%{filter:drop-shadow(0 0 8px rgba(21,164,253,.7));opacity:.9;transform:scale(1.1)}55%{transform:scale(.85) skewX(-6deg)}100%{filter:grayscale(1) brightness(.85);opacity:0;transform:scale(.4) translateY(8px)}}
-body.rd[data-rd-chapter="1"] .answer.wrong-choice .rd-afl::after{content:"";position:absolute;left:50%;top:6px;width:14px;height:22px;margin-left:-7px;border-radius:50%;background:radial-gradient(circle,rgba(150,155,185,.55),rgba(150,155,185,0) 70%);filter:blur(3px);opacity:0;animation:rdSmoke 1.4s ease-out .45s forwards}
+body.rd .answer.wrong-choice .rd-afl::after{content:"";position:absolute;left:50%;top:6px;width:14px;height:22px;margin-left:-7px;border-radius:50%;background:radial-gradient(circle,rgba(150,155,185,.55),rgba(150,155,185,0) 70%);filter:blur(3px);opacity:0;animation:rdSmoke 1.4s ease-out .45s forwards}
 @keyframes rdSmoke{0%{opacity:0;transform:translateY(0) scale(.6)}30%{opacity:.9}100%{opacity:0;transform:translate(6px,-34px) scale(1.6)}}
-body.rd[data-rd-chapter="1"] .answer:disabled:not(.correct-choice){opacity:.4}
+body.rd .answer:disabled:not(.correct-choice){opacity:.4}
 /* летящий огонёк */
 body.rd .rd-flyer{position:fixed;z-index:400;width:54px;height:54px;margin:-27px 0 0 -27px;pointer-events:none;filter:drop-shadow(0 0 12px rgba(21,164,253,.95)) drop-shadow(0 0 3px #fff)}
 /* основной огонёк ждёт, пока прилетит маленький, потом вспыхивает */
@@ -431,86 +431,86 @@ body.rd .next.ready.rd-wait .rd-glow{opacity:0;animation:none}
 body.rd .next.ready.rd-wait .rd-guide img{filter:grayscale(1) brightness(1.15);opacity:.42;animation:none}
 body.rd .next.ready.rd-ignite .rd-guide img{animation:rdLightUp2 .9s ease-out both,rdHover 2.6s ease-in-out .9s infinite}
 body.rd .next.ready.rd-wait{color:inherit}
-@media (prefers-reduced-motion:reduce){body.rd[data-rd-chapter="1"] .rd-afl img,body.rd[data-rd-chapter="1"] .rd-afl::after{animation:none!important}}
+@media (prefers-reduced-motion:reduce){body.rd .rd-afl img,body.rd .rd-afl::after{animation:none!important}}
 
 /* ---------- Глава 1, экран 5: охота за словами без плашек ---------- */
 body.rd .rd-tfl{display:none}
-body.rd[data-rd-chapter="1"] .task-panel:has(.search-targets){background:none!important;box-shadow:none!important;border:0;padding:0;margin:4px auto 10px}
-body.rd[data-rd-chapter="1"] .task-panel:has(.search-targets) h3{margin:0 0 6px;text-align:center}
-body.rd[data-rd-chapter="1"] .task-panel:has(.search-targets)>p{margin:0 auto;text-align:center;font:400 clamp(15px,1.7vw,17px)/1.4 var(--rd-sans);color:var(--rd-muted)}
-body.rd[data-rd-chapter="1"] .search-targets{display:flex;flex-wrap:wrap;justify-content:center;gap:10px clamp(22px,4vw,44px);max-width:none;width:auto;margin:22px auto 6px}
-body.rd[data-rd-chapter="1"] .search-target{display:inline-flex;align-items:center;gap:2px;flex:0 0 auto;min-width:0;padding:0;border:0!important;border-radius:0;background:none!important;box-shadow:none!important;
+body.rd .task-panel:has(.search-targets){background:none!important;box-shadow:none!important;border:0;padding:0;margin:4px auto 10px}
+body.rd .task-panel:has(.search-targets) h3{margin:0 0 6px;text-align:center}
+body.rd .task-panel:has(.search-targets)>p{margin:0 auto;text-align:center;font:400 clamp(15px,1.7vw,17px)/1.4 var(--rd-sans);color:var(--rd-muted)}
+body.rd .search-targets{display:flex;flex-wrap:wrap;justify-content:center;gap:10px clamp(22px,4vw,44px);max-width:none;width:auto;margin:22px auto 6px}
+body.rd .search-target{display:inline-flex;align-items:center;gap:2px;flex:0 0 auto;min-width:0;padding:0;border:0!important;border-radius:0;background:none!important;box-shadow:none!important;
   font:500 clamp(24px,2.8vw,30px)/1.2 var(--rd-serif-it);color:#6f77a8;text-shadow:0 0 10px rgba(255,255,255,.95);transition:color .4s ease}
-body.rd[data-rd-chapter="1"] .rd-tfl{display:block;flex:none;width:40px;height:40px;margin-left:-8px}
-body.rd[data-rd-chapter="1"] .rd-tfl img{width:100%;height:100%;object-fit:contain;filter:grayscale(1) brightness(1.1);opacity:0;transform-origin:50% 85%;transition:filter .4s ease,opacity .4s ease}
-body.rd[data-rd-chapter="1"] .search-target.found{color:#2f3b8f}
-body.rd[data-rd-chapter="1"] .search-target.found .rd-tfl img{filter:drop-shadow(0 0 9px rgba(21,164,253,.85)) drop-shadow(0 0 3px #fff);opacity:1;animation:rdAFlare .7s ease-out}
+body.rd .rd-tfl{display:block;flex:none;width:40px;height:40px;margin-left:-8px}
+body.rd .rd-tfl img{width:100%;height:100%;object-fit:contain;filter:grayscale(1) brightness(1.1);opacity:0;transform-origin:50% 85%;transition:filter .4s ease,opacity .4s ease}
+body.rd .search-target.found{color:#2f3b8f}
+body.rd .search-target.found .rd-tfl img{filter:drop-shadow(0 0 9px rgba(21,164,253,.85)) drop-shadow(0 0 3px #fff);opacity:1;animation:rdAFlare .7s ease-out}
 /* текст без рамки */
-body.rd[data-rd-chapter="1"] .word-search-text{background:none!important;box-shadow:none!important;border:0;padding:0;margin-top:10px}
-body.rd[data-rd-chapter="1"] .search-word{padding:2px 3px;margin:0 -1px;border-radius:10px;background:none!important;box-shadow:none!important;transition:color .3s ease,text-shadow .3s ease}
-body.rd[data-rd-chapter="1"] .search-word:hover{color:#3d4aa6}
-body.rd[data-rd-chapter="1"] .search-word.found{padding-inline:3px;color:#1f6fd1;text-shadow:0 0 12px rgba(90,176,250,.75),0 0 2px rgba(255,255,255,.9)}
-body.rd[data-rd-chapter="1"] .search-word.miss{animation:rdShake .4s ease}
+body.rd .word-search-text{background:none!important;box-shadow:none!important;border:0;padding:0;margin-top:10px}
+body.rd .search-word{padding:2px 3px;margin:0 -1px;border-radius:10px;background:none!important;box-shadow:none!important;transition:color .3s ease,text-shadow .3s ease}
+body.rd .search-word:hover{color:#3d4aa6}
+body.rd .search-word.found{padding-inline:3px;color:#1f6fd1;text-shadow:0 0 12px rgba(90,176,250,.75),0 0 2px rgba(255,255,255,.9)}
+body.rd .search-word.miss{animation:rdShake .4s ease}
 /* счётчик — только для чтения с экрана, видно по огонькам */
-body.rd[data-rd-chapter="1"] .hunt-status{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;margin:0;padding:0;border:0}
-body.rd[data-rd-chapter="1"] .search-target::before,body.rd[data-rd-chapter="1"] .search-target::after{content:none!important;display:none!important}
-body.rd[data-rd-chapter="1"] .search-targets{gap:8px clamp(14px,2.4vw,26px)}
-body.rd[data-rd-chapter="1"] .search-target{font-size:clamp(21px,2.4vw,26px)}
-body.rd[data-rd-chapter="1"] .rd-tfl.rd-gone img{opacity:0!important;transition:opacity .2s;animation:none}
+body.rd .hunt-status{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;margin:0;padding:0;border:0}
+body.rd .search-target::before,body.rd .search-target::after{content:none!important;display:none!important}
+body.rd .search-targets{gap:8px clamp(14px,2.4vw,26px)}
+body.rd .search-target{font-size:clamp(21px,2.4vw,26px)}
+body.rd .rd-tfl.rd-gone img{opacity:0!important;transition:opacity .2s;animation:none}
 
 /* ---------- «Путь открыт» крупнее ---------- */
 body.rd .next.opened{gap:12px;margin:22px auto 4px;padding:8px 18px;font:500 clamp(20px,2.2vw,24px)/1.2 var(--rd-serif-it);color:#45507e;text-shadow:0 0 10px rgba(255,255,255,.9)}
 body.rd .next.opened::before{content:""!important;width:40px;height:40px;opacity:1!important;color:transparent!important;filter:drop-shadow(0 0 10px rgba(21,164,253,.75)) drop-shadow(0 0 3px #fff)!important}
 /* огонёк у верного ответа не остаётся: только вспышка перед полётом */
-body.rd[data-rd-chapter="1"] .question:has(.next.opened) .rd-afl img,body.rd[data-rd-chapter="1"] .page:has(.next.opened) .answer .rd-afl img{opacity:0!important;animation:none!important}
+body.rd .question:has(.next.opened) .rd-afl img,body.rd .page:has(.next.opened) .answer .rd-afl img{opacity:0!important;animation:none!important}
 
 /* ---------- Глава 1, финал (по референсу) ---------- */
 /* предложение для чтения — стеклянная карточка, как у слов */
-body.rd[data-rd-chapter="1"] .story .breath{max-width:none;width:auto;margin:22px -60px 30px;padding:clamp(18px,2.4vw,26px) clamp(22px,3.4vw,40px);border-radius:32px;text-align:center;
+body.rd .story .breath{max-width:none;width:auto;margin:22px -60px 30px;padding:clamp(18px,2.4vw,26px) clamp(22px,3.4vw,40px);border-radius:32px;text-align:center;
   background:linear-gradient(160deg,rgba(250,248,255,.8),rgba(232,230,255,.6));box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.9),0 0 16px rgba(255,255,255,.5),0 12px 26px rgba(80,80,170,.12);
   font:500 clamp(22px,2.6vw,28px)/1.45 var(--rd-serif-it);color:#2f3b8f;text-shadow:0 0 8px rgba(255,255,255,.9)}
 /* что означают предметы — список с ключом и свитком */
-body.rd[data-rd-chapter="1"] .meaning-note{position:relative;max-width:640px;margin:0 auto 26px;padding:0 0 26px;border:0;background:none!important;box-shadow:none!important}
-body.rd[data-rd-chapter="1"] .meaning-note::after{content:"";position:absolute;left:50%;bottom:0;width:min(260px,60%);height:1px;transform:translateX(-50%);background:linear-gradient(90deg,transparent,rgba(70,86,160,.5),transparent)}
-body.rd[data-rd-chapter="1"] .meaning-note>strong{display:block;margin:0 0 16px;text-align:center;font:700 clamp(24px,2.8vw,30px)/1.2 var(--rd-tale);color:var(--rd-ink)}
-body.rd[data-rd-chapter="1"] .meaning-note p{position:relative;display:flex;align-items:center;min-height:56px;margin:0 0 8px;padding:0 0 0 82px;text-align:left;
+body.rd .meaning-note{position:relative;max-width:640px;margin:0 auto 26px;padding:0 0 26px;border:0;background:none!important;box-shadow:none!important}
+body.rd .meaning-note::after{content:"";position:absolute;left:50%;bottom:0;width:min(260px,60%);height:1px;transform:translateX(-50%);background:linear-gradient(90deg,transparent,rgba(70,86,160,.5),transparent)}
+body.rd .meaning-note>strong{display:block;margin:0 0 16px;text-align:center;font:700 clamp(24px,2.8vw,30px)/1.2 var(--rd-tale);color:var(--rd-ink)}
+body.rd .meaning-note p{position:relative;display:flex;align-items:center;min-height:56px;margin:0 0 8px;padding:0 0 0 82px;text-align:left;
   font:400 clamp(17px,1.9vw,19px)/1.45 var(--rd-sans);color:#45507e}
-body.rd[data-rd-chapter="1"] .meaning-note p>span{display:block}
-body.rd[data-rd-chapter="1"] .meaning-note p::before{content:"";position:absolute;left:0;top:50%;width:66px;height:52px;transform:translateY(-50%);background:url(hoshi_icon_key_v1.webp) center/contain no-repeat;filter:drop-shadow(0 4px 6px rgba(80,60,40,.18))}
-body.rd[data-rd-chapter="1"] .meaning-note p:last-of-type::before{background-image:url(hoshi_icon_scroll_v1.webp)}
-body.rd[data-rd-chapter="1"] .meaning-note b{font:600 clamp(22px,2.5vw,27px)/1.2 var(--rd-serif-it);color:#2f3b8f}
-body.rd[data-rd-chapter="1"] .meaning-note b::after{content:" —";font:400 clamp(17px,1.9vw,19px)/1 var(--rd-sans);color:#45507e}
+body.rd .meaning-note p>span{display:block}
+body.rd .meaning-note p::before{content:"";position:absolute;left:0;top:50%;width:66px;height:52px;transform:translateY(-50%);background:url(hoshi_icon_key_v1.webp) center/contain no-repeat;filter:drop-shadow(0 4px 6px rgba(80,60,40,.18))}
+body.rd .meaning-note p:last-of-type::before{background-image:url(hoshi_icon_scroll_v1.webp)}
+body.rd .meaning-note b{font:600 clamp(22px,2.5vw,27px)/1.2 var(--rd-serif-it);color:#2f3b8f}
+body.rd .meaning-note b::after{content:" —";font:400 clamp(17px,1.9vw,19px)/1 var(--rd-sans);color:#45507e}
 body.rd[data-rd-chapter="1"] .page[data-screen="6"] .story>p:last-child{text-align:center}
 /* история прочитана */
-body.rd[data-rd-chapter="1"] .final-note{max-width:none;margin:26px auto 0;padding:0;border:0;background:none!important;box-shadow:none!important;overflow:visible;animation:none;
+body.rd .final-note{max-width:none;margin:26px auto 0;padding:0;border:0;background:none!important;box-shadow:none!important;overflow:visible;animation:none;
   font:400 clamp(17px,1.9vw,19px)/1.5 var(--rd-sans);color:#45507e;text-align:center}
-body.rd[data-rd-chapter="1"] .final-note::before,body.rd[data-rd-chapter="1"] .final-note::after{content:none!important;display:none}
-body.rd[data-rd-chapter="1"] .final-note br{display:none}
-body.rd[data-rd-chapter="1"] .final-note strong{display:block;margin-bottom:6px;font:600 clamp(32px,3.8vw,42px)/1.15 var(--rd-serif-it);color:#2f3b8f;text-shadow:0 0 16px rgba(255,255,255,.95)}
+body.rd .final-note::before,body.rd .final-note::after{content:none!important;display:none}
+body.rd .final-note br{display:none}
+body.rd .final-note strong{display:block;margin-bottom:6px;font:600 clamp(32px,3.8vw,42px)/1.15 var(--rd-serif-it);color:#2f3b8f;text-shadow:0 0 16px rgba(255,255,255,.95)}
 /* подпись огонька — просто текст, без плашки */
 /* спящая лисичка на камне в углу */
 body.rd[data-rd-chapter="1"] .page[data-screen="6"]{padding-bottom:clamp(30px,4vw,48px)}
 body.rd[data-rd-chapter="1"] .page[data-screen="6"]::after{content:"";display:block!important;position:absolute;right:-6px;bottom:-4px;width:clamp(200px,28vw,340px);aspect-ratio:766/438;
   background:url(hoshi_final1_fox_v1.webp) right bottom/contain no-repeat;pointer-events:none}
 @media (max-width:700px){body.rd[data-rd-chapter="1"] .page[data-screen="6"]::after{opacity:.5}}
-@media (max-width:900px){body.rd[data-rd-chapter="1"] .story .breath{margin-left:0;margin-right:0}}
+@media (max-width:900px){body.rd .story .breath{margin-left:0;margin-right:0}}
 @media (max-width:760px){body.rd[data-rd-chapter="1"] .page[data-screen="6"]{padding-bottom:clamp(110px,30vw,180px)}}
 
 /* ---------- Глава 1, награда «Четыре тайны Инари»: без плашек ---------- */
-body.rd[data-rd-chapter="1"] .reward-page{background:rgba(232,232,255,.6);-webkit-backdrop-filter:blur(14px) saturate(1.1);backdrop-filter:blur(14px) saturate(1.1);
+body.rd .reward-page{background:rgba(232,232,255,.6);-webkit-backdrop-filter:blur(14px) saturate(1.1);backdrop-filter:blur(14px) saturate(1.1);
   box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.75),0 24px 70px rgba(70,80,160,.16)}
 body.rd[data-rd-chapter="1"] .inari-reward-card{width:min(440px,100%)}
 body.rd[data-rd-chapter="1"] .inari-card-face{border-radius:30px;box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.8),0 16px 34px rgba(70,80,160,.2)}
 body.rd[data-rd-chapter="1"] .inari-reward-hint{margin:12px auto 8px;font:400 15px/1.4 var(--rd-sans);color:var(--rd-muted)}
 /* подсказка — просто текст */
-body.rd[data-rd-chapter="1"] .reward-copy{max-width:560px;margin:18px auto 6px;padding:0;border:0;background:none!important;box-shadow:none!important;text-align:center;
+body.rd .reward-copy{max-width:560px;margin:18px auto 6px;padding:0;border:0;background:none!important;box-shadow:none!important;text-align:center;
   font:400 clamp(17px,1.9vw,19px)/1.45 var(--rd-sans);color:#45507e}
-body.rd[data-rd-chapter="1"] .reward-copy br{display:none}
-body.rd[data-rd-chapter="1"] .reward-copy strong{display:block;margin-bottom:4px;font:700 clamp(24px,2.8vw,30px)/1.2 var(--rd-tale);color:var(--rd-ink)}
+body.rd .reward-copy br{display:none}
+body.rd .reward-copy strong{display:block;margin-bottom:4px;font:700 clamp(24px,2.8vw,30px)/1.2 var(--rd-tale);color:var(--rd-ink)}
 /* тайны — стеклянные карточки: огонёк слева, вопрос и ответ, справа дымчатая сценка */
-body.rd[data-rd-chapter="1"] .inari-facts{display:grid;gap:14px;max-width:760px;margin:18px auto 0}
-body.rd[data-rd-chapter="1"] .inari-fact{position:relative;overflow:hidden;display:grid;grid-template-columns:62px 1fr;column-gap:12px;align-items:center;min-height:92px;
-  padding:16px 33% 16px 18px;border:0;border-radius:30px;text-align:left;
+body.rd .inari-reward:not(.echo-reward) .inari-facts{display:grid;gap:14px;max-width:760px;margin:18px auto 0}
+body.rd .inari-reward:not(.echo-reward) .inari-fact{position:relative;overflow:hidden;display:grid;grid-template-columns:62px 1fr;column-gap:12px;align-items:center;min-height:92px;
+  padding:16px 22px 16px 18px;border:0;border-radius:30px;text-align:left;
   background:linear-gradient(160deg,rgba(250,248,255,.82),rgba(232,230,255,.6))!important;
   box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.9),0 10px 24px rgba(80,80,170,.11)!important}
 body.rd[data-rd-chapter="1"] .inari-fact::after{content:"";position:absolute;right:0;top:0;bottom:0;width:34%;background:var(--scene) right center/cover no-repeat;pointer-events:none;z-index:0;opacity:.62;filter:saturate(.75);-webkit-mask-image:linear-gradient(90deg,transparent,#000 70%);mask-image:linear-gradient(90deg,transparent,#000 70%)}
@@ -518,28 +518,28 @@ body.rd[data-rd-chapter="1"] .inari-fact:nth-child(1){--scene:url(hoshi_inari_fa
 body.rd[data-rd-chapter="1"] .inari-fact:nth-child(2){--scene:url(hoshi_inari_fact2_v1.webp)}
 body.rd[data-rd-chapter="1"] .inari-fact:nth-child(3){--scene:url(hoshi_inari_fact3_v1.webp)}
 body.rd[data-rd-chapter="1"] .inari-fact:nth-child(4){--scene:url(hoshi_inari_fact4_v1.webp)}
-body.rd[data-rd-chapter="1"] .inari-question{display:contents}
-body.rd[data-rd-chapter="1"] .inari-question h3{grid-column:2;grid-row:1;position:relative;z-index:1;margin:0;text-align:left;font-size:clamp(20px,2.3vw,25px)}
-body.rd[data-rd-chapter="1"] .inari-flame{grid-column:1;grid-row:1/3;align-self:center;position:relative;z-index:1;width:52px;height:60px;padding:2px;background:none!important;border:0;cursor:pointer;filter:grayscale(1) brightness(1.15);opacity:.55;transition:transform .2s ease,opacity .4s ease,filter .4s ease}
-body.rd[data-rd-chapter="1"] .inari-flame img{animation:none}
-body.rd[data-rd-chapter="1"] .inari-flame:hover{transform:scale(1.15)}
-body.rd[data-rd-chapter="1"] .inari-flame:hover:not(.opened){opacity:.8}
-body.rd[data-rd-chapter="1"] .inari-flame.opened{opacity:1;filter:drop-shadow(0 0 10px rgba(21,164,253,.75)) drop-shadow(0 0 3px #fff)}
-body.rd[data-rd-chapter="1"] .inari-flame.opened img{animation:rdAFlare .7s ease-out,rdHover 2.6s ease-in-out .7s infinite}
-body.rd[data-rd-chapter="1"] .inari-answer{grid-column:2;grid-row:2;position:relative;z-index:1;max-width:none;margin:4px 0 0;padding:0;border:0;background:none;text-align:left;font:400 clamp(16px,1.7vw,18px)/1.45 var(--rd-sans);color:#45507e}
-body.rd[data-rd-chapter="1"] .inari-answer strong{color:#2f3b8f}
-@media (max-width:600px){body.rd[data-rd-chapter="1"] .inari-fact{padding-right:18px}body.rd[data-rd-chapter="1"] .inari-fact::after{opacity:.35}}
+body.rd .inari-reward:not(.echo-reward) .inari-question{display:contents}
+body.rd .inari-reward:not(.echo-reward) .inari-question h3{grid-column:2;grid-row:1;position:relative;z-index:1;margin:0;text-align:left;font-size:clamp(20px,2.3vw,25px)}
+body.rd .inari-reward:not(.echo-reward) .inari-flame{grid-column:1;grid-row:1/3;align-self:center;position:relative;z-index:1;width:52px;height:60px;padding:2px;background:none!important;border:0;cursor:pointer;filter:grayscale(1) brightness(1.15);opacity:.55;transition:transform .2s ease,opacity .4s ease,filter .4s ease}
+body.rd .inari-reward:not(.echo-reward) .inari-flame img{animation:none}
+body.rd .inari-reward:not(.echo-reward) .inari-flame:hover{transform:scale(1.15)}
+body.rd .inari-reward:not(.echo-reward) .inari-flame:hover:not(.opened){opacity:.8}
+body.rd .inari-reward:not(.echo-reward) .inari-flame.opened{opacity:1;filter:drop-shadow(0 0 10px rgba(21,164,253,.75)) drop-shadow(0 0 3px #fff)}
+body.rd .inari-reward:not(.echo-reward) .inari-flame.opened img{animation:rdAFlare .7s ease-out,rdHover 2.6s ease-in-out .7s infinite}
+body.rd .inari-reward:not(.echo-reward) .inari-answer{grid-column:2;grid-row:2;position:relative;z-index:1;max-width:none;margin:4px 0 0;padding:0;border:0;background:none;text-align:left;font:400 clamp(16px,1.7vw,18px)/1.45 var(--rd-sans);color:#45507e}
+body.rd .inari-reward:not(.echo-reward) .inari-answer strong{color:#2f3b8f}
+@media (max-width:600px){body.rd .inari-reward:not(.echo-reward) .inari-fact{padding-right:18px}body.rd .inari-reward:not(.echo-reward) .inari-fact::after{opacity:.35}}
 /* все тайны раскрыты — светящаяся надпись */
-body.rd[data-rd-chapter="1"] .inari-complete{max-width:none;margin:22px auto 0;padding:0;border:0;background:none!important;box-shadow:none!important;text-align:center;
+body.rd .inari-reward:not(.echo-reward) .inari-complete{max-width:none;margin:22px auto 0;padding:0;border:0;background:none!important;box-shadow:none!important;text-align:center;
   font:400 clamp(17px,1.9vw,19px)/1.5 var(--rd-sans);color:#45507e}
-body.rd[data-rd-chapter="1"] .inari-complete::after{content:none!important}
-body.rd[data-rd-chapter="1"] .inari-complete::before{content:none!important}
-body.rd[data-rd-chapter="1"] .inari-complete br{display:none}
-body.rd[data-rd-chapter="1"] .inari-complete strong{display:block;margin-bottom:6px;font:700 clamp(28px,3.2vw,36px)/1.15 var(--rd-tale);color:#2f3b8f;text-shadow:0 0 16px rgba(255,255,255,.95)}
+body.rd .inari-reward:not(.echo-reward) .inari-complete::after{content:none!important}
+body.rd .inari-reward:not(.echo-reward) .inari-complete::before{content:none!important}
+body.rd .inari-reward:not(.echo-reward) .inari-complete br{display:none}
+body.rd .inari-reward:not(.echo-reward) .inari-complete strong{display:block;margin-bottom:6px;font:700 clamp(28px,3.2vw,36px)/1.15 var(--rd-tale);color:#2f3b8f;text-shadow:0 0 16px rgba(255,255,255,.95)}
 /* карточка шире и короче */
 body.rd[data-rd-chapter="1"] .inari-reward-card{width:min(760px,100%);aspect-ratio:1672/941}
-body.rd[data-rd-chapter="1"] .inari-card-front .animated-reward-scene{width:100%;height:100%;max-height:none;aspect-ratio:auto;margin:0;border-radius:0}
-body.rd[data-rd-chapter="1"] .inari-card-front .scene-image{object-fit:cover;object-position:50% 50%}
+body.rd .inari-card-front .animated-reward-scene{width:100%;height:100%;max-height:none;aspect-ratio:auto;margin:0;border-radius:0}
+body.rd .inari-card-front .scene-image{width:100%;height:100%;object-fit:cover;object-position:50% 50%}
 body.rd[data-rd-chapter="1"] .inari-card-back img{width:100%;height:100%;object-fit:cover;object-position:50% 40%}
 /* внизу огонька нет — просто переход дальше */
 /* огоньки на картинке: блуждают, мерцают, тают и появляются снова */
@@ -560,7 +560,7 @@ body.rd[data-rd-chapter="1"] .inari-kitsunebi--4{--t:8.5s;--d:-2.8s}
 @media (prefers-reduced-motion:reduce){body.rd[data-rd-chapter="1"] .inari-kitsunebi{animation:none;opacity:.8}}
 
 /* ответ раздвигает карточку */
-body.rd[data-rd-chapter="1"] .inari-answer:not([hidden]){animation:rdExpand .55s cubic-bezier(.2,.8,.25,1) both;overflow:hidden}
+body.rd .inari-reward:not(.echo-reward) .inari-answer:not([hidden]){animation:rdExpand .55s cubic-bezier(.2,.8,.25,1) both;overflow:hidden}
 @keyframes rdExpand{from{max-height:0;opacity:0;margin-top:0}60%{opacity:.6}to{max-height:260px;opacity:1}}
 /* переход дальше: текст и цепочка синих следов */
 body.rd .rd-steps{display:inline-flex;align-items:center;gap:8px}
@@ -571,40 +571,40 @@ body.rd .rd-steps i:nth-child(2){animation-delay:.3s}
 body.rd .rd-steps i:nth-child(3){animation-delay:.6s}
 @keyframes rdStep{0%,100%{opacity:.2}25%,60%{opacity:1;filter:drop-shadow(0 0 9px rgba(47,143,240,.9))}}
 @media (prefers-reduced-motion:reduce){body.rd .rd-steps i{animation:none;opacity:.85}}
-@media (prefers-reduced-motion:reduce){body.rd[data-rd-chapter="1"] .inari-answer:not([hidden]){animation:none}}
+@media (prefers-reduced-motion:reduce){body.rd .inari-reward:not(.echo-reward) .inari-answer:not([hidden]){animation:none}}
 /* реакция на наведение и касание */
 
 /* переход дальше — как кнопка с огоньком, только вместо огонька синие следы */
-body.rd .reward-continue .rd-guide img{display:none}
+body.rd .reward-continue:has(.rd-steps) .rd-guide img{display:none}
 body.rd .reward-continue .rd-glow{background:radial-gradient(circle,rgba(150,200,255,.7) 0%,rgba(150,200,255,.28) 38%,rgba(150,200,255,0) 66%)}
 body.rd .reward-continue .rd-steps{position:relative;gap:6px}
 body.rd .reward-continue .rd-steps i{width:26px;height:26px}
 body.rd .reward-continue.ready:not(.opened):hover .rd-steps i{animation-duration:.9s}
-body.rd .reward-continue::after{content:"коснись следов"}
-body.rd.rd-en .reward-continue::after{content:"tap the tracks"}
+body.rd .reward-continue:has(.rd-steps)::after{content:"коснись следов"}
+body.rd.rd-en .reward-continue:has(.rd-steps)::after{content:"tap the tracks"}
 /* «Все четыре тайны раскрыты!» — другой шрифт */
-body.rd[data-rd-chapter="1"] .inari-complete strong{font:700 clamp(26px,3vw,32px)/1.2 var(--rd-sans)!important;letter-spacing:.01em;color:#2f3b8f}
-body.rd[data-rd-chapter="1"] .inari-complete{font:400 clamp(16px,1.8vw,18px)/1.5 var(--rd-sans);color:#6b6f98}
+body.rd .inari-reward:not(.echo-reward) .inari-complete strong{font:700 clamp(26px,3vw,32px)/1.2 var(--rd-sans)!important;letter-spacing:.01em;color:#2f3b8f}
+body.rd .inari-reward:not(.echo-reward) .inari-complete{font:400 clamp(16px,1.8vw,18px)/1.5 var(--rd-sans);color:#6b6f98}
 /* переход: надпись — ниже следы — ниже подпись */
-body.rd .reward-continue{display:flex!important;flex-direction:column;align-items:center;padding-top:8px!important}
-body.rd .reward-continue .rd-guide{position:relative!important;left:auto!important;top:auto!important;margin:8px auto 0!important;order:1;width:110px;height:54px}
-body.rd .reward-continue::after{position:static!important;transform:none!important;order:2;margin-top:2px}
+body.rd .reward-continue:has(.rd-steps){display:flex!important;flex-direction:column;align-items:center;padding-top:8px!important}
+body.rd .reward-continue:has(.rd-steps) .rd-guide{position:relative!important;left:auto!important;top:auto!important;margin:8px auto 0!important;order:1;width:110px;height:54px}
+body.rd .reward-continue:has(.rd-steps)::after{position:static!important;transform:none!important;order:2;margin-top:2px}
 /* четыре следа */
 body.rd .reward-continue .rd-guide{width:150px}
 body.rd .rd-steps i:nth-child(4){animation-delay:.9s}
 /* пояснения крупнее — их читает ребёнок */
-body.rd[data-rd-chapter="1"] .inari-answer{font-size:clamp(19px,2.1vw,21px);line-height:1.5}
-body.rd[data-rd-chapter="1"] .reward-copy{font-size:clamp(19px,2.1vw,21px)}
-body.rd[data-rd-chapter="1"] .inari-complete{font-size:clamp(19px,2.1vw,21px);color:#45507e}
+body.rd .inari-reward:not(.echo-reward) .inari-answer{font-size:clamp(19px,2.1vw,21px);line-height:1.5}
+body.rd .reward-copy{font-size:clamp(19px,2.1vw,21px)}
+body.rd .inari-reward:not(.echo-reward) .inari-complete{font-size:clamp(19px,2.1vw,21px);color:#45507e}
 body.rd[data-rd-chapter="1"] .inari-reward-hint{font-size:17px}
-body.rd[data-rd-chapter="1"] .next::after{font-size:15px}
+body.rd .next::after{font-size:15px}
 body.rd[data-rd-chapter="1"] .inari-fact{padding-right:30%}
 /* обратная сторона карточки: картинка целиком, по бокам — её же размытый фон */
 body.rd[data-rd-chapter="1"] .inari-card-back{overflow:hidden;background:#d9dcf5}
 body.rd[data-rd-chapter="1"] .inari-card-back::before{content:"";position:absolute;inset:-30px;background:url(hoshi_chapter1_kitsune_traditional_wide_v1.webp) center/cover no-repeat;filter:blur(22px) saturate(.9) brightness(1.05);opacity:.85}
 body.rd[data-rd-chapter="1"] .inari-card-back img{position:relative;z-index:1;width:100%;height:100%;object-fit:contain!important;object-position:center}
 /* переход дальше появляется только когда раскрыты все четыре тайны */
-body.rd .inari-reward:not(.ponta-reward):not(.echo-reward) .inari-complete[hidden]~.reward-continue{display:none!important}
+body.rd .inari-reward:not(.echo-reward) .inari-complete[hidden]~.reward-continue{display:none!important}
 body.rd .rd-locked{max-width:560px;margin:26px auto 8px;text-align:center;font:400 clamp(19px,2.1vw,21px)/1.45 var(--rd-sans);color:#6b6f98}
 body.rd .rd-locked::before{content:"";display:block;width:110px;height:30px;margin:0 auto 8px;opacity:.35;filter:grayscale(1);
   background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 110 30' fill='%232f8ff0'%3E%3Cg transform='translate(4 3) scale(.9)'%3E%3Cellipse cx='12' cy='15.5' rx='5' ry='4.3'/%3E%3Cellipse cx='5.6' cy='9.6' rx='2' ry='2.6'/%3E%3Cellipse cx='9.6' cy='6' rx='2.1' ry='2.8'/%3E%3Cellipse cx='14.4' cy='6' rx='2.1' ry='2.8'/%3E%3Cellipse cx='18.4' cy='9.6' rx='2' ry='2.6'/%3E%3C/g%3E%3Cg transform='translate(32 7) scale(.9)'%3E%3Cellipse cx='12' cy='15.5' rx='5' ry='4.3'/%3E%3Cellipse cx='5.6' cy='9.6' rx='2' ry='2.6'/%3E%3Cellipse cx='9.6' cy='6' rx='2.1' ry='2.8'/%3E%3Cellipse cx='14.4' cy='6' rx='2.1' ry='2.8'/%3E%3Cellipse cx='18.4' cy='9.6' rx='2' ry='2.6'/%3E%3C/g%3E%3Cg transform='translate(60 3) scale(.9)'%3E%3Cellipse cx='12' cy='15.5' rx='5' ry='4.3'/%3E%3Cellipse cx='5.6' cy='9.6' rx='2' ry='2.6'/%3E%3Cellipse cx='9.6' cy='6' rx='2.1' ry='2.8'/%3E%3Cellipse cx='14.4' cy='6' rx='2.1' ry='2.8'/%3E%3Cellipse cx='18.4' cy='9.6' rx='2' ry='2.6'/%3E%3C/g%3E%3Cg transform='translate(88 7) scale(.9)'%3E%3Cellipse cx='12' cy='15.5' rx='5' ry='4.3'/%3E%3Cellipse cx='5.6' cy='9.6' rx='2' ry='2.6'/%3E%3Cellipse cx='9.6' cy='6' rx='2.1' ry='2.8'/%3E%3Cellipse cx='14.4' cy='6' rx='2.1' ry='2.8'/%3E%3Cellipse cx='18.4' cy='9.6' rx='2' ry='2.6'/%3E%3C/g%3E%3C/svg%3E") center/contain no-repeat}
@@ -612,3 +612,21 @@ body.rd .inari-complete:not([hidden])~.rd-locked{display:none}
 body.rd[data-rd-chapter="1"] .inari-card-back::before{content:none}
 body.rd[data-rd-chapter="1"] .inari-card-back img{object-fit:cover!important}
 body.rd .rd-locked::before{content:none!important;display:none!important}
+
+/* ---------- Главы 2–4: длинные варианты ответов — столбиком ---------- */
+body.rd .answers:has(.answer:nth-child(3)){flex-direction:column;align-items:center;gap:14px}
+body.rd .answers:has(.answer:nth-child(3)) .answer{font-size:clamp(22px,2.6vw,28px);text-align:left;max-width:100%}
+/* ---------- Глава 2: вместо огоньков — лапки ---------- */
+body.rd[data-rd-chapter="2"] .rd-afl img,body.rd[data-rd-chapter="2"] .rd-tfl img,body.rd[data-rd-chapter="2"] .next .rd-guide img{content:url(hoshi_paw_icon_v1.svg)}
+body.rd[data-rd-chapter="2"] .rd-afl{width:44px;height:44px;margin-left:-6px}
+body.rd[data-rd-chapter="2"] .rd-tfl{width:30px;height:30px;margin-right:4px;margin-left:0}
+body.rd[data-rd-chapter="2"] .next:not(.reward-continue) .rd-guide img{display:none}
+body.rd[data-rd-chapter="2"] .next .rd-glow{background:radial-gradient(circle,rgba(150,200,255,.7) 0%,rgba(150,200,255,.28) 38%,rgba(150,200,255,0) 66%)}
+body.rd[data-rd-chapter="2"] .next:not(.ready) .rd-steps i{animation:none;opacity:.35;filter:grayscale(1)}
+body.rd[data-rd-chapter="2"] .next::after{content:"коснись следов"}
+body.rd.rd-en[data-rd-chapter="2"] .next::after{content:"tap the tracks"}
+body.rd .next.ready.rd-wait .rd-steps i{animation:none;opacity:.35;filter:grayscale(1)}
+body.rd .next.ready.rd-ignite .rd-steps i{animation:rdAFlare .7s ease-out,rdStep 2.4s ease-in-out .7s infinite}
+/* глава 3: карточка тануки — картинка на всю карточку, без синей полосы */
+body.rd .ponta-reward :has(>.inari-card-inner){width:min(560px,100%);margin-left:auto;margin-right:auto}
+body.rd .ponta-reward .inari-card-front .animated-reward-scene{width:100%!important;max-width:none!important}

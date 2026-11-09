@@ -367,13 +367,13 @@
   const ch1 = () => document.body.dataset.rdChapter === '1';
   document.addEventListener('click', e => {
     const a = e.target.closest('.answer');
-    if (!a || !ch1()) return;
+    if (!a) return;
     // движок уже обработал клик (наш скрипт подключён после него)
     requestAnimationFrame(() => {
       if (!a.classList.contains('correct-choice')) return;
       const q = a.closest('.question') || a.closest('.page');
       const next = q?.querySelector('.next') || a.closest('.page')?.querySelector('.next');
-      const target = next?.querySelector('.rd-guide img');
+      const target = next?.querySelector('.rd-guide');
       if (!next || !target || reduce) return;
       next.classList.add('rd-wait');
       const from = a.querySelector('.rd-afl').getBoundingClientRect();
@@ -381,7 +381,7 @@
         const to = target.getBoundingClientRect();
         const fx = from.left + from.width / 2, fy = from.top + from.height / 2;
         const tx = to.left + to.width / 2, ty = to.top + to.height / 2;
-        const fly = document.createElement('img'); fly.src = FLAME; fly.className = 'rd-flyer'; fly.alt = '';
+        const fly = document.createElement('img'); fly.src = document.body.dataset.rdChapter === '2' ? 'hoshi_paw_icon_v1.svg' : FLAME; fly.className = 'rd-flyer'; fly.alt = '';
         fly.style.left = fx + 'px'; fly.style.top = fy + 'px';
         document.body.appendChild(fly);
         a.classList.add('rd-sent');
@@ -421,7 +421,7 @@
   const fly = (fromEl, toEl, delay, done) => setTimeout(() => {
     const a = fromEl.getBoundingClientRect(), b = toEl.getBoundingClientRect();
     const fx = a.left + a.width / 2, fy = a.top + a.height / 2, tx = b.left + b.width / 2, ty = b.top + b.height / 2;
-    const el = document.createElement('img'); el.src = FLAME; el.className = 'rd-flyer'; el.alt = '';
+    const el = document.createElement('img'); el.src = document.body.dataset.rdChapter === '2' ? 'hoshi_paw_icon_v1.svg' : FLAME; el.className = 'rd-flyer'; el.alt = '';
     el.style.left = fx + 'px'; el.style.top = fy + 'px'; document.body.appendChild(el);
     fromEl.classList.add('rd-gone');
     const cx = fx + (tx - fx) * 0.15, cy = fy + (ty - fy) * 0.55, frames = [];
@@ -436,14 +436,14 @@
   // когда все слова найдены — огоньки слетаются к главному и зажигают его
   document.addEventListener('click', e => {
     const hunt = e.target.closest('[data-word-hunt]');
-    if (!hunt || document.body.dataset.rdChapter !== '1') return;
+    if (!hunt) return;
     const screen = hunt.closest('[data-screen]'), next = screen?.querySelector('.next');
     const targets = [...(screen?.querySelectorAll('.search-target') || [])];
     if (!next || !targets.length || screen.dataset.rdFlown) return;
     requestAnimationFrame(() => {
       if (!targets.every(t => t.classList.contains('found'))) return;
       screen.dataset.rdFlown = '1';
-      const goal = next.querySelector('.rd-guide img');
+      const goal = next.querySelector('.rd-guide');
       if (reduce || !goal) return;
       next.classList.add('rd-wait');
       targets.forEach((t, i) => fly(t.querySelector('.rd-tfl'), goal, 700 + i * 160, i === targets.length - 1 ? () => {
@@ -497,7 +497,7 @@
 (() => {
   'use strict';
   if (!document.body.classList.contains('rd')) return;
-  document.querySelectorAll('.reward-continue').forEach(btn => {
+  document.querySelectorAll('.inari-reward:not(.ponta-reward):not(.echo-reward) .reward-continue, [data-chapter="2"] .next').forEach(btn => {
     const guide = btn.querySelector('.rd-guide');
     if (!guide || guide.querySelector('.rd-steps')) return;
     const steps = document.createElement('span'); steps.className = 'rd-steps';
@@ -513,10 +513,11 @@
   'use strict';
   if (!document.body.classList.contains('rd')) return;
   let lang = 'ru'; try { lang = localStorage.getItem('hoshi-language-choice') || 'ru'; } catch (e) {}
-  document.querySelectorAll('.inari-reward:not(.ponta-reward):not(.echo-reward) .inari-complete').forEach(done => {
+  document.querySelectorAll('.inari-reward:not(.echo-reward) .inari-complete').forEach(done => {
     if (done.parentElement.querySelector('.rd-locked')) return;
     const p = document.createElement('p'); p.className = 'rd-locked';
-    p.textContent = lang === 'en' ? 'Open all four secrets of Inari to continue the journey.' : 'Открой все четыре тайны Инари — и сможешь продолжить путь.';
+    const ponta = done.closest('.ponta-reward');
+    p.textContent = lang === 'en' ? (ponta ? 'Open all four tanuki secrets to continue the journey.' : 'Open all four secrets of Inari to continue the journey.') : (ponta ? 'Открой все четыре секрета тануки — и сможешь продолжить путь.' : 'Открой все четыре тайны Инари — и сможешь продолжить путь.');
     done.after(p);
   });
 })();
