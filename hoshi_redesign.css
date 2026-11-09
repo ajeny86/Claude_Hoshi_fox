@@ -567,9 +567,17 @@ body.rd[data-rd-chapter="1"] .inari-kitsunebi--4{--t:8.5s;--d:-2.8s}
 /* ответ раздвигает карточку */
 body.rd[data-rd-chapter="1"] .inari-answer:not([hidden]){animation:rdExpand .55s cubic-bezier(.2,.8,.25,1) both;overflow:hidden}
 @keyframes rdExpand{from{max-height:0;opacity:0;margin-top:0}60%{opacity:.6}to{max-height:260px;opacity:1}}
-/* переход дальше: явно кликабельный, с лапкой */
-body.rd[data-rd-chapter="1"] .reward-continue{gap:10px;cursor:pointer;color:#1f5fc0;text-decoration:underline;text-decoration-thickness:1.5px;text-decoration-color:rgba(31,95,192,.35);text-underline-offset:6px;transition:color .2s ease,text-decoration-color .2s ease}
-body.rd[data-rd-chapter="1"] .reward-continue:hover{color:#2f3b8f;text-decoration-color:rgba(47,59,143,.8)}
-body.rd[data-rd-chapter="1"] .reward-continue::after{content:""!important;display:inline-block!important;width:26px;height:26px;margin-left:0;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%231f5fc0'%3E%3Cellipse cx='12' cy='15.5' rx='5' ry='4.3'/%3E%3Cellipse cx='5.6' cy='9.6' rx='2' ry='2.6' transform='rotate(-18 5.6 9.6)'/%3E%3Cellipse cx='9.6' cy='6' rx='2.1' ry='2.8' transform='rotate(-6 9.6 6)'/%3E%3Cellipse cx='14.4' cy='6' rx='2.1' ry='2.8' transform='rotate(6 14.4 6)'/%3E%3Cellipse cx='18.4' cy='9.6' rx='2' ry='2.6' transform='rotate(18 18.4 9.6)'/%3E%3C/svg%3E") center/contain no-repeat;transform:rotate(90deg)!important;animation:rdPawStep 1.8s ease-in-out infinite}
-@keyframes rdPawStep{0%,100%{translate:0 0}40%{translate:6px -3px}60%{translate:6px 0}}
+/* переход дальше: текст и цепочка синих следов */
+body.rd[data-rd-chapter="1"] .reward-continue{gap:16px;cursor:pointer;color:#2f3b8f;text-decoration:none;transition:color .2s ease}
+body.rd[data-rd-chapter="1"] .reward-continue:hover{color:#1f5fc0}
+body.rd[data-rd-chapter="1"] .reward-continue::after{content:none!important;display:none!important}
+body.rd .rd-steps{display:inline-flex;align-items:center;gap:8px}
+body.rd .rd-steps i{display:block;width:24px;height:24px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%232f8ff0'%3E%3Cellipse cx='12' cy='15.5' rx='5' ry='4.3'/%3E%3Cellipse cx='5.6' cy='9.6' rx='2' ry='2.6' transform='rotate(-18 5.6 9.6)'/%3E%3Cellipse cx='9.6' cy='6' rx='2.1' ry='2.8' transform='rotate(-6 9.6 6)'/%3E%3Cellipse cx='14.4' cy='6' rx='2.1' ry='2.8' transform='rotate(6 14.4 6)'/%3E%3Cellipse cx='18.4' cy='9.6' rx='2' ry='2.6' transform='rotate(18 18.4 9.6)'/%3E%3C/svg%3E") center/contain no-repeat;filter:drop-shadow(0 0 5px rgba(47,143,240,.45));opacity:.2;animation:rdStep 2.4s ease-in-out infinite}
+body.rd .rd-steps i:nth-child(odd){transform:rotate(90deg) translateX(4px)}
+body.rd .rd-steps i:nth-child(even){transform:rotate(90deg) translateX(-4px)}
+body.rd .rd-steps i:nth-child(2){animation-delay:.3s}
+body.rd .rd-steps i:nth-child(3){animation-delay:.6s}
+@keyframes rdStep{0%,100%{opacity:.2}25%,60%{opacity:1}}
+body.rd .reward-continue:hover .rd-steps i{animation-duration:1.2s}
+@media (prefers-reduced-motion:reduce){body.rd .rd-steps i{animation:none;opacity:.85}}
 @media (prefers-reduced-motion:reduce){body.rd[data-rd-chapter="1"] .reward-continue::after,body.rd[data-rd-chapter="1"] .inari-answer:not([hidden]){animation:none}}

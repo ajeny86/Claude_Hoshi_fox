@@ -492,3 +492,15 @@
     p.appendChild(span);
   });
 })();
+
+/* ---------- Награда: цепочка синих следов у перехода дальше ---------- */
+(() => {
+  'use strict';
+  if (!document.body.classList.contains('rd')) return;
+  document.querySelectorAll('.reward-continue').forEach(btn => {
+    if (btn.querySelector('.rd-steps')) return;
+    const steps = document.createElement('span'); steps.className = 'rd-steps'; steps.setAttribute('aria-hidden', 'true');
+    steps.innerHTML = '<i></i><i></i><i></i>';
+    btn.appendChild(steps);
+  });
+})();
