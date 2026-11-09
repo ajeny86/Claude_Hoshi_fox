@@ -542,11 +542,6 @@ body.rd[data-rd-chapter="1"] .inari-card-front .animated-reward-scene{width:100%
 body.rd[data-rd-chapter="1"] .inari-card-front .scene-image{object-fit:cover;object-position:50% 50%}
 body.rd[data-rd-chapter="1"] .inari-card-back img{width:100%;height:100%;object-fit:cover;object-position:50% 40%}
 /* внизу огонька нет — просто переход дальше */
-body.rd[data-rd-chapter="1"] .reward-continue{padding-top:10px;flex-direction:row;justify-content:center;align-items:center}
-body.rd[data-rd-chapter="1"] .reward-continue .rd-guide{display:none}
-body.rd[data-rd-chapter="1"] .reward-continue::after{content:"→"!important;position:static!important;transform:none!important;display:inline!important;margin-left:10px;font:700 1em/1 var(--rd-sans);color:inherit;opacity:1}
-body.rd[data-rd-chapter="1"] .reward-continue{font:700 clamp(21px,2.3vw,25px)/1.2 var(--rd-tale);color:#2f3b8f}
-body.rd[data-rd-chapter="1"] .reward-continue:hover{color:#1f6fd1}
 /* огоньки на картинке: блуждают, мерцают, тают и появляются снова */
 body.rd[data-rd-chapter="1"] .inari-kitsunebi{opacity:0;animation:rdKitsu var(--t,8s) ease-in-out infinite,rdFlick 1.6s ease-in-out infinite;animation-delay:var(--d,0s),calc(var(--d,0s)*.5)}
 body.rd[data-rd-chapter="1"] .inari-kitsunebi--1{--t:9s;--d:-1s}
@@ -568,9 +563,6 @@ body.rd[data-rd-chapter="1"] .inari-kitsunebi--4{--t:8.5s;--d:-2.8s}
 body.rd[data-rd-chapter="1"] .inari-answer:not([hidden]){animation:rdExpand .55s cubic-bezier(.2,.8,.25,1) both;overflow:hidden}
 @keyframes rdExpand{from{max-height:0;opacity:0;margin-top:0}60%{opacity:.6}to{max-height:260px;opacity:1}}
 /* переход дальше: текст и цепочка синих следов */
-body.rd[data-rd-chapter="1"] .reward-continue{gap:16px;cursor:pointer;color:#2f3b8f;text-decoration:none;transition:color .2s ease}
-body.rd[data-rd-chapter="1"] .reward-continue:hover{color:#1f5fc0}
-body.rd[data-rd-chapter="1"] .reward-continue::after{content:none!important;display:none!important}
 body.rd .rd-steps{display:inline-flex;align-items:center;gap:8px}
 body.rd .rd-steps i{display:block;width:24px;height:24px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%232f8ff0'%3E%3Cellipse cx='12' cy='15.5' rx='5' ry='4.3'/%3E%3Cellipse cx='5.6' cy='9.6' rx='2' ry='2.6' transform='rotate(-18 5.6 9.6)'/%3E%3Cellipse cx='9.6' cy='6' rx='2.1' ry='2.8' transform='rotate(-6 9.6 6)'/%3E%3Cellipse cx='14.4' cy='6' rx='2.1' ry='2.8' transform='rotate(6 14.4 6)'/%3E%3Cellipse cx='18.4' cy='9.6' rx='2' ry='2.6' transform='rotate(18 18.4 9.6)'/%3E%3C/svg%3E") center/contain no-repeat;filter:drop-shadow(0 0 5px rgba(47,143,240,.45));opacity:.2;animation:rdStep 2.4s ease-in-out infinite}
 body.rd .rd-steps i:nth-child(odd){transform:rotate(90deg) translateX(4px)}
@@ -578,17 +570,15 @@ body.rd .rd-steps i:nth-child(even){transform:rotate(90deg) translateX(-4px)}
 body.rd .rd-steps i:nth-child(2){animation-delay:.3s}
 body.rd .rd-steps i:nth-child(3){animation-delay:.6s}
 @keyframes rdStep{0%,100%{opacity:.2}25%,60%{opacity:1;filter:drop-shadow(0 0 9px rgba(47,143,240,.9))}}
-body.rd .reward-continue:hover .rd-steps i{animation-duration:1.2s}
 @media (prefers-reduced-motion:reduce){body.rd .rd-steps i{animation:none;opacity:.85}}
-@media (prefers-reduced-motion:reduce){body.rd[data-rd-chapter="1"] .reward-continue::after,body.rd[data-rd-chapter="1"] .inari-answer:not([hidden]){animation:none}}
-body.rd[data-rd-chapter="1"] .reward-continue{flex-wrap:wrap;row-gap:6px}
-body.rd .rd-cont-hint{flex-basis:100%;text-align:center;font:600 13px/1.2 var(--rd-sans);letter-spacing:.02em;color:#7d82a8}
+@media (prefers-reduced-motion:reduce){body.rd[data-rd-chapter="1"] .inari-answer:not([hidden]){animation:none}}
 /* реакция на наведение и касание */
-body.rd[data-rd-chapter="1"] .reward-continue{transition:color .25s ease,transform .25s ease}
-body.rd[data-rd-chapter="1"] .reward-continue:is(:hover,:focus-visible){color:#1f6fd1;transform:translateY(-2px)}
-body.rd[data-rd-chapter="1"] .reward-continue:active{transform:scale(.97)}
-body.rd .rd-steps{transition:transform .3s ease}
-body.rd .reward-continue:is(:hover,:focus-visible) .rd-steps{transform:translateX(8px)}
-body.rd .reward-continue:is(:hover,:focus-visible) .rd-steps i{animation-duration:.9s;filter:drop-shadow(0 0 9px rgba(47,143,240,.95))}
-body.rd .rd-cont-hint{transition:color .25s ease}
-body.rd .reward-continue:is(:hover,:focus-visible) .rd-cont-hint{color:#1f6fd1}
+
+/* переход дальше — как кнопка с огоньком, только вместо огонька синие следы */
+body.rd .reward-continue .rd-guide img{display:none}
+body.rd .reward-continue .rd-glow{background:radial-gradient(circle,rgba(150,200,255,.7) 0%,rgba(150,200,255,.28) 38%,rgba(150,200,255,0) 66%)}
+body.rd .reward-continue .rd-steps{position:relative;gap:6px}
+body.rd .reward-continue .rd-steps i{width:26px;height:26px}
+body.rd .reward-continue.ready:not(.opened):hover .rd-steps i{animation-duration:.9s}
+body.rd .reward-continue::after{content:"коснись следов"}
+body.rd.rd-en .reward-continue::after{content:"tap the tracks"}

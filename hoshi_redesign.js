@@ -498,13 +498,12 @@
   'use strict';
   if (!document.body.classList.contains('rd')) return;
   document.querySelectorAll('.reward-continue').forEach(btn => {
-    if (btn.querySelector('.rd-steps')) return;
-    const steps = document.createElement('span'); steps.className = 'rd-steps'; steps.setAttribute('aria-hidden', 'true');
+    const guide = btn.querySelector('.rd-guide');
+    if (!guide || guide.querySelector('.rd-steps')) return;
+    const steps = document.createElement('span'); steps.className = 'rd-steps';
     steps.innerHTML = '<i></i><i></i><i></i>';
-    btn.appendChild(steps);
-    const hint = document.createElement('span'); hint.className = 'rd-cont-hint'; hint.setAttribute('aria-hidden', 'true');
-    let lang = 'ru'; try { lang = localStorage.getItem('hoshi-language-choice') || 'ru'; } catch (e) {}
-    hint.textContent = lang === 'en' ? 'tap the tracks' : 'коснись следов';
-    btn.appendChild(hint);
+    guide.appendChild(steps);
   });
+  let lang = 'ru'; try { lang = localStorage.getItem('hoshi-language-choice') || 'ru'; } catch (e) {}
+  if (lang === 'en') document.body.classList.add('rd-en');
 })();
