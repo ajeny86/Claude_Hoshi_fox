@@ -472,3 +472,23 @@
     sc?.querySelectorAll('.search-target').forEach(t => mo.observe(t, { attributes: true, attributeFilter: ['class'] }));
   });
 })();
+
+/* ---------- Глава 1, финал: подпись огонька в таблетке, текст пояснений в span ---------- */
+(() => {
+  'use strict';
+  if (!document.body.classList.contains('rd')) return;
+  document.querySelectorAll('.next[data-reward]').forEach(btn => {
+    if (btn.querySelector('.rd-pill')) return;
+    const texts = [...btn.childNodes].filter(n => n.nodeType === 3 && n.textContent.trim());
+    if (!texts.length) return;
+    const pill = document.createElement('span'); pill.className = 'rd-pill';
+    pill.textContent = texts.map(t => t.textContent.trim()).join(' ');
+    texts.forEach(t => t.remove()); btn.appendChild(pill);
+  });
+  document.querySelectorAll('.meaning-note p').forEach(p => {
+    if (p.querySelector(':scope>span')) return;
+    const span = document.createElement('span');
+    while (p.firstChild) span.appendChild(p.firstChild);
+    p.appendChild(span);
+  });
+})();

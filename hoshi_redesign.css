@@ -464,25 +464,38 @@ body.rd .next.opened::before{content:""!important;width:40px;height:40px;opacity
 /* огонёк у верного ответа не остаётся: только вспышка перед полётом */
 body.rd[data-rd-chapter="1"] .question:has(.next.opened) .rd-afl img,body.rd[data-rd-chapter="1"] .page:has(.next.opened) .answer .rd-afl img{opacity:0!important;animation:none!important}
 
-/* ---------- Глава 1, финал: без плашек ---------- */
-/* предложение для чтения — цитата между тонкими линиями */
-body.rd[data-rd-chapter="1"] .story .breath{position:relative;margin:26px auto 30px;padding:22px 0;text-align:center;
-  font:italic 500 clamp(22px,2.6vw,28px)/1.5 var(--rd-serif-it);color:#2f3b8f;text-shadow:0 0 10px rgba(255,255,255,.9)}
-body.rd[data-rd-chapter="1"] .story .breath::before,body.rd[data-rd-chapter="1"] .story .breath::after{content:"";position:absolute;left:50%;width:min(260px,60%);height:1px;transform:translateX(-50%);
-  background:linear-gradient(90deg,transparent,rgba(70,86,160,.45),transparent)}
-body.rd[data-rd-chapter="1"] .story .breath::before{top:0}
-body.rd[data-rd-chapter="1"] .story .breath::after{bottom:0}
-/* что означают предметы — две колонки с огоньками */
-body.rd[data-rd-chapter="1"] .meaning-note{display:grid;grid-template-columns:1fr 1fr;gap:6px 36px;margin:10px 0 26px;padding:0;border:0;background:none!important;box-shadow:none!important}
-body.rd[data-rd-chapter="1"] .meaning-note>strong{grid-column:1/-1;margin:0 0 14px;text-align:center;font:400 clamp(24px,2.8vw,30px)/1.2 var(--rd-tale);color:var(--rd-ink)}
-body.rd[data-rd-chapter="1"] .meaning-note p{margin:0;padding-top:58px;position:relative;text-align:center;font:400 clamp(17px,1.9vw,19px)/1.5 var(--rd-sans);color:#45507e}
-body.rd[data-rd-chapter="1"] .meaning-note p::before{content:"";position:absolute;left:50%;top:0;width:44px;height:44px;margin-left:-22px;background:url(hoshi_flame_icon_v1.webp) center/contain no-repeat;filter:drop-shadow(0 0 9px rgba(21,164,253,.75)) drop-shadow(0 0 3px #fff)}
-body.rd[data-rd-chapter="1"] .meaning-note b{display:block;margin-bottom:2px;font:italic 600 clamp(24px,2.8vw,30px)/1.2 var(--rd-serif-it);color:#2f3b8f}
-@media (max-width:560px){body.rd[data-rd-chapter="1"] .meaning-note{grid-template-columns:1fr;gap:22px}}
-/* история прочитана — светящаяся надпись */
-body.rd[data-rd-chapter="1"] .final-note{max-width:none;margin:30px auto 0;padding:0;border:0;background:none!important;box-shadow:none!important;overflow:visible;
+/* ---------- Глава 1, финал (по референсу) ---------- */
+/* предложение для чтения — стеклянная карточка, как у слов */
+body.rd[data-rd-chapter="1"] .story .breath{max-width:none;width:auto;margin:22px -60px 30px;padding:clamp(18px,2.4vw,26px) clamp(22px,3.4vw,40px);border-radius:32px;text-align:center;
+  background:linear-gradient(160deg,rgba(250,248,255,.8),rgba(232,230,255,.6));box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.9),0 0 16px rgba(255,255,255,.5),0 12px 26px rgba(80,80,170,.12);
+  font:italic 500 clamp(22px,2.6vw,28px)/1.45 var(--rd-serif-it);color:#2f3b8f;text-shadow:0 0 8px rgba(255,255,255,.9)}
+/* что означают предметы — список с ключом и свитком */
+body.rd[data-rd-chapter="1"] .meaning-note{position:relative;max-width:640px;margin:0 auto 26px;padding:0 0 26px;border:0;background:none!important;box-shadow:none!important}
+body.rd[data-rd-chapter="1"] .meaning-note::after{content:"";position:absolute;left:50%;bottom:0;width:min(260px,60%);height:1px;transform:translateX(-50%);background:linear-gradient(90deg,transparent,rgba(70,86,160,.5),transparent)}
+body.rd[data-rd-chapter="1"] .meaning-note>strong{display:block;margin:0 0 16px;text-align:center;font:400 clamp(24px,2.8vw,30px)/1.2 var(--rd-tale);color:var(--rd-ink)}
+body.rd[data-rd-chapter="1"] .meaning-note p{position:relative;display:flex;align-items:center;min-height:56px;margin:0 0 8px;padding:0 0 0 82px;text-align:left;
+  font:400 clamp(17px,1.9vw,19px)/1.45 var(--rd-sans);color:#45507e}
+body.rd[data-rd-chapter="1"] .meaning-note p>span{display:block}
+body.rd[data-rd-chapter="1"] .meaning-note p::before{content:"";position:absolute;left:0;top:50%;width:66px;height:52px;transform:translateY(-50%);background:url(hoshi_icon_key_v1.webp) center/contain no-repeat;filter:drop-shadow(0 4px 6px rgba(80,60,40,.18))}
+body.rd[data-rd-chapter="1"] .meaning-note p:last-of-type::before{background-image:url(hoshi_icon_scroll_v1.webp)}
+body.rd[data-rd-chapter="1"] .meaning-note b{font:italic 600 clamp(22px,2.5vw,27px)/1.2 var(--rd-serif-it);color:#2f3b8f}
+body.rd[data-rd-chapter="1"] .meaning-note b::after{content:" —";font:400 clamp(17px,1.9vw,19px)/1 var(--rd-sans);color:#45507e}
+body.rd[data-rd-chapter="1"] .page[data-screen="6"] .story>p:last-child{text-align:center}
+/* история прочитана */
+body.rd[data-rd-chapter="1"] .final-note{max-width:none;margin:26px auto 0;padding:0;border:0;background:none!important;box-shadow:none!important;overflow:visible;animation:none;
   font:400 clamp(17px,1.9vw,19px)/1.5 var(--rd-sans);color:#45507e;text-align:center}
 body.rd[data-rd-chapter="1"] .final-note::before,body.rd[data-rd-chapter="1"] .final-note::after{content:none!important;display:none}
 body.rd[data-rd-chapter="1"] .final-note br{display:none}
-body.rd[data-rd-chapter="1"] .final-note strong{display:block;margin-bottom:6px;font:italic 600 clamp(30px,3.6vw,40px)/1.15 var(--rd-serif-it);color:#2f3b8f;
-  text-shadow:0 0 18px rgba(120,196,255,.7),0 0 4px rgba(255,255,255,.95)}
+body.rd[data-rd-chapter="1"] .final-note strong{display:block;margin-bottom:6px;font:italic 600 clamp(32px,3.8vw,42px)/1.15 var(--rd-serif-it);color:#2f3b8f;text-shadow:0 0 16px rgba(255,255,255,.95)}
+/* подпись огонька — стеклянная таблетка */
+body.rd[data-rd-chapter="1"] .next[data-reward] .rd-pill{display:inline-flex;align-items:center;gap:12px;padding:12px 30px;border-radius:999px;
+  background:linear-gradient(160deg,rgba(250,248,255,.85),rgba(232,230,255,.65));box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.95),0 10px 24px rgba(80,80,170,.14);
+  font:500 clamp(19px,2.1vw,22px)/1.2 var(--rd-tale);color:#2f3b8f}
+body.rd[data-rd-chapter="1"] .next[data-reward] .rd-pill::after{content:"→";font:400 1.1em/1 var(--rd-sans)}
+body.rd[data-rd-chapter="1"] .next[data-reward]:not(.ready) .rd-pill{opacity:.55}
+/* камень с ключом и свитком в углу */
+body.rd[data-rd-chapter="1"] .page[data-screen="6"]{padding-bottom:clamp(60px,9vw,110px)}
+body.rd[data-rd-chapter="1"] .page[data-screen="6"]::after{content:"";display:block!important;position:absolute;right:-6px;bottom:-4px;width:clamp(170px,26vw,300px);aspect-ratio:356/240;
+  background:url(hoshi_final1_decor_v1.webp) right bottom/contain no-repeat;pointer-events:none;opacity:.95}
+@media (max-width:700px){body.rd[data-rd-chapter="1"] .page[data-screen="6"]::after{opacity:.5}}
+@media (max-width:900px){body.rd[data-rd-chapter="1"] .story .breath{margin-left:0;margin-right:0}}
