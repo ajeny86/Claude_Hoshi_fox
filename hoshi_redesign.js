@@ -381,7 +381,7 @@
         const to = target.getBoundingClientRect();
         const fx = from.left + from.width / 2, fy = from.top + from.height / 2;
         const tx = to.left + to.width / 2, ty = to.top + to.height / 2;
-        const fly = document.createElement('img'); fly.src = document.body.dataset.rdChapter === '2' ? 'hoshi_paw_trail_v1.svg' : FLAME; fly.className = 'rd-flyer'; fly.alt = '';
+        const fly = document.createElement('img'); fly.src = document.body.dataset.rdChapter === '2' ? 'hoshi_paw_up_v1.svg' : FLAME; fly.className = 'rd-flyer'; fly.alt = '';
         fly.style.left = fx + 'px'; fly.style.top = fy + 'px';
         document.body.appendChild(fly);
         a.classList.add('rd-sent');
@@ -421,7 +421,7 @@
   const fly = (fromEl, toEl, delay, done) => setTimeout(() => {
     const a = fromEl.getBoundingClientRect(), b = toEl.getBoundingClientRect();
     const fx = a.left + a.width / 2, fy = a.top + a.height / 2, tx = b.left + b.width / 2, ty = b.top + b.height / 2;
-    const el = document.createElement('img'); el.src = document.body.dataset.rdChapter === '2' ? 'hoshi_paw_trail_v1.svg' : FLAME; el.className = 'rd-flyer'; el.alt = '';
+    const el = document.createElement('img'); el.src = document.body.dataset.rdChapter === '2' ? 'hoshi_paw_up_v1.svg' : FLAME; el.className = 'rd-flyer'; el.alt = '';
     el.style.left = fx + 'px'; el.style.top = fy + 'px'; document.body.appendChild(el);
     fromEl.classList.add('rd-gone');
     const cx = fx + (tx - fx) * 0.15, cy = fy + (ty - fy) * 0.55, frames = [];

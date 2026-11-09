@@ -719,3 +719,5 @@ body.rd[data-rd-chapter="2"] .answers:has(.answer:nth-child(3)) .answer.wrong-ch
 /* без кружков: лапка появляется слева при наведении, как в других экранах */
 body.rd[data-rd-chapter="2"] .answers:has(.answer:nth-child(3)) .rd-afl,body.rd[data-rd-chapter="2"] .answers:has(.answer:nth-child(3)) .answer:is(:hover,.correct-choice) .rd-afl{box-shadow:none;border-radius:0}
 body.rd[data-rd-chapter="2"] .answers:has(.answer:nth-child(3)) .rd-afl img{width:30px;height:30px;margin:2px}
+/* у ответов и найденных слов — лапка пальчиками вверх */
+body.rd[data-rd-chapter="2"] .rd-afl img,body.rd[data-rd-chapter="2"] .rd-tfl img{content:url(hoshi_paw_up_v1.svg)}
