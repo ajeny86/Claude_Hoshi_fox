@@ -203,3 +203,65 @@
   new MutationObserver(run).observe(mapHome, { attributes: true, attributeFilter: ['hidden'] });
   run();
 })();
+
+/* ---------- Шаг 2: экраны глав ---------- */
+(() => {
+  'use strict';
+  if (!document.body.classList.contains('rd')) return;
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let lang = 'ru';
+  try { lang = localStorage.getItem('hoshi-language-choice') || sessionStorage.getItem('hoshi-language-choice') || 'ru'; } catch (e) {}
+  document.body.dataset.rdLang = lang;
+
+  // Кнопка «Карта» в верхней панели (нажимает существующую кнопку движка)
+  const inner = document.querySelector('.top-inner');
+  const listBtn = document.querySelector('[data-chapter-list]');
+  if (inner && listBtn && !document.querySelector('.rd-map-btn')) {
+    const left = document.createElement('div'); left.className = 'rd-top-left';
+    const mapBtn = document.createElement('button');
+    mapBtn.type = 'button'; mapBtn.className = 'rd-map-btn';
+    mapBtn.setAttribute('aria-label', lang === 'en' ? 'Back to the map' : 'К карте');
+    mapBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 4L3 6v14l6-2 6 2 6-2V4l-6 2-6-2z"/><path d="M9 4v14M15 6v14"/></svg><span>' + (lang === 'en' ? 'Map' : 'Карта') + '</span>';
+    mapBtn.addEventListener('click', () => document.querySelector('[data-open-map]')?.click());
+    inner.insertBefore(left, inner.firstChild);
+    left.appendChild(mapBtn);
+    left.appendChild(listBtn);
+  }
+
+  // Подложка под текущую главу
+  const chapters = [...document.querySelectorAll('section.chapter[data-chapter]')];
+  const syncChapter = () => {
+    const open = chapters.find(c => !c.hidden);
+    if (open) document.body.dataset.rdChapter = open.dataset.chapter; else delete document.body.dataset.rdChapter;
+  };
+  chapters.forEach(c => new MutationObserver(syncChapter).observe(c, { attributes: true, attributeFilter: ['hidden'] }));
+  syncChapter();
+
+  // Слоги через тире
+  document.querySelectorAll('.word-parts,.syllable-parts').forEach(el => {
+    if (el.dataset.rdDashed) return;
+    const parts = el.textContent.split(/\s*·\s*/);
+    if (parts.length < 2) return;
+    el.dataset.rdDashed = '1';
+    el.textContent = '';
+    parts.forEach((p, i) => {
+      el.append(p);
+      if (i < parts.length - 1) { const d = document.createElement('span'); d.className = 'rd-dash'; d.textContent = '–'; el.append(d); }
+    });
+  });
+
+  // Вспышка огонька при касании «дальше»
+  document.addEventListener('click', e => {
+    const btn = e.target.closest('.next');
+    if (!btn || btn.classList.contains('opened') || reduce) return;
+    btn.classList.remove('rd-going'); void btn.offsetWidth; btn.classList.add('rd-going');
+    for (let i = 0; i < 10; i++) {
+      const s = document.createElement('i'); s.className = 'rd-spark';
+      s.style.left = '50%'; s.style.top = '46px';
+      s.style.setProperty('--a', `${i * 36 + Math.random() * 14}deg`);
+      s.style.setProperty('--d', `${-40 - Math.random() * 26}px`);
+      btn.appendChild(s);
+    }
+    setTimeout(() => { btn.classList.remove('rd-going'); btn.querySelectorAll('.rd-spark').forEach(x => x.remove()); }, 900);
+  }, true);
+})();

@@ -181,3 +181,118 @@ body.rd .rd-go,body.rd .rd-go:hover,body.rd .rd-go:focus,body.rd .rd-go:focus-vi
   transition:none!important;transform:translateZ(0);will-change:transform;
   -webkit-tap-highlight-color:transparent}
 body.rd .rd-go:active{transform:translateZ(0) scale(.98)}
+
+/* =====================================================================
+   ШАГ 2 — экраны глав части 1
+   ===================================================================== */
+body.rd:not(.map-view-open){background:#e9eef9 url("hoshi_bg_map_v1.webp") center/cover fixed no-repeat;font-family:var(--rd-sans);color:var(--rd-text)}
+body.rd[data-rd-chapter="1"]:not(.map-view-open){background-image:url("hoshi_bg_chapter1_v1.webp")}
+
+/* ---------- Верхняя панель главы ---------- */
+body.rd .top{position:sticky;top:calc(10px + env(safe-area-inset-top,0px));z-index:100;width:min(1080px,calc(100% - 32px));max-width:none;margin:10px auto 0;padding:8px;border:0;border-radius:24px;background:linear-gradient(180deg,rgba(255,255,255,.84),rgba(246,248,252,.66));backdrop-filter:var(--rd-blur);-webkit-backdrop-filter:var(--rd-blur);box-shadow:var(--rd-edge),var(--rd-shadow)}
+body.rd .top .progress-wrap::before{display:none}
+body.rd .top-inner{position:static;width:auto;margin:0;display:grid;grid-template-columns:auto minmax(0,1fr) auto;grid-template-areas:"left mid right";align-items:center;column-gap:12px;row-gap:0}
+body.rd .rd-top-left{grid-area:left;display:flex;gap:8px}
+body.rd .top .meta{grid-area:mid;padding:0;align-self:end}
+body.rd .top .meta b{display:none}
+body.rd .top .meta small{margin:0;font:400 20px/1.2 var(--rd-tale);letter-spacing:.01em;color:var(--rd-ink);text-transform:none}
+body.rd .top .progress-wrap{grid-area:mid;align-self:start;margin-top:30px;min-height:0;padding:0;border:0;gap:6px}
+body.rd .top .progress-title{display:none}
+body.rd .top .progress-readable{font:700 13px/1 var(--rd-sans);color:var(--rd-muted);font-variant-numeric:tabular-nums}
+body.rd .top .dot{width:18px;height:18px;background-size:contain;background-image:url("hoshi_flame_icon_v1.webp")}
+body.rd .top .chapter-list-button,body.rd .top .restart,body.rd .rd-map-btn{position:static;display:inline-flex;align-items:center;gap:8px;width:auto;min-width:0;height:auto;min-height:48px;padding:0 18px 0 14px;border:0;border-radius:18px;background:rgba(255,255,255,.62);box-shadow:inset 0 1px 0 #fff,inset 0 0 0 1px rgba(200,205,240,.6);color:var(--rd-ink);font:700 15px/1 var(--rd-sans);cursor:pointer}
+body.rd .top .restart{grid-area:right}
+body.rd .top .chapter-list-icon,body.rd .top .restart-icon{display:inline-block;font-size:18px;line-height:1}
+body.rd .top .restart-label{display:none}body.rd .top .restart-label-short{display:inline}
+body.rd .rd-map-btn svg{width:20px;height:20px}
+body.rd .top .chapter-list-button:active,body.rd .top .restart:active,body.rd .rd-map-btn:active{transform:scale(.97)}
+
+/* ---------- Лента страниц ---------- */
+body.rd main:not(.map-mode){width:min(1080px,calc(100% - 32px));max-width:none;margin:22px auto 0;padding:0 0 60px}
+body.rd .page,body.rd .reward-page{
+  --px:clamp(22px,7vw,96px);
+  position:relative;display:flex;flex-direction:column;align-items:stretch;gap:0;overflow:hidden;
+  margin:0 0 28px;padding:clamp(30px,4.5vw,52px) var(--px) clamp(30px,4vw,48px);
+  border:0;border-radius:34px;background:#f2f7fd;
+  box-shadow:0 1px 0 rgba(255,255,255,.9) inset,0 24px 70px rgba(70,90,140,.16),0 4px 14px rgba(70,90,140,.08);
+  scroll-margin-top:110px;font-family:var(--rd-sans)}
+body.rd .page::before,body.rd .page::after,body.rd .reward-page::before{display:none}
+body.rd .page>*,body.rd .reward-page>*{max-width:760px;width:100%;margin-left:auto;margin-right:auto;box-sizing:border-box}
+
+/* картинка сверху, растворяется в бумаге */
+body.rd .page:has(> .scene-image:not(.portrait-image)){padding-top:0}
+body.rd .page>.scene-image:not(.portrait-image){
+  order:-1;display:block;width:calc(100% + 2 * var(--px));max-width:none;height:auto;max-height:none;aspect-ratio:16/9;object-fit:cover;
+  margin:0 calc(-1 * var(--px)) -64px;border:0;border-radius:0;box-shadow:none;
+  -webkit-mask-image:linear-gradient(180deg,#000 66%,rgba(0,0,0,.55) 82%,transparent 100%);mask-image:linear-gradient(180deg,#000 66%,rgba(0,0,0,.55) 82%,transparent 100%)}
+body.rd .page .kicker,body.rd .reward-page .kicker{position:relative;margin:0 auto 6px;text-align:center;font:700 12px/1.3 var(--rd-sans);letter-spacing:.2em;text-transform:uppercase;color:var(--rd-muted)}
+body.rd .page h1,body.rd .page h2,body.rd .reward-page h2{position:relative;margin:0 auto 22px;text-align:center;font:400 clamp(34px,4.6vw,52px)/1.08 var(--rd-tale);letter-spacing:.01em;color:var(--rd-ink);text-wrap:balance}
+body.rd .story{max-width:640px;font:500 clamp(20px,2.4vw,23px)/1.7 var(--rd-sans);color:var(--rd-text)}
+body.rd .story p{margin:0 0 14px}
+body.rd .story strong,body.rd .story b{color:var(--rd-ink)}
+
+/* ---------- Огонёк-проводник вместо кнопки «дальше» ---------- */
+body.rd .next{
+  position:relative;flex-direction:column;align-items:center;justify-content:flex-start;gap:4px;
+  width:auto;max-width:none;min-height:0;margin:26px auto 4px;padding:96px 24px 30px;
+  border:0;border-radius:28px;background:none;box-shadow:none;text-shadow:none;
+  font:400 22px/1.2 var(--rd-tale);color:var(--rd-ink);cursor:pointer;-webkit-tap-highlight-color:transparent}
+body.rd .next:hover,body.rd .next:focus{background:none;box-shadow:none}
+body.rd .next:active{transform:none}
+body.rd .next::before{content:"";position:absolute;left:50%;top:0;width:92px;height:92px;margin-left:-46px;border-radius:50%;opacity:1;font-size:0;
+  background:url("hoshi_flame_icon_v1.webp") center 48%/56px 56px no-repeat,radial-gradient(circle,rgba(185,228,255,.7) 0%,rgba(185,228,255,.25) 40%,rgba(185,228,255,0) 70%);
+  filter:drop-shadow(0 0 10px rgba(21,164,253,.6));transform:none;animation:rdHover 2.6s ease-in-out infinite}
+@keyframes rdHover{50%{transform:translateY(-5px) scale(1.04)}}
+body.rd .next::after{content:"коснись огонька";position:absolute;left:0;right:0;bottom:6px;top:auto;transform:none;opacity:1;font:600 13px/1 var(--rd-sans);letter-spacing:.02em;color:#7d8bb0;filter:none}
+body.rd[data-rd-lang="en"] .next::after{content:"tap the flame"}
+body.rd .next:hover::before{filter:drop-shadow(0 0 16px rgba(21,164,253,.95))}
+body.rd .next.rd-going::before{animation:rdFlare .65s cubic-bezier(.2,.8,.25,1) forwards}
+@keyframes rdFlare{40%{transform:scale(1.4);filter:brightness(1.5) drop-shadow(0 0 26px rgba(21,164,253,1))}100%{transform:translateY(-12px) scale(.9);opacity:.8}}
+body.rd .next:focus-visible{outline:3px solid #8fb6f0;outline-offset:2px}
+/* пройденный переход */
+body.rd .next.opened{flex-direction:row;gap:8px;min-height:0;margin:14px auto 0;padding:6px 14px;border:0;background:none;box-shadow:none;color:#6f7fa6;font:600 15px/1.2 var(--rd-sans);cursor:default}
+body.rd .next.opened::before{position:static;width:22px;height:22px;margin:0;background:url("hoshi_flame_icon_v1.webp") center/contain no-repeat;animation:none;filter:drop-shadow(0 0 5px rgba(21,164,253,.6))}
+body.rd .next.opened::after{display:none}
+body.rd .rd-spark{z-index:3}
+
+/* ---------- Задания ---------- */
+body.rd .question{border-top:0;margin-top:22px;padding-top:0}
+body.rd .question h3,body.rd .task-panel h3,body.rd .inari-question h3{font:400 clamp(24px,3vw,30px)/1.2 var(--rd-tale);color:var(--rd-ink);text-align:center}
+body.rd .hint,body.rd .task-panel p,body.rd .tracker-intro{font-family:var(--rd-sans);color:#6b7896;text-align:center}
+body.rd .answers{gap:12px}
+body.rd .answer{min-height:64px;padding:16px 22px;border:0;border-radius:22px;background:rgba(255,255,255,.75);box-shadow:inset 0 1px 0 #fff,inset 0 0 0 1px #dfe5f0,0 6px 16px rgba(70,95,160,.08);font:600 clamp(19px,2.2vw,21px)/1.4 var(--rd-sans);color:var(--rd-text);transition:transform .12s,box-shadow .2s}
+body.rd .answer:hover{box-shadow:inset 0 1px 0 #fff,inset 0 0 0 1.5px #9fb3e6,0 8px 20px rgba(70,95,160,.12)}
+body.rd .answer:active{transform:scale(.99)}
+body.rd .feedback{border:0;border-radius:18px;font:600 17px/1.45 var(--rd-sans)}
+body.rd .task-panel,body.rd .word-search-text,body.rd .source-excerpt,body.rd .final-note,body.rd .meaning-note,body.rd .observation-task,body.rd .syllable-support,body.rd .sequence-quiz{border:0;border-radius:24px;background:rgba(255,255,255,.6);box-shadow:inset 0 1px 0 #fff,inset 0 0 0 1px rgba(210,222,242,.8);font-family:var(--rd-sans)}
+body.rd .search-target{border-radius:999px;font-family:var(--rd-sans)}
+body.rd .hunt-status{border-radius:16px;background:rgba(255,255,255,.6);font-family:var(--rd-sans)}
+
+/* ---------- Карточки слов ---------- */
+body.rd .word-cards{gap:16px}
+body.rd .word-card,body.rd .syllable-button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;min-height:130px;padding:20px 16px;border:0;border-radius:28px;background:rgba(255,255,255,.55);box-shadow:inset 0 0 0 1px rgba(255,255,255,.95),0 4px 16px rgba(70,95,160,.06);font-family:var(--rd-sans)}
+body.rd .word-card .word-parts,body.rd .syllable-parts{padding:0;border:0;background:none;box-shadow:none;font:600 clamp(22px,2.6vw,27px)/1.3 var(--rd-sans);color:#33418a;letter-spacing:.01em}
+body.rd .word-card strong,body.rd .word-whole{font:600 18px/1.3 var(--rd-sans);color:#6f7fa6}
+body.rd .rd-dash{display:inline-block;margin:0 2px;color:#7fb4ee}
+
+/* ---------- Награды ---------- */
+body.rd .reward-page .scene-image,body.rd .reward-page .animated-reward-scene{border-radius:24px}
+body.rd .reward-copy{border:0;border-radius:22px;background:rgba(255,255,255,.6);box-shadow:inset 0 0 0 1px rgba(210,222,242,.8);font-family:var(--rd-sans);color:var(--rd-text)}
+
+/* ---------- Окна: список глав, памятка, «заново» ---------- */
+body.rd .chapter-panel,body.rd .parent-guide-panel,body.rd .restart-panel{border:0;border-radius:28px;background:rgba(255,255,255,.94);backdrop-filter:var(--rd-blur);-webkit-backdrop-filter:var(--rd-blur);box-shadow:var(--rd-edge),0 30px 80px rgba(30,60,120,.28);font-family:var(--rd-sans)}
+body.rd .chapter-panel h2,body.rd .parent-guide-panel h2,body.rd .restart-panel h2{font:400 30px/1.15 var(--rd-tale);color:var(--rd-ink)}
+body.rd .chapter-card{border:0;border-radius:18px;background:rgba(240,245,253,.8);box-shadow:inset 0 0 0 1px rgba(210,222,242,.8);font-family:var(--rd-sans)}
+body.rd .chapter-card strong{font:400 18px/1.2 var(--rd-tale);color:var(--rd-ink)}
+body.rd .chapter-card.current{box-shadow:inset 0 0 0 2px #9fe6fb,0 0 16px rgba(21,164,253,.2)}
+
+@media (max-width:620px){
+  body.rd .top{width:calc(100% - 16px)}
+  body.rd .top .chapter-list-button span:last-child,body.rd .rd-map-btn span{display:none}
+  body.rd .top .chapter-list-button,body.rd .top .restart,body.rd .rd-map-btn{padding:0 12px;min-height:44px}
+  body.rd .top .restart-label-short{display:none}
+  body.rd .top .meta small{font-size:16px}
+  body.rd main:not(.map-mode){width:calc(100% - 16px)}
+  body.rd .page>.scene-image:not(.portrait-image){margin-bottom:-36px}
+}
+@media (prefers-reduced-motion:reduce){body.rd .next::before{animation:none}}
