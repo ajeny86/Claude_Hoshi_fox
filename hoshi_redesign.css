@@ -369,3 +369,35 @@ body.rd .word-card.rd-word.rd-joined .word-parts{animation:rdJoin .45s ease}
 @keyframes rdJoin{50%{transform:scale(1.06)}}
 @media (prefers-reduced-motion:reduce){body.rd .word-card.rd-word .word-parts .rd-dash{transition:none}body.rd .word-card.rd-word.rd-joined .word-parts{animation:none}}
 body.rd .next::after{left:50%;right:auto;transform:translateX(-50%);white-space:nowrap}
+
+/* ---------- Глава 1, экран 2: слова на деревянных дощечках эма ---------- */
+body.rd .word-cards:has(.rd-word){gap:26px 22px;padding-top:26px}
+body.rd .word-card.rd-word{
+  isolation:isolate;min-height:168px;padding:42px 18px 22px;border:0;border-radius:0;background:none;box-shadow:none;
+  filter:drop-shadow(0 8px 14px rgba(110,70,40,.18)) drop-shadow(0 1px 1px rgba(110,70,40,.15));
+  transform-origin:50% -18px;transition:filter .2s}
+body.rd .word-card.rd-word::before{
+  content:"";position:absolute;inset:0;z-index:-1;
+  clip-path:polygon(50% 0,100% 24%,100% 100%,0 100%,0 24%);
+  background:
+    radial-gradient(circle at 50% 15%,rgba(90,55,30,.55) 0 5px,transparent 6px),
+    repeating-linear-gradient(92deg,rgba(150,100,55,.05) 0 3px,transparent 3px 11px),
+    linear-gradient(180deg,#f8ead3 0%,#efd9b8 100%)}
+body.rd .word-card.rd-word::after{
+  content:"";position:absolute;left:50%;top:-22px;width:16px;height:30px;margin-left:-8px;
+  border:2.5px solid #d0563a;border-bottom:0;border-radius:10px 10px 0 0;z-index:-2}
+body.rd .word-card.rd-word:hover{box-shadow:none;filter:drop-shadow(0 10px 18px rgba(110,70,40,.24)) drop-shadow(0 1px 1px rgba(110,70,40,.15))}
+body.rd .word-card.rd-word .word-parts{color:#4a3426;font-weight:700}
+body.rd .word-card.rd-word .word-parts .rd-dash{color:#d0563a}
+body.rd .word-card.rd-word .rd-word-hint{color:#8a6a50}
+body.rd .word-card.rd-word .rd-word-hint::before{background:#d0563a;box-shadow:none}
+/* качнуть дощечку при касании */
+body.rd .word-card.rd-word.rd-swing{animation:rdSwing .7s ease-out}
+@keyframes rdSwing{20%{transform:rotate(-4deg)}45%{transform:rotate(3deg)}70%{transform:rotate(-1.5deg)}100%{transform:rotate(0)}}
+/* собрано: тёплое свечение и красная храмовая печать */
+body.rd .word-card.rd-word.rd-joined{background:none;box-shadow:none;filter:drop-shadow(0 0 14px rgba(255,190,120,.45)) drop-shadow(0 8px 14px rgba(110,70,40,.18))}
+body.rd .word-card.rd-word.rd-joined .rd-word-hint{color:#b5452d}
+body.rd .word-card.rd-word.rd-joined .rd-word-hint::before{content:"";width:0;height:0;margin:0}
+body.rd .rd-seal{position:absolute;right:14px;bottom:12px;width:38px;height:38px;display:grid;place-items:center;border:2px solid rgba(200,70,50,.85);border-radius:50%;color:rgba(200,70,50,.9);font:800 18px/1 var(--rd-sans);transform:rotate(-12deg) scale(.4);opacity:0;transition:transform .35s cubic-bezier(.2,.8,.25,1.4),opacity .25s}
+body.rd .word-card.rd-word.rd-joined .rd-seal{transform:rotate(-12deg) scale(1);opacity:1}
+@media (prefers-reduced-motion:reduce){body.rd .word-card.rd-word.rd-swing{animation:none}}

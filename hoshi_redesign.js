@@ -308,13 +308,18 @@
       hint.className = 'rd-word-hint';
       hint.textContent = T.tap;
       card.appendChild(hint);
+      const seal = document.createElement('span'); seal.className = 'rd-seal'; seal.setAttribute('aria-hidden', 'true'); seal.textContent = '✓';
+      card.appendChild(seal);
       const setJoined = on => {
         card.classList.toggle('rd-joined', on);
         card.setAttribute('aria-pressed', String(on));
         hint.textContent = on ? T.done : T.tap;
       };
       setJoined(false);
-      const toggle = () => { setJoined(!card.classList.contains('rd-joined')); unlockIfDone(); };
+      const toggle = () => {
+        card.classList.remove('rd-swing'); void card.offsetWidth; card.classList.add('rd-swing');
+        setJoined(!card.classList.contains('rd-joined')); unlockIfDone();
+      };
       card.addEventListener('click', toggle);
       card.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); } });
       card._rdSetJoined = setJoined;
