@@ -452,15 +452,23 @@
       } : null));
     });
   });
-  // экран уже пройден — маленьких огоньков нет
+  // все слова уже найдены (вернулись к экрану или перезагрузили) — маленьких огоньков нет
+  document.addEventListener('click', e => {
+    const h = e.target.closest('[data-word-hunt]');
+    if (h) h.closest('[data-screen]').dataset.rdLive = '1';
+  }, true);
   const hideIfDone = () => document.querySelectorAll('[data-word-hunt]').forEach(h => {
     const sc = h.closest('[data-screen]');
-    if (sc?.querySelector('.next.opened')) sc.querySelectorAll('.rd-tfl:not(.rd-gone)').forEach(f => f.classList.add('rd-gone'));
+    if (!sc || sc.dataset.rdLive) return;
+    const t = [...sc.querySelectorAll('.search-target')];
+    if (t.length && t.every(x => x.classList.contains('found')))
+      sc.querySelectorAll('.rd-tfl:not(.rd-gone)').forEach(f => f.classList.add('rd-gone'));
   });
   hideIfDone();
   const mo = new MutationObserver(hideIfDone);
   document.querySelectorAll('[data-word-hunt]').forEach(h => {
-    const nx = h.closest('[data-screen]')?.querySelector('.next');
-    if (nx) mo.observe(nx, { attributes: true, attributeFilter: ['class'] });
+    const sc = h.closest('[data-screen]');
+    if (sc) mo.observe(sc, { attributes: true, attributeFilter: ['hidden'] });
+    sc?.querySelectorAll('.search-target').forEach(t => mo.observe(t, { attributes: true, attributeFilter: ['class'] }));
   });
 })();
