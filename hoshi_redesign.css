@@ -463,3 +463,26 @@ body.rd .next.opened{gap:12px;margin:22px auto 4px;padding:8px 18px;font:italic 
 body.rd .next.opened::before{content:""!important;width:40px;height:40px;opacity:1!important;color:transparent!important;filter:drop-shadow(0 0 10px rgba(21,164,253,.75)) drop-shadow(0 0 3px #fff)!important}
 /* огонёк у верного ответа не остаётся: только вспышка перед полётом */
 body.rd[data-rd-chapter="1"] .question:has(.next.opened) .rd-afl img,body.rd[data-rd-chapter="1"] .page:has(.next.opened) .answer .rd-afl img{opacity:0!important;animation:none!important}
+
+/* ---------- Глава 1, финал: без плашек ---------- */
+/* предложение для чтения — цитата между тонкими линиями */
+body.rd[data-rd-chapter="1"] .story .breath{position:relative;margin:26px auto 30px;padding:22px 0;text-align:center;
+  font:italic 500 clamp(22px,2.6vw,28px)/1.5 var(--rd-serif-it);color:#2f3b8f;text-shadow:0 0 10px rgba(255,255,255,.9)}
+body.rd[data-rd-chapter="1"] .story .breath::before,body.rd[data-rd-chapter="1"] .story .breath::after{content:"";position:absolute;left:50%;width:min(260px,60%);height:1px;transform:translateX(-50%);
+  background:linear-gradient(90deg,transparent,rgba(70,86,160,.45),transparent)}
+body.rd[data-rd-chapter="1"] .story .breath::before{top:0}
+body.rd[data-rd-chapter="1"] .story .breath::after{bottom:0}
+/* что означают предметы — две колонки с огоньками */
+body.rd[data-rd-chapter="1"] .meaning-note{display:grid;grid-template-columns:1fr 1fr;gap:6px 36px;margin:10px 0 26px;padding:0;border:0;background:none!important;box-shadow:none!important}
+body.rd[data-rd-chapter="1"] .meaning-note>strong{grid-column:1/-1;margin:0 0 14px;text-align:center;font:400 clamp(24px,2.8vw,30px)/1.2 var(--rd-tale);color:var(--rd-ink)}
+body.rd[data-rd-chapter="1"] .meaning-note p{margin:0;padding-top:58px;position:relative;text-align:center;font:400 clamp(17px,1.9vw,19px)/1.5 var(--rd-sans);color:#45507e}
+body.rd[data-rd-chapter="1"] .meaning-note p::before{content:"";position:absolute;left:50%;top:0;width:44px;height:44px;margin-left:-22px;background:url(hoshi_flame_icon_v1.webp) center/contain no-repeat;filter:drop-shadow(0 0 9px rgba(21,164,253,.75)) drop-shadow(0 0 3px #fff)}
+body.rd[data-rd-chapter="1"] .meaning-note b{display:block;margin-bottom:2px;font:italic 600 clamp(24px,2.8vw,30px)/1.2 var(--rd-serif-it);color:#2f3b8f}
+@media (max-width:560px){body.rd[data-rd-chapter="1"] .meaning-note{grid-template-columns:1fr;gap:22px}}
+/* история прочитана — светящаяся надпись */
+body.rd[data-rd-chapter="1"] .final-note{max-width:none;margin:30px auto 0;padding:0;border:0;background:none!important;box-shadow:none!important;overflow:visible;
+  font:400 clamp(17px,1.9vw,19px)/1.5 var(--rd-sans);color:#45507e;text-align:center}
+body.rd[data-rd-chapter="1"] .final-note::before,body.rd[data-rd-chapter="1"] .final-note::after{content:none!important;display:none}
+body.rd[data-rd-chapter="1"] .final-note br{display:none}
+body.rd[data-rd-chapter="1"] .final-note strong{display:block;margin-bottom:6px;font:italic 600 clamp(30px,3.6vw,40px)/1.15 var(--rd-serif-it);color:#2f3b8f;
+  text-shadow:0 0 18px rgba(120,196,255,.7),0 0 4px rgba(255,255,255,.95)}
