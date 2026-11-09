@@ -432,3 +432,27 @@ body.rd .next.ready.rd-wait .rd-guide img{filter:grayscale(1) brightness(1.15);o
 body.rd .next.ready.rd-ignite .rd-guide img{animation:rdLightUp2 .9s ease-out both,rdHover 2.6s ease-in-out .9s infinite}
 body.rd .next.ready.rd-wait{color:inherit}
 @media (prefers-reduced-motion:reduce){body.rd[data-rd-chapter="1"] .rd-afl img,body.rd[data-rd-chapter="1"] .rd-afl::after{animation:none!important}}
+
+/* ---------- Глава 1, экран 5: охота за словами без плашек ---------- */
+body.rd .rd-tfl{display:none}
+body.rd[data-rd-chapter="1"] .task-panel:has(.search-targets){background:none!important;box-shadow:none!important;border:0;padding:0;margin:4px auto 10px}
+body.rd[data-rd-chapter="1"] .task-panel:has(.search-targets) h3{margin:0 0 6px;text-align:center}
+body.rd[data-rd-chapter="1"] .task-panel:has(.search-targets)>p{margin:0 auto;text-align:center;font:400 clamp(15px,1.7vw,17px)/1.4 var(--rd-sans);color:var(--rd-muted)}
+body.rd[data-rd-chapter="1"] .search-targets{display:flex;flex-wrap:wrap;justify-content:center;gap:10px clamp(22px,4vw,44px);max-width:none;width:auto;margin:22px auto 6px}
+body.rd[data-rd-chapter="1"] .search-target{display:inline-flex;align-items:center;gap:2px;flex:0 0 auto;min-width:0;padding:0;border:0!important;border-radius:0;background:none!important;box-shadow:none!important;
+  font:italic 500 clamp(24px,2.8vw,30px)/1.2 var(--rd-serif-it);color:#6f77a8;text-shadow:0 0 10px rgba(255,255,255,.95);transition:color .4s ease}
+body.rd[data-rd-chapter="1"] .rd-tfl{display:block;flex:none;width:40px;height:40px;margin-left:-8px}
+body.rd[data-rd-chapter="1"] .rd-tfl img{width:100%;height:100%;object-fit:contain;filter:grayscale(1) brightness(1.1);opacity:.4;transform-origin:50% 85%;transition:filter .4s ease,opacity .4s ease}
+body.rd[data-rd-chapter="1"] .search-target.found{color:#2f3b8f}
+body.rd[data-rd-chapter="1"] .search-target.found .rd-tfl img{filter:drop-shadow(0 0 9px rgba(21,164,253,.85)) drop-shadow(0 0 3px #fff);opacity:1;animation:rdAFlare .7s ease-out}
+/* текст без рамки */
+body.rd[data-rd-chapter="1"] .word-search-text{background:none!important;box-shadow:none!important;border:0;padding:0;margin-top:10px}
+body.rd[data-rd-chapter="1"] .search-word{padding:2px 3px;margin:0 -1px;border-radius:10px;background:none!important;box-shadow:none!important;transition:color .3s ease,text-shadow .3s ease}
+body.rd[data-rd-chapter="1"] .search-word:hover{color:#3d4aa6}
+body.rd[data-rd-chapter="1"] .search-word.found{padding-inline:3px;color:#1f6fd1;text-shadow:0 0 12px rgba(90,176,250,.75),0 0 2px rgba(255,255,255,.9)}
+body.rd[data-rd-chapter="1"] .search-word.miss{animation:rdShake .4s ease}
+/* счётчик — только для чтения с экрана, видно по огонькам */
+body.rd[data-rd-chapter="1"] .hunt-status{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;margin:0;padding:0;border:0}
+body.rd[data-rd-chapter="1"] .search-target::before,body.rd[data-rd-chapter="1"] .search-target::after{content:none!important;display:none!important}
+body.rd[data-rd-chapter="1"] .search-targets{gap:8px clamp(14px,2.4vw,26px)}
+body.rd[data-rd-chapter="1"] .search-target{font-size:clamp(21px,2.4vw,26px)}

@@ -405,3 +405,15 @@
     });
   });
 })();
+
+/* ---------- Глава 1, экран 5: у каждого искомого слова — свой огонёк ---------- */
+(() => {
+  'use strict';
+  if (!document.body.classList.contains('rd')) return;
+  document.querySelectorAll('.search-target').forEach(t => {
+    if (t.querySelector('.rd-tfl')) return;
+    const f = document.createElement('span'); f.className = 'rd-tfl'; f.setAttribute('aria-hidden', 'true');
+    f.innerHTML = '<img src="hoshi_flame_icon_v1.webp" alt="">';
+    t.prepend(f);
+  });
+})();
