@@ -653,3 +653,10 @@ body.rd .rd-steps i:nth-child(4),body.rd[data-rd-chapter="2"] .next.opened .rd-s
 @keyframes rdPaw4{0%,56%{filter:brightness(0) invert(1) drop-shadow(0 0 3px rgba(90,120,200,.7))}62%,86%{filter:drop-shadow(0 0 7px rgba(47,143,240,.8))}94%,100%{filter:brightness(0) invert(1) drop-shadow(0 0 3px rgba(90,120,200,.7))}}
 body.rd .next:not(.ready) .rd-steps i,body.rd .next.ready.rd-wait .rd-steps i{animation:none!important;opacity:.4;filter:grayscale(1)}
 @media (prefers-reduced-motion:reduce){body.rd .rd-steps i{animation:none!important}}
+/* кнопки со следами (глава 2): надпись — следы — «коснись следов» */
+body.rd .next:has(.rd-steps):not(.opened){display:flex!important;flex-direction:column;align-items:center;padding-top:8px!important}
+body.rd .next:has(.rd-steps):not(.opened) .rd-guide{position:relative!important;left:auto!important;top:auto!important;margin:8px auto 0!important;order:1;width:150px;height:54px}
+body.rd .next:has(.rd-steps):not(.opened) .rd-guide img{display:none}
+body.rd .next:has(.rd-steps):not(.opened)::after{position:static!important;transform:none!important;order:2;margin-top:2px}
+body.rd[data-rd-chapter="2"] .next:not(.ready)::after{content:"выполни задание — и следы загорятся"}
+body.rd.rd-en[data-rd-chapter="2"] .next:not(.ready)::after{content:"finish the task to light the tracks"}
