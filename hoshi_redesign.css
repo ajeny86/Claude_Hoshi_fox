@@ -703,13 +703,16 @@ body.rd .rd-steps i.on,body.rd .next.opened .rd-steps i.on{transform:scale(1.08)
   -webkit-filter:drop-shadow(0 0 4px #40ddfd) drop-shadow(0 0 10px rgba(21,164,253,.7))!important;filter:drop-shadow(0 0 4px #40ddfd) drop-shadow(0 0 10px rgba(21,164,253,.7))!important}
 body.rd .next:not(.ready):not(.opened) .rd-steps i,body.rd .next.ready.rd-wait .rd-steps i{opacity:.35!important;transform:scale(.85)!important;background-image:url(hoshi_paw_trail_v1.svg)!important;-webkit-filter:grayscale(1) drop-shadow(0 0 1.5px rgba(90,100,140,.6))!important;filter:grayscale(1) drop-shadow(0 0 1.5px rgba(90,100,140,.6))!important}
 
-/* ---------- Экран «текст + вопрос» без картинки: текст в карточке, вопрос отдельным блоком ---------- */
-body.rd .page:not(:has(> .scene-image)):has(> .story + .question) > .story{max-width:none;width:auto;margin:6px -40px 0;padding:clamp(20px,2.6vw,30px) clamp(24px,3.6vw,44px);border-radius:32px;
-  background:linear-gradient(160deg,rgba(250,248,255,.78),rgba(232,230,255,.55));box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.9),0 0 16px rgba(255,255,255,.45),0 12px 26px rgba(80,80,170,.1)}
-body.rd .page:not(:has(> .scene-image)):has(> .story + .question) > .story p{margin:0 0 14px}
-body.rd .page:not(:has(> .scene-image)):has(> .story + .question) > .story p:last-child{margin-bottom:0}
-body.rd .page:not(:has(> .scene-image)):has(> .story + .question) > .question{position:relative;margin-top:30px;padding-top:44px}
-body.rd .page:not(:has(> .scene-image)):has(> .story + .question) > .question::before{content:"";position:absolute;left:50%;top:0;width:150px;height:26px;transform:translateX(-50%);
-  background:url(hoshi_paw_trail_blue_v1.svg) 0 60%/22px 22px no-repeat,url(hoshi_paw_trail_blue_v1.svg) 40px 10%/22px 22px no-repeat,url(hoshi_paw_trail_blue_v1.svg) 80px 60%/22px 22px no-repeat,url(hoshi_paw_trail_blue_v1.svg) 120px 10%/22px 22px no-repeat;opacity:.45}
-body.rd[data-rd-chapter="1"] .page:not(:has(> .scene-image)):has(> .story + .question) > .question::before,body.rd[data-rd-chapter="3"] .page:not(:has(> .scene-image)):has(> .story + .question) > .question::before,body.rd[data-rd-chapter="4"] .page:not(:has(> .scene-image)):has(> .story + .question) > .question::before{background:linear-gradient(90deg,transparent,rgba(70,86,160,.45),transparent) center/100% 1px no-repeat;height:2px;top:12px}
-@media (max-width:900px){body.rd .page:not(:has(> .scene-image)):has(> .story + .question) > .story{margin-left:0;margin-right:0}}
+/* ---------- Глава 2, экраны без картинки: снежная подложка внутри страницы, текст и ответы списком ---------- */
+body.rd[data-rd-chapter="2"] .page:not(:has(> .scene-image)){background:#e9e8fb url(hoshi_page_snow_v1.webp) center/cover no-repeat;-webkit-backdrop-filter:none;backdrop-filter:none}
+body.rd[data-rd-chapter="2"] .page:not(:has(> .scene-image)) > h2::after{content:"";display:block;width:120px;height:2px;margin:22px auto 0;background:linear-gradient(90deg,transparent,rgba(70,86,160,.55),transparent)}
+body.rd[data-rd-chapter="2"] .page:not(:has(> .scene-image)) .question{margin-top:34px}
+/* ответы — список с кружками */
+body.rd[data-rd-chapter="2"] .answers:has(.answer:nth-child(3)){align-items:stretch;gap:0;max-width:600px;margin:20px auto 6px}
+body.rd[data-rd-chapter="2"] .answers:has(.answer:nth-child(3)) .answer{justify-content:flex-start;gap:18px;width:100%;padding:16px 8px;border-radius:0;text-align:left;font:400 clamp(21px,2.3vw,25px)/1.3 var(--rd-sans);color:#2b3157}
+body.rd[data-rd-chapter="2"] .answers:has(.answer:nth-child(3)) .answer+.answer{box-shadow:inset 0 1px 0 rgba(70,86,160,.22)!important}
+body.rd[data-rd-chapter="2"] .answers:has(.answer:nth-child(3)) .answer:hover:not(:disabled){transform:none;color:#1f5fc0}
+body.rd[data-rd-chapter="2"] .answers:has(.answer:nth-child(3)) .rd-afl{width:34px;height:34px;margin:0;border-radius:50%;box-shadow:inset 0 0 0 2px rgba(110,115,160,.55)}
+body.rd[data-rd-chapter="2"] .answers:has(.answer:nth-child(3)) .rd-afl img{width:26px;height:26px;margin:4px}
+body.rd[data-rd-chapter="2"] .answers:has(.answer:nth-child(3)) .answer:is(:hover,.correct-choice) .rd-afl{box-shadow:inset 0 0 0 2px rgba(64,160,240,.8)}
+body.rd[data-rd-chapter="2"] .answers:has(.answer:nth-child(3)) .answer.wrong-choice{color:#8a8eb0}
