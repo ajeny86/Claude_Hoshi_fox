@@ -390,7 +390,7 @@ body.rd .word-card.rd-word .word-parts .rd-dash{vertical-align:top;height:1.2em;
 body.rd .word-card.rd-word .rd-word-hint,body.rd .word-card.rd-word .rd-knot{display:none}
 /* собрано: тёплое свечение по краю */
 body.rd .word-card.rd-word.rd-joined{filter:none;
-  box-shadow:inset 0 0 0 2px rgba(255,248,236,.95),inset 0 0 20px rgba(255,214,180,.5),0 0 24px rgba(255,214,170,.85),0 12px 26px rgba(80,80,170,.14)}
+  box-shadow:inset 0 0 0 2px rgba(196,232,255,.95),inset 0 0 22px rgba(120,196,255,.35),0 0 22px rgba(90,176,250,.55),0 12px 26px rgba(80,80,170,.14)}
 body.rd .word-card.rd-word:nth-child(odd).rd-joined{background-image:url(hoshi_word_card_torii_v1.webp)}
 /* лепестки */
 body.rd .rd-petal{position:absolute;left:var(--x);top:var(--y);width:14px;height:8px;border-radius:80% 0 80% 0;background:linear-gradient(135deg,#ffd6de,#ee8fa6);pointer-events:none;z-index:2;opacity:0;animation:rdPetal 1.8s ease-out forwards}
