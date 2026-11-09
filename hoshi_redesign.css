@@ -526,3 +526,30 @@ body.rd[data-rd-chapter="1"] .inari-complete{max-width:none;margin:22px auto 0;p
 body.rd[data-rd-chapter="1"] .inari-complete::before,body.rd[data-rd-chapter="1"] .inari-complete::after{content:none!important}
 body.rd[data-rd-chapter="1"] .inari-complete br{display:none}
 body.rd[data-rd-chapter="1"] .inari-complete strong{display:block;margin-bottom:6px;font:700 clamp(30px,3.6vw,40px)/1.15 var(--rd-sans);color:#2f3b8f;text-shadow:0 0 16px rgba(255,255,255,.95)}
+/* карточка шире и короче */
+body.rd[data-rd-chapter="1"] .inari-reward-card{width:min(720px,100%);aspect-ratio:16/10}
+body.rd[data-rd-chapter="1"] .inari-card-front .animated-reward-scene{width:100%;height:100%;max-height:none;aspect-ratio:auto;margin:0;border-radius:0}
+body.rd[data-rd-chapter="1"] .inari-card-front .scene-image{object-fit:cover;object-position:50% 22%}
+body.rd[data-rd-chapter="1"] .inari-card-back img{width:100%;height:100%;object-fit:cover;object-position:50% 40%}
+/* внизу огонька нет — просто переход дальше */
+body.rd[data-rd-chapter="1"] .reward-continue{padding-top:10px;flex-direction:row;justify-content:center;align-items:center}
+body.rd[data-rd-chapter="1"] .reward-continue .rd-guide{display:none}
+body.rd[data-rd-chapter="1"] .reward-continue::after{content:"→"!important;position:static!important;transform:none!important;display:inline!important;margin-left:10px;font:700 1em/1 var(--rd-sans);color:inherit;opacity:1}
+body.rd[data-rd-chapter="1"] .reward-continue{font:700 clamp(21px,2.3vw,25px)/1.2 var(--rd-tale);color:#2f3b8f}
+body.rd[data-rd-chapter="1"] .reward-continue:hover{color:#1f6fd1}
+/* огоньки на картинке: блуждают, мерцают, тают и появляются снова */
+body.rd[data-rd-chapter="1"] .inari-kitsunebi{opacity:0;animation:rdKitsu var(--t,8s) ease-in-out infinite,rdFlick 1.6s ease-in-out infinite;animation-delay:var(--d,0s),calc(var(--d,0s)*.5)}
+body.rd[data-rd-chapter="1"] .inari-kitsunebi--1{--t:9s;--d:-1s}
+body.rd[data-rd-chapter="1"] .inari-kitsunebi--2{--t:7.5s;--d:-4s}
+body.rd[data-rd-chapter="1"] .inari-kitsunebi--3{--t:10s;--d:-6.5s}
+body.rd[data-rd-chapter="1"] .inari-kitsunebi--4{--t:8.5s;--d:-2.8s}
+@keyframes rdKitsu{
+  0%{transform:translate(0,0) scale(.6);opacity:0}
+  12%{opacity:.95;transform:translate(calc(var(--dx)*.5),calc(var(--dy)*.4)) scale(1)}
+  32%{transform:translate(calc(var(--dx)*1.6),calc(var(--dy)*1.2)) scale(1.08) rotate(6deg)}
+  52%{transform:translate(calc(var(--dx)*-.4),calc(var(--dy)*2)) scale(.96) rotate(-5deg)}
+  72%{opacity:.9;transform:translate(calc(var(--dx)*1.1),calc(var(--dy)*2.8)) scale(1.04) rotate(4deg)}
+  90%{opacity:.25;transform:translate(calc(var(--dx)*.4),calc(var(--dy)*3.4)) scale(.75)}
+  100%{opacity:0;transform:translate(0,calc(var(--dy)*3.8)) scale(.5)}}
+@keyframes rdFlick{0%,100%{filter:drop-shadow(0 0 8px rgba(47,181,239,.75)) brightness(1)}35%{filter:drop-shadow(0 0 16px rgba(90,200,255,1)) brightness(1.25)}60%{filter:drop-shadow(0 0 6px rgba(47,181,239,.6)) brightness(.92)}}
+@media (prefers-reduced-motion:reduce){body.rd[data-rd-chapter="1"] .inari-kitsunebi{animation:none;opacity:.8}}
