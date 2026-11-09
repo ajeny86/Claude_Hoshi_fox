@@ -351,3 +351,21 @@ body.rd .next.opened .rd-guide{display:none}
 @media (prefers-reduced-motion:reduce){body.rd .rd-glow,body.rd .rd-guide img{animation:none!important}}
 /* Без вспышки «загорается»: когда задание выполнено, огонёк сразу просто горит */
 body.rd .next.ready:not(.opened) .rd-guide img{animation:rdHover 2.6s ease-in-out infinite}
+
+/* ---------- Глава 1, экран 2: слова собираются из слогов ---------- */
+body.rd .word-card.rd-word{position:relative;cursor:pointer;user-select:none;-webkit-user-select:none;transition:transform .15s,box-shadow .2s,background-color .2s;-webkit-tap-highlight-color:transparent}
+body.rd .word-card.rd-word:hover{box-shadow:inset 0 0 0 1.5px rgba(159,179,230,.9),0 8px 20px rgba(70,95,160,.10)}
+body.rd .word-card.rd-word:active{transform:scale(.98)}
+body.rd .word-card.rd-word:focus-visible{outline:3px solid #8fb6f0;outline-offset:3px}
+body.rd .word-card.rd-word strong{display:none}
+body.rd .word-card.rd-word .rd-word-hint{display:flex;align-items:center;gap:6px;font:600 14px/1.2 var(--rd-sans);color:#7d8bb0}
+body.rd .word-card.rd-word .rd-word-hint::before{content:"";width:6px;height:6px;border-radius:50%;background:#5aaef5;box-shadow:0 0 8px rgba(21,164,253,.7)}
+body.rd .word-card.rd-word .word-parts .rd-dash{display:inline-block;max-width:1em;overflow:hidden;vertical-align:baseline;transition:max-width .35s ease,opacity .3s ease,margin .35s ease}
+body.rd .word-card.rd-word.rd-joined .word-parts .rd-dash{max-width:0;opacity:0;margin:0}
+body.rd .word-card.rd-word.rd-joined{background:rgba(236,246,255,.7);box-shadow:inset 0 0 0 1.5px rgba(140,190,240,.6),0 6px 18px rgba(21,164,253,.10)}
+body.rd .word-card.rd-word.rd-joined .rd-word-hint{color:#0482fc}
+body.rd .word-card.rd-word.rd-joined .rd-word-hint::before{content:"✓";width:auto;height:auto;border-radius:0;background:none;box-shadow:none;font-weight:800}
+body.rd .word-card.rd-word.rd-joined .word-parts{animation:rdJoin .45s ease}
+@keyframes rdJoin{50%{transform:scale(1.06)}}
+@media (prefers-reduced-motion:reduce){body.rd .word-card.rd-word .word-parts .rd-dash{transition:none}body.rd .word-card.rd-word.rd-joined .word-parts{animation:none}}
+body.rd .next::after{left:50%;right:auto;transform:translateX(-50%);white-space:nowrap}

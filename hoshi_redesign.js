@@ -275,3 +275,58 @@
     setTimeout(() => { btn.classList.remove('rd-going'); btn.querySelectorAll('.rd-spark').forEach(x => x.remove()); }, 900);
   }, true);
 })();
+
+/* ---------- Глава 1, экран 2: собери слова из слогов, чтобы открыть путь ---------- */
+(() => {
+  'use strict';
+  if (!document.body.classList.contains('rd')) return;
+  let lang = 'ru';
+  try { lang = localStorage.getItem('hoshi-language-choice') || sessionStorage.getItem('hoshi-language-choice') || 'ru'; } catch (e) {}
+  const T = lang === 'en'
+    ? { tap: 'tap to join the parts', done: 'word joined' }
+    : { tap: 'коснись — слово соберётся', done: 'слово собрано' };
+
+  document.querySelectorAll('.word-cards').forEach(box => {
+    const page = box.closest('.page');
+    const next = page?.querySelector('.next[data-next]');
+    const cards = [...box.querySelectorAll('.word-card')];
+    if (!cards.length) return;
+    const passed = () => next?.classList.contains('opened');
+
+    const unlockIfDone = () => {
+      if (!next || passed()) return;
+      if (cards.every(c => c.classList.contains('rd-joined'))) next.classList.add('ready');
+    };
+
+    cards.forEach(card => {
+      card.classList.add('rd-word');
+      card.setAttribute('role', 'button');
+      card.setAttribute('tabindex', '0');
+      const whole = card.querySelector('strong')?.textContent.trim() || '';
+      card.setAttribute('aria-label', whole);
+      const hint = document.createElement('span');
+      hint.className = 'rd-word-hint';
+      hint.textContent = T.tap;
+      card.appendChild(hint);
+      const setJoined = on => {
+        card.classList.toggle('rd-joined', on);
+        card.setAttribute('aria-pressed', String(on));
+        hint.textContent = on ? T.done : T.tap;
+      };
+      setJoined(false);
+      const toggle = () => { setJoined(!card.classList.contains('rd-joined')); unlockIfDone(); };
+      card.addEventListener('click', toggle);
+      card.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); } });
+      card._rdSetJoined = setJoined;
+    });
+
+    // Если экран уже пройден — слова собраны; иначе путь закрыт, пока слова не собраны
+    const sync = () => {
+      if (passed()) cards.forEach(c => c._rdSetJoined(true));
+      else if (!cards.every(c => c.classList.contains('rd-joined'))) next?.classList.remove('ready');
+    };
+    sync();
+    if (next) new MutationObserver(() => { if (passed()) cards.forEach(c => c._rdSetJoined(true)); }).observe(next, { attributes: true, attributeFilter: ['class'] });
+    if (page) new MutationObserver(sync).observe(page, { attributes: true, attributeFilter: ['hidden'] });
+  });
+})();
