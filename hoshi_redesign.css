@@ -384,7 +384,7 @@ body.rd .word-card.rd-word{
 body.rd .word-card.rd-word:nth-child(even){background-image:url(hoshi_word_card_sakura_v1.webp)}
 body.rd .word-card.rd-word:hover{transform:translateY(-2px)}
 body.rd .word-card.rd-word:active{transform:scale(.98)}
-body.rd .word-card.rd-word .word-parts{font:italic 500 clamp(22px,8.4cqw,40px)/1.2 var(--rd-serif-it);color:#2f3b8f;letter-spacing:0;
+body.rd .word-card.rd-word .word-parts{font:500 clamp(22px,8.4cqw,40px)/1.2 var(--rd-serif-it);color:#2f3b8f;letter-spacing:0;
   text-shadow:0 0 10px rgba(255,255,255,.9),0 0 2px rgba(255,255,255,.9)}
 body.rd .word-card.rd-word .word-parts .rd-dash{vertical-align:top;height:1.2em;line-height:1.2;color:#2f3b8f;font-style:normal}
 body.rd .word-card.rd-word .rd-word-hint,body.rd .word-card.rd-word .rd-knot{display:none}
@@ -404,7 +404,7 @@ body.rd .rd-afl{display:none}
 body.rd[data-rd-chapter="1"] .feedback{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;margin:0;padding:0;border:0}
 body.rd[data-rd-chapter="1"] .answers{display:flex;justify-content:center;gap:clamp(36px,6vw,64px);max-width:none;margin:22px auto 4px}
 body.rd[data-rd-chapter="1"] .answer{position:relative;display:flex;flex-direction:row;align-items:center;gap:10px;flex:0 0 auto;width:auto;min-width:110px;min-height:0;padding:6px 14px 10px;border:0;border-radius:24px;
-  background:none!important;box-shadow:none!important;font:italic 500 clamp(30px,3.6vw,40px)/1.1 var(--rd-serif-it);color:#2f3b8f;text-shadow:0 0 10px rgba(255,255,255,.95);
+  background:none!important;box-shadow:none!important;font:500 clamp(30px,3.6vw,40px)/1.1 var(--rd-serif-it);color:#2f3b8f;text-shadow:0 0 10px rgba(255,255,255,.95);
   transition:transform .2s ease,opacity .35s ease,color .35s ease;-webkit-tap-highlight-color:transparent}
 body.rd[data-rd-chapter="1"] .answer:hover:not(:disabled){transform:translateY(-3px)}
 body.rd[data-rd-chapter="1"] .answer:active:not(:disabled){transform:scale(.96)}
@@ -440,7 +440,7 @@ body.rd[data-rd-chapter="1"] .task-panel:has(.search-targets) h3{margin:0 0 6px;
 body.rd[data-rd-chapter="1"] .task-panel:has(.search-targets)>p{margin:0 auto;text-align:center;font:400 clamp(15px,1.7vw,17px)/1.4 var(--rd-sans);color:var(--rd-muted)}
 body.rd[data-rd-chapter="1"] .search-targets{display:flex;flex-wrap:wrap;justify-content:center;gap:10px clamp(22px,4vw,44px);max-width:none;width:auto;margin:22px auto 6px}
 body.rd[data-rd-chapter="1"] .search-target{display:inline-flex;align-items:center;gap:2px;flex:0 0 auto;min-width:0;padding:0;border:0!important;border-radius:0;background:none!important;box-shadow:none!important;
-  font:italic 500 clamp(24px,2.8vw,30px)/1.2 var(--rd-serif-it);color:#6f77a8;text-shadow:0 0 10px rgba(255,255,255,.95);transition:color .4s ease}
+  font:500 clamp(24px,2.8vw,30px)/1.2 var(--rd-serif-it);color:#6f77a8;text-shadow:0 0 10px rgba(255,255,255,.95);transition:color .4s ease}
 body.rd[data-rd-chapter="1"] .rd-tfl{display:block;flex:none;width:40px;height:40px;margin-left:-8px}
 body.rd[data-rd-chapter="1"] .rd-tfl img{width:100%;height:100%;object-fit:contain;filter:grayscale(1) brightness(1.1);opacity:0;transform-origin:50% 85%;transition:filter .4s ease,opacity .4s ease}
 body.rd[data-rd-chapter="1"] .search-target.found{color:#2f3b8f}
@@ -459,7 +459,7 @@ body.rd[data-rd-chapter="1"] .search-target{font-size:clamp(21px,2.4vw,26px)}
 body.rd[data-rd-chapter="1"] .rd-tfl.rd-gone img{opacity:0!important;transition:opacity .2s;animation:none}
 
 /* ---------- «Путь открыт» крупнее ---------- */
-body.rd .next.opened{gap:12px;margin:22px auto 4px;padding:8px 18px;font:italic 500 clamp(20px,2.2vw,24px)/1.2 var(--rd-serif-it);color:#45507e;text-shadow:0 0 10px rgba(255,255,255,.9)}
+body.rd .next.opened{gap:12px;margin:22px auto 4px;padding:8px 18px;font:500 clamp(20px,2.2vw,24px)/1.2 var(--rd-serif-it);color:#45507e;text-shadow:0 0 10px rgba(255,255,255,.9)}
 body.rd .next.opened::before{content:""!important;width:40px;height:40px;opacity:1!important;color:transparent!important;filter:drop-shadow(0 0 10px rgba(21,164,253,.75)) drop-shadow(0 0 3px #fff)!important}
 /* огонёк у верного ответа не остаётся: только вспышка перед полётом */
 body.rd[data-rd-chapter="1"] .question:has(.next.opened) .rd-afl img,body.rd[data-rd-chapter="1"] .page:has(.next.opened) .answer .rd-afl img{opacity:0!important;animation:none!important}
@@ -468,7 +468,7 @@ body.rd[data-rd-chapter="1"] .question:has(.next.opened) .rd-afl img,body.rd[dat
 /* предложение для чтения — стеклянная карточка, как у слов */
 body.rd[data-rd-chapter="1"] .story .breath{max-width:none;width:auto;margin:22px -60px 30px;padding:clamp(18px,2.4vw,26px) clamp(22px,3.4vw,40px);border-radius:32px;text-align:center;
   background:linear-gradient(160deg,rgba(250,248,255,.8),rgba(232,230,255,.6));box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.9),0 0 16px rgba(255,255,255,.5),0 12px 26px rgba(80,80,170,.12);
-  font:italic 500 clamp(22px,2.6vw,28px)/1.45 var(--rd-serif-it);color:#2f3b8f;text-shadow:0 0 8px rgba(255,255,255,.9)}
+  font:500 clamp(22px,2.6vw,28px)/1.45 var(--rd-serif-it);color:#2f3b8f;text-shadow:0 0 8px rgba(255,255,255,.9)}
 /* что означают предметы — список с ключом и свитком */
 body.rd[data-rd-chapter="1"] .meaning-note{position:relative;max-width:640px;margin:0 auto 26px;padding:0 0 26px;border:0;background:none!important;box-shadow:none!important}
 body.rd[data-rd-chapter="1"] .meaning-note::after{content:"";position:absolute;left:50%;bottom:0;width:min(260px,60%);height:1px;transform:translateX(-50%);background:linear-gradient(90deg,transparent,rgba(70,86,160,.5),transparent)}
@@ -478,7 +478,7 @@ body.rd[data-rd-chapter="1"] .meaning-note p{position:relative;display:flex;alig
 body.rd[data-rd-chapter="1"] .meaning-note p>span{display:block}
 body.rd[data-rd-chapter="1"] .meaning-note p::before{content:"";position:absolute;left:0;top:50%;width:66px;height:52px;transform:translateY(-50%);background:url(hoshi_icon_key_v1.webp) center/contain no-repeat;filter:drop-shadow(0 4px 6px rgba(80,60,40,.18))}
 body.rd[data-rd-chapter="1"] .meaning-note p:last-of-type::before{background-image:url(hoshi_icon_scroll_v1.webp)}
-body.rd[data-rd-chapter="1"] .meaning-note b{font:italic 600 clamp(22px,2.5vw,27px)/1.2 var(--rd-serif-it);color:#2f3b8f}
+body.rd[data-rd-chapter="1"] .meaning-note b{font:600 clamp(22px,2.5vw,27px)/1.2 var(--rd-serif-it);color:#2f3b8f}
 body.rd[data-rd-chapter="1"] .meaning-note b::after{content:" —";font:400 clamp(17px,1.9vw,19px)/1 var(--rd-sans);color:#45507e}
 body.rd[data-rd-chapter="1"] .page[data-screen="6"] .story>p:last-child{text-align:center}
 /* история прочитана */
@@ -486,7 +486,7 @@ body.rd[data-rd-chapter="1"] .final-note{max-width:none;margin:26px auto 0;paddi
   font:400 clamp(17px,1.9vw,19px)/1.5 var(--rd-sans);color:#45507e;text-align:center}
 body.rd[data-rd-chapter="1"] .final-note::before,body.rd[data-rd-chapter="1"] .final-note::after{content:none!important;display:none}
 body.rd[data-rd-chapter="1"] .final-note br{display:none}
-body.rd[data-rd-chapter="1"] .final-note strong{display:block;margin-bottom:6px;font:italic 600 clamp(32px,3.8vw,42px)/1.15 var(--rd-serif-it);color:#2f3b8f;text-shadow:0 0 16px rgba(255,255,255,.95)}
+body.rd[data-rd-chapter="1"] .final-note strong{display:block;margin-bottom:6px;font:600 clamp(32px,3.8vw,42px)/1.15 var(--rd-serif-it);color:#2f3b8f;text-shadow:0 0 16px rgba(255,255,255,.95)}
 /* подпись огонька — просто текст, без плашки */
 /* спящая лисичка на камне в углу */
 body.rd[data-rd-chapter="1"] .page[data-screen="6"]{padding-bottom:clamp(30px,4vw,48px)}
