@@ -296,3 +296,21 @@ body.rd .chapter-card.current{box-shadow:inset 0 0 0 2px #9fe6fb,0 0 16px rgba(2
   body.rd .page>.scene-image:not(.portrait-image){margin-bottom:-36px}
 }
 @media (prefers-reduced-motion:reduce){body.rd .next::before{animation:none}}
+
+/* ---------- Правки 09.11 ---------- */
+/* «К карте путешествия» убрана из списка глав: для этого есть кнопка «Карта» в панели */
+body.rd .chapter-map-link{display:none!important}
+
+/* Огонёк крупнее при наведении */
+body.rd .next.ready:not(.opened)::before{transition:scale .25s ease}
+body.rd .next.ready:not(.opened):hover::before,body.rd .next.ready:not(.opened):focus-visible::before{scale:1.28;filter:drop-shadow(0 0 18px rgba(21,164,253,.95))}
+
+/* Пока задание не выполнено — огонёк погашен; загорается, когда задание сделано */
+body.rd .next:not(.ready){display:flex;pointer-events:none;cursor:default;color:#9aa5c0}
+body.rd .next:not(.ready)::before{animation:none;background:url("hoshi_flame_icon_v1.webp") center 48%/56px 56px no-repeat;filter:grayscale(1) brightness(1.15);opacity:.45}
+body.rd .next:not(.ready)::after{content:"выполни задание — и огонёк загорится"}
+body.rd[data-rd-lang="en"] .next:not(.ready)::after{content:"finish the task to light the flame"}
+body.rd .next.ready:not(.opened)::before{animation:rdLightUp .9s ease-out both,rdHover 2.6s ease-in-out .9s infinite}
+@keyframes rdLightUp{0%{filter:grayscale(1) brightness(1.15);opacity:.45;transform:scale(.9)}45%{filter:brightness(1.6) drop-shadow(0 0 24px rgba(21,164,253,1));opacity:1;transform:scale(1.25)}100%{filter:drop-shadow(0 0 10px rgba(21,164,253,.6));opacity:1;transform:scale(1)}}
+body.rd .next.rd-going::before{animation:rdFlare .65s cubic-bezier(.2,.8,.25,1) forwards}
+@media (prefers-reduced-motion:reduce){body.rd .next.ready:not(.opened)::before{animation:none}}
