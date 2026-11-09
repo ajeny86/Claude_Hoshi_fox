@@ -582,3 +582,10 @@ body.rd .reward-continue .rd-steps i{width:26px;height:26px}
 body.rd .reward-continue.ready:not(.opened):hover .rd-steps i{animation-duration:.9s}
 body.rd .reward-continue::after{content:"коснись следов"}
 body.rd.rd-en .reward-continue::after{content:"tap the tracks"}
+/* «Все четыре тайны раскрыты!» — другой шрифт */
+body.rd[data-rd-chapter="1"] .inari-complete strong{font:700 clamp(26px,3vw,32px)/1.2 var(--rd-sans)!important;letter-spacing:.01em;color:#2f3b8f}
+body.rd[data-rd-chapter="1"] .inari-complete{font:400 clamp(16px,1.8vw,18px)/1.5 var(--rd-sans);color:#6b6f98}
+/* переход: надпись — ниже следы — ниже подпись */
+body.rd .reward-continue{display:flex!important;flex-direction:column;align-items:center;padding-top:8px!important}
+body.rd .reward-continue .rd-guide{position:relative!important;left:auto!important;top:auto!important;margin:8px auto 0!important;order:1;width:110px;height:54px}
+body.rd .reward-continue::after{position:static!important;transform:none!important;order:2;margin-top:2px}
