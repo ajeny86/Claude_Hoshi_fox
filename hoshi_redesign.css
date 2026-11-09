@@ -398,3 +398,25 @@ body.rd .rd-petal{position:absolute;left:var(--x);top:var(--y);width:14px;height
 @keyframes rdPetal{0%{opacity:0;transform:translate(0,0) rotate(0)}15%{opacity:1}100%{opacity:0;transform:translate(var(--dx),var(--dy)) rotate(var(--rot))}}
 body.rd .word-card.rd-word.rd-joined .word-parts{animation:rdJoin .45s ease}
 @media (prefers-reduced-motion:reduce){body.rd .rd-petal{display:none}}
+
+/* ---------- Глава 1: вопросы с ответами — стеклянные таблетки ---------- */
+body.rd[data-rd-chapter="1"] .answers{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:16px 20px;max-width:640px;margin:18px auto 0}
+body.rd[data-rd-chapter="1"] .answer{display:flex;align-items:center;justify-content:center;min-height:84px;padding:14px 24px;border:0;border-radius:30px;text-align:center;
+  background:linear-gradient(160deg,rgba(250,248,255,.82),rgba(232,230,255,.62));
+  box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.9),0 0 14px rgba(255,255,255,.5),0 10px 24px rgba(80,80,170,.13);
+  font:italic 500 clamp(24px,2.8vw,30px)/1.2 var(--rd-serif-it);color:#2f3b8f;text-shadow:0 0 8px rgba(255,255,255,.9);
+  transition:transform .2s ease,box-shadow .3s ease,opacity .3s ease;-webkit-tap-highlight-color:transparent}
+body.rd[data-rd-chapter="1"] .answer:hover:not(:disabled){transform:translateY(-2px);box-shadow:inset 0 0 0 1.5px #fff,0 0 18px rgba(255,255,255,.7),0 12px 26px rgba(80,80,170,.16)}
+body.rd[data-rd-chapter="1"] .answer:active:not(:disabled){transform:scale(.98)}
+body.rd[data-rd-chapter="1"] .answer.correct-choice{background:linear-gradient(160deg,rgba(232,244,255,.9),rgba(205,228,255,.7));
+  box-shadow:inset 0 0 0 2px rgba(196,232,255,.95),inset 0 0 22px rgba(120,196,255,.35),0 0 22px rgba(90,176,250,.55),0 12px 26px rgba(80,80,170,.14)}
+body.rd[data-rd-chapter="1"] .answer.wrong-choice{opacity:.6;color:#6b6f98;animation:rdShake .45s ease}
+body.rd[data-rd-chapter="1"] .answer:disabled:not(.correct-choice){opacity:.45}
+@keyframes rdShake{20%{transform:translateX(-6px)}40%{transform:translateX(5px)}60%{transform:translateX(-3px)}80%{transform:translateX(2px)}}
+body.rd[data-rd-chapter="1"] .feedback{max-width:640px;margin:18px auto 0;padding:16px 22px;border:0;border-radius:24px;text-align:center;
+  background:rgba(248,247,255,.7);box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.85),0 8px 20px rgba(80,80,170,.10);
+  font:400 clamp(17px,1.9vw,19px)/1.45 var(--rd-serif-it);color:#45507e}
+body.rd[data-rd-chapter="1"] .feedback strong{display:block;margin-bottom:2px;font:italic 600 clamp(20px,2.3vw,24px)/1.25 var(--rd-serif-it);color:#2f3b8f}
+body.rd[data-rd-chapter="1"] .feedback.good-feedback{background:linear-gradient(160deg,rgba(236,246,255,.85),rgba(214,234,255,.65));box-shadow:inset 0 0 0 1.5px rgba(196,232,255,.95),0 8px 20px rgba(80,120,200,.12)}
+body.rd[data-rd-chapter="1"] .feedback br{display:none}
+@media (prefers-reduced-motion:reduce){body.rd[data-rd-chapter="1"] .answer.wrong-choice{animation:none}}
