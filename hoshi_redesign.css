@@ -681,3 +681,15 @@ body.rd .rd-steps i b{position:absolute;top:0;left:0;width:100%;height:100%;back
 body.rd .rd-steps i.on b{opacity:0}
 body.rd .next:not(.ready) .rd-steps i b,body.rd .next.ready.rd-wait .rd-steps i b{opacity:0}
 body.rd .rd-steps i b{background-image:url(hoshi_paw_glow_blue_v2.webp);-webkit-filter:brightness(0) invert(1) drop-shadow(0 0 3px rgba(120,150,220,.9));filter:brightness(0) invert(1) drop-shadow(0 0 3px rgba(120,150,220,.9))}
+/* следы как на карте: светлые лапки с голубым свечением, появляются по очереди */
+body.rd .rd-steps{gap:10px}
+body.rd .rd-steps i,body.rd[data-rd-chapter="2"] .next.opened .rd-steps i{width:28px!important;height:28px!important;background:url(hoshi_paw_trail_v1.svg) center/contain no-repeat!important;
+  -webkit-filter:drop-shadow(0 0 4px #40ddfd) drop-shadow(0 0 10px rgba(21,164,253,.65))!important;filter:drop-shadow(0 0 4px #40ddfd) drop-shadow(0 0 10px rgba(21,164,253,.65))!important;
+  opacity:.15;transform:scale(.4)!important;-webkit-transition:opacity .35s ease,transform .45s cubic-bezier(.2,.8,.25,1.4);transition:opacity .35s ease,transform .45s cubic-bezier(.2,.8,.25,1.4)}
+body.rd .rd-steps i.on{opacity:1;transform:scale(1)!important}
+body.rd .rd-steps i:nth-child(odd){translate:0 7px}
+body.rd .rd-steps i b{display:none}
+body.rd .next:not(.ready) .rd-steps i,body.rd .next.ready.rd-wait .rd-steps i{opacity:.35!important;transform:scale(.85)!important;-webkit-filter:grayscale(1)!important;filter:grayscale(1) drop-shadow(0 0 2px rgba(120,130,170,.6))!important;background-image:url(hoshi_paw_trail_v1.svg)!important}
+body.rd .next:not(.ready) .rd-steps i{background-color:transparent}
+body.rd[data-rd-chapter="2"] .rd-afl img,body.rd[data-rd-chapter="2"] .rd-tfl img{content:url(hoshi_paw_trail_v1.svg);-webkit-filter:drop-shadow(0 0 4px #40ddfd) drop-shadow(0 0 10px rgba(21,164,253,.65))!important;filter:drop-shadow(0 0 4px #40ddfd) drop-shadow(0 0 10px rgba(21,164,253,.65))!important}
+body.rd[data-rd-chapter="2"] .next.opened::before{background-image:url(hoshi_paw_trail_v1.svg)!important}
