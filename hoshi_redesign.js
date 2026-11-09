@@ -416,4 +416,51 @@
     f.innerHTML = '<img src="hoshi_flame_icon_v1.webp" alt="">';
     t.prepend(f);
   });
+  const FLAME = 'hoshi_flame_icon_v1.webp';
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const fly = (fromEl, toEl, delay, done) => setTimeout(() => {
+    const a = fromEl.getBoundingClientRect(), b = toEl.getBoundingClientRect();
+    const fx = a.left + a.width / 2, fy = a.top + a.height / 2, tx = b.left + b.width / 2, ty = b.top + b.height / 2;
+    const el = document.createElement('img'); el.src = FLAME; el.className = 'rd-flyer'; el.alt = '';
+    el.style.left = fx + 'px'; el.style.top = fy + 'px'; document.body.appendChild(el);
+    fromEl.classList.add('rd-gone');
+    const cx = fx + (tx - fx) * 0.15, cy = fy + (ty - fy) * 0.55, frames = [];
+    for (let i = 0; i <= 30; i++) {
+      const t = i / 30, u = 1 - t;
+      const x = u * u * fx + 2 * u * t * cx + t * t * tx + Math.sin(t * Math.PI * 2) * 5 * u;
+      const y = u * u * fy + 2 * u * t * cy + t * t * ty;
+      frames.push({ transform: `translate(${x - fx}px,${y - fy}px) scale(${(1 + 0.12 * t).toFixed(3)})`, opacity: t > .9 ? (1 - t) * 10 : 1 });
+    }
+    el.animate(frames, { duration: 1400, easing: 'cubic-bezier(.45,.05,.3,1)' }).onfinish = () => { el.remove(); done && done(); };
+  }, delay);
+  // когда все слова найдены — огоньки слетаются к главному и зажигают его
+  document.addEventListener('click', e => {
+    const hunt = e.target.closest('[data-word-hunt]');
+    if (!hunt || document.body.dataset.rdChapter !== '1') return;
+    const screen = hunt.closest('[data-screen]'), next = screen?.querySelector('.next');
+    const targets = [...(screen?.querySelectorAll('.search-target') || [])];
+    if (!next || !targets.length || screen.dataset.rdFlown) return;
+    requestAnimationFrame(() => {
+      if (!targets.every(t => t.classList.contains('found'))) return;
+      screen.dataset.rdFlown = '1';
+      const goal = next.querySelector('.rd-guide img');
+      if (reduce || !goal) return;
+      next.classList.add('rd-wait');
+      targets.forEach((t, i) => fly(t.querySelector('.rd-tfl'), goal, 700 + i * 160, i === targets.length - 1 ? () => {
+        next.classList.remove('rd-wait'); next.classList.add('rd-ignite');
+        setTimeout(() => next.classList.remove('rd-ignite'), 1000);
+      } : null));
+    });
+  });
+  // экран уже пройден — маленьких огоньков нет
+  const hideIfDone = () => document.querySelectorAll('[data-word-hunt]').forEach(h => {
+    const sc = h.closest('[data-screen]');
+    if (sc?.querySelector('.next.opened')) sc.querySelectorAll('.rd-tfl:not(.rd-gone)').forEach(f => f.classList.add('rd-gone'));
+  });
+  hideIfDone();
+  const mo = new MutationObserver(hideIfDone);
+  document.querySelectorAll('[data-word-hunt]').forEach(h => {
+    const nx = h.closest('[data-screen]')?.querySelector('.next');
+    if (nx) mo.observe(nx, { attributes: true, attributeFilter: ['class'] });
+  });
 })();
