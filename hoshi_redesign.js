@@ -386,16 +386,16 @@
         document.body.appendChild(fly);
         a.classList.add('rd-sent');
         // плавная дуга с лёгким покачиванием, как у парящего огонька
-        const cx = (fx + tx) / 2 + (tx > fx ? -90 : 90), cy = Math.min(fy, ty) - 90;
+        const cx = fx + (tx - fx) * 0.15, cy = fy + (ty - fy) * 0.55; // без подскока: сразу плавно вниз
         const frames = [], N = 30;
         for (let i = 0; i <= N; i++) {
           const t = i / N, u = 1 - t;
-          const x = u * u * fx + 2 * u * t * cx + t * t * tx + Math.sin(t * Math.PI * 3) * 10 * u;
+          const x = u * u * fx + 2 * u * t * cx + t * t * tx + Math.sin(t * Math.PI * 2) * 5 * u;
           const y = u * u * fy + 2 * u * t * cy + t * t * ty;
-          const sc = 1 + 0.18 * Math.sin(t * Math.PI);
-          frames.push({ transform: `translate(${x - fx}px,${y - fy}px) scale(${sc.toFixed(3)}) rotate(${(Math.sin(t * Math.PI * 4) * 6).toFixed(1)}deg)` });
+          const sc = 1 + 0.12 * t;
+          frames.push({ transform: `translate(${x - fx}px,${y - fy}px) scale(${sc.toFixed(3)}) rotate(${(Math.sin(t * Math.PI * 3) * 4).toFixed(1)}deg)` });
         }
-        const anim = fly.animate(frames, { duration: 1600, easing: 'cubic-bezier(.4,0,.25,1)' });
+        const anim = fly.animate(frames, { duration: 1400, easing: 'cubic-bezier(.45,.05,.3,1)' });
         anim.onfinish = () => {
           fly.remove();
           next.classList.remove('rd-wait'); next.classList.add('rd-ignite');
