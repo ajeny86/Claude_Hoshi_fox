@@ -1,0 +1,2995 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="description" content="Вторая часть интерактивного путешествия Хоси: японские традиции, сюжетное чтение и задания на внимательность.">
+  <meta name="theme-color" content="#dff4fb">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Путь Хоси — японские традиции">
+  <meta property="og:description" content="Интерактивные истории и задания для внимательного чтения.">
+  <meta property="og:image" content="approved_part2_seasonal_map_background.webp">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Hoshi’s Journey — Japanese Traditions">
+  <meta name="twitter:description" content="Interactive stories and close-reading activities for children.">
+  <meta name="twitter:image" content="approved_part2_seasonal_map_background.webp">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": ["LearningResource", "WebApplication"],
+    "name": "Путь Хоси — японские традиции",
+    "description": "Интерактивная история с заданиями на внимательное чтение для детей.",
+    "applicationCategory": "EducationalApplication",
+    "operatingSystem": "Any",
+    "isAccessibleForFree": true,
+    "inLanguage": ["ru", "en"],
+    "educationalUse": ["reading practice", "close reading", "reading comprehension"],
+    "learningResourceType": ["interactive story", "reading activity"],
+    "typicalAgeRange": "8-10"
+  }
+  </script>
+  <title>Путь Хоси — японские традиции</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #1b5594;
+      --muted: #66849a;
+      --focus: #2eaae9;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      overflow-x: clip;
+      margin: 0;
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 50% 12%, rgba(255,255,255,.82), transparent 36%),
+        linear-gradient(180deg, #dff4fb, #c7ebf4);
+      color: var(--ink);
+    }
+
+    body.map-view-open {
+      background: linear-gradient(180deg, #4a94bb 0%, #458fb3 42%, #1b759a 100%);
+    }
+
+    body.map-view-open .map-canvas {
+      border-top-color: transparent;
+      border-bottom-color: transparent;
+      background: transparent;
+    }
+
+    main {
+      width: min(760px, 100%);
+      margin: 0 auto;
+      padding: 24px 0 40px;
+    }
+
+    .part-switch {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+      width: min(540px, calc(100% - 28px));
+      margin: 0 auto 14px;
+      padding: 6px;
+      border: 1px solid rgba(255,255,255,.9);
+      border-radius: 18px;
+      background: rgba(242,251,255,.76);
+      box-shadow: 0 8px 24px rgba(35,102,143,.13);
+      backdrop-filter: blur(10px);
+      -webkit-user-select: none;
+      user-select: none;
+    }
+
+    body.map-view-open .part-switch {
+      margin-bottom: 0;
+      border-color: transparent;
+      background: transparent;
+      box-shadow: none;
+      backdrop-filter: none;
+    }
+
+    .part-switch a,
+    .part-switch span {
+      display: grid;
+      place-items: center;
+      min-height: 44px;
+      padding: 8px 10px;
+      border-radius: 13px;
+      color: #52738e;
+      font: 700 13px/1.2 Arial, sans-serif;
+      text-align: center;
+      text-decoration: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .part-switch a {
+      border: 1px solid transparent;
+      background: transparent;
+      color: #fff;
+      box-shadow: none;
+      text-shadow: 0 1px 3px rgba(14,65,91,.62);
+      transition: background .18s ease, color .18s ease, border-color .18s ease;
+    }
+
+    .part-switch a:hover,
+    .part-switch a:focus-visible {
+      border-color: rgba(117,189,227,.72);
+      background: rgba(224,244,255,.88);
+      color: #245f91;
+      text-shadow: none;
+    }
+
+    .part-switch a:focus-visible {
+      outline: 3px solid var(--focus);
+      outline-offset: 2px;
+    }
+
+    .part-switch .active {
+      border: 1px solid #87c7eb;
+      background: linear-gradient(180deg, #f7fcff, #dff3ff);
+      color: #175f98;
+      box-shadow: 0 3px 9px rgba(48,125,178,.12);
+    }
+
+    .map-canvas {
+      position: relative;
+      overflow: hidden;
+      width: 100%;
+      border: 1px solid rgba(255,255,255,.86);
+      border-radius: 38px;
+      background: #caedf4;
+      box-shadow:
+        0 30px 80px rgba(35, 102, 143, .22),
+        0 0 0 10px rgba(255,255,255,.25);
+    }
+
+    .map-canvas > img {
+      display: block;
+      width: 100%;
+      height: auto;
+      -webkit-mask-image:
+        linear-gradient(to bottom, transparent 0%, #000 2.5%, #000 97.5%, transparent 100%);
+      mask-image:
+        linear-gradient(to bottom, transparent 0%, #000 2.5%, #000 97.5%, transparent 100%);
+    }
+
+    .map-heading {
+      position: absolute;
+      z-index: 3;
+      top: 1.1%;
+      left: 50%;
+      width: min(82%, 520px);
+      color: #fff;
+      text-align: center;
+      text-shadow:
+        0 2px 3px rgba(12,65,100,.68),
+        0 5px 16px rgba(9,60,96,.48);
+      transform: translateX(-50%);
+      pointer-events: none;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+
+    .map-heading small {
+      display: block;
+      margin-bottom: 3px;
+      font: 700 11px/1 Arial, sans-serif;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+
+    .map-heading h1 {
+      margin: 0;
+      font: 700 clamp(27px, 6vw, 42px)/1.08 Georgia, "Times New Roman", serif;
+    }
+
+    .map-heading h1:focus {
+      outline: none;
+    }
+
+    .map-stop {
+      position: absolute;
+      z-index: 4;
+      width: clamp(126px, 23vw, 160px);
+      padding: 0;
+      border: 0;
+      background: transparent;
+      color: inherit;
+      text-align: center;
+      transform: translate(-50%, -50%);
+      cursor: pointer;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+
+    .map-stop:focus { outline: none; }
+
+    .map-stop--1 { left: 30%; top: 20.7%; }
+    .map-stop--2 { left: 78%; top: 41.5%; }
+    .map-stop--3 { left: 22%; top: 60%; }
+    .map-stop--4 { left: 78%; top: 78%; }
+    .map-stop--5 { left: 22%; top: 89.5%; }
+
+    .map-stop-label {
+      position: relative;
+      display: grid;
+      gap: 0;
+      width: 100%;
+      min-height: 78px;
+      align-content: center;
+      padding: 13px 11px 12px;
+      border: 2px solid rgba(255,255,255,.88);
+      border-radius: 21px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.78), rgba(203,231,246,.64));
+      box-shadow:
+        0 8px 18px rgba(45,105,143,.18),
+        inset 0 0 0 1px rgba(150,207,234,.48);
+      backdrop-filter: blur(8px);
+      transition:
+        transform .2s ease,
+        box-shadow .2s ease,
+        border-color .2s ease,
+        background .2s ease;
+    }
+
+    .map-kicker {
+      display: flex;
+      min-height: 18px;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      margin-bottom: 6px;
+      color: var(--muted);
+      font: 700 10px/1 Georgia, "Times New Roman", serif;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .map-complete-flame {
+      display: none;
+      flex: 0 0 14px;
+      width: 14px;
+      height: 18px;
+      background: url("blue_kitsune_flame_optimized.webp") center/contain no-repeat;
+      filter: saturate(1.05) drop-shadow(0 0 4px rgba(56,184,239,.5));
+    }
+
+    .map-stop.completed .map-complete-flame {
+      display: block;
+    }
+
+    .map-stop-label strong {
+      display: block;
+      color: var(--ink);
+      font: 400 clamp(18px, 3vw, 22px)/1.1 Georgia, "Times New Roman", serif;
+    }
+
+    .map-development-status {
+      display: block;
+      margin-top: 5px;
+      color: #5e7d92;
+      font: 700 9px/1.1 Arial, sans-serif;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+    }
+
+    .map-stop--5 .map-stop-label {
+      min-height: 62px;
+      padding-top: 8px;
+      padding-bottom: 8px;
+    }
+
+    .map-stop:hover .map-stop-label,
+    .map-stop:focus-visible .map-stop-label {
+      border-color: rgba(101,172,211,.94);
+      background:
+        linear-gradient(180deg, rgba(231,247,255,.97), rgba(178,218,240,.94));
+      box-shadow:
+        0 11px 24px rgba(38,108,151,.24),
+        inset 0 0 0 1px rgba(255,255,255,.72);
+      transform: translateY(-3px);
+    }
+
+    .map-stop:focus-visible {
+      border-radius: 22px;
+      outline: 3px solid var(--focus);
+      outline-offset: 4px;
+    }
+
+    .map-stop:active .map-stop-label {
+      transform: scale(.98);
+    }
+
+    .map-stop--2,
+    .map-stop--3,
+    .map-stop--4,
+    .map-stop--5 {
+      cursor: default;
+    }
+
+    .map-stop[aria-disabled="true"] .map-stop-label {
+      background:
+        linear-gradient(180deg, rgba(250,253,255,.7), rgba(208,232,244,.58));
+    }
+
+    @media (max-width: 620px) {
+      main { padding: 0; }
+
+      .part-switch {
+        width: 100%;
+        margin: 0;
+        padding: calc(6px + env(safe-area-inset-top)) 7px 6px;
+        border-width: 0;
+        border-radius: 0;
+      }
+
+      .part-switch a,
+      .part-switch span {
+        min-height: 42px;
+        padding: 7px 5px;
+        font-size: 11px;
+      }
+
+      .map-canvas {
+        border: 0;
+        border-radius: 0;
+        box-shadow: none;
+      }
+
+      .map-heading { top: .8%; }
+
+      .map-heading small { font-size: 9px; }
+
+      .map-stop {
+        width: clamp(108px, 28vw, 132px);
+      }
+
+      .map-stop-label {
+        min-height: 68px;
+        padding: 10px 8px 9px;
+        border-radius: 18px;
+        box-shadow:
+          0 5px 13px rgba(45,105,143,.15),
+          inset 0 0 0 1px rgba(150,207,234,.42);
+      }
+
+      .map-kicker {
+        margin-bottom: 4px;
+        font-size: 8.5px;
+      }
+
+      .map-complete-flame {
+        flex-basis: 11px;
+        width: 11px;
+        height: 15px;
+      }
+
+      .map-stop-label strong {
+        font-size: clamp(16px, 4.6vw, 19px);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        transition-duration: .01ms !important;
+      }
+    }
+
+    [hidden] { display: none !important; }
+
+    .chapter-view {
+      width: min(760px, calc(100% - 20px));
+      margin: 0 auto;
+      color: #263f55;
+    }
+
+    .chapter-toolbar {
+      position: sticky;
+      z-index: 30;
+      top: 0;
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 14px;
+      border-bottom: 1px solid rgba(178,213,235,.78);
+      background: rgba(247,252,255,.94);
+      box-shadow: 0 7px 22px rgba(42,98,139,.1);
+      backdrop-filter: blur(12px);
+    }
+
+    .toolbar-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      min-height: 44px;
+      padding: 9px 13px;
+      border: 1px solid #bedced;
+      border-radius: 13px;
+      background: #fff;
+      color: #2b6694;
+      font: 700 13px/1 Arial, sans-serif;
+      cursor: pointer;
+    }
+
+    .toolbar-icon {
+      display: inline-block;
+      flex: 0 0 auto;
+      width: 20px;
+      color: currentColor;
+      text-align: center;
+      font: 400 19px/1 Arial, sans-serif;
+    }
+
+    .toolbar-icon--restart {
+      font-size: 22px;
+      transform: translateY(-1px);
+    }
+
+    .chapter-dialog,
+    .parent-guide-dialog,
+    .restart-dialog {
+      position: fixed;
+      z-index: 200;
+      inset: 0;
+      display: grid;
+      place-items: start center;
+      padding: 86px 14px 24px;
+    }
+
+    .parent-guide-dialog,
+    .restart-dialog {
+      z-index: 210;
+      place-items: center;
+      padding: 18px;
+    }
+
+    .dialog-backdrop {
+      position: absolute;
+      inset: 0;
+      border: 0;
+      background: rgba(22,48,72,.38);
+      backdrop-filter: blur(5px);
+    }
+
+    .chapter-panel,
+    .parent-guide-panel,
+    .restart-panel {
+      position: relative;
+      width: min(520px, 100%);
+      padding: 22px;
+      border: 1px solid rgba(190,218,238,.92);
+      border-radius: 26px;
+      background: rgba(249,253,255,.99);
+      box-shadow: 0 24px 70px rgba(25,66,99,.26);
+    }
+
+    .parent-guide-panel {
+      width: min(620px, 100%);
+      max-height: min(82vh, 760px);
+      overflow: auto;
+      padding: 28px 26px;
+    }
+
+    .restart-panel {
+      width: min(420px, 100%);
+      padding: 28px 24px 24px;
+      text-align: center;
+    }
+
+    .chapter-panel-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .chapter-panel-kicker {
+      color: #658198;
+      font: 700 11px/1 Arial, sans-serif;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+
+    .chapter-panel h2,
+    .parent-guide-panel h2,
+    .restart-panel h2 {
+      margin: 5px 0 0;
+      color: #174f91;
+      font: 700 29px/1.15 Georgia, serif;
+    }
+
+    .dialog-close {
+      display: grid;
+      width: 40px;
+      height: 40px;
+      place-items: center;
+      border: 1px solid #cce1f0;
+      border-radius: 50%;
+      background: #fff;
+      color: #356b94;
+      font-size: 26px;
+      cursor: pointer;
+    }
+
+    .chapter-cards {
+      display: grid;
+      gap: 11px;
+    }
+
+    .chapter-card {
+      display: grid;
+      grid-template-columns: 42px minmax(0,1fr) 32px;
+      align-items: center;
+      gap: 12px;
+      width: 100%;
+      min-height: 72px;
+      padding: 11px 13px;
+      border: 1px solid #cee3f2;
+      border-radius: 18px;
+      background: #fff;
+      color: #2c4359;
+      box-shadow: 0 6px 16px rgba(43,92,130,.07);
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .chapter-card:hover:not(:disabled) {
+      border-color: #83bbe4;
+      background: #f4faff;
+    }
+
+    .chapter-card.current {
+      border-color: #4fb8ec;
+      background: linear-gradient(135deg,#e5f7ff,#d3efff);
+    }
+
+    .chapter-card.completed {
+      border-color: #8dceed;
+      background: linear-gradient(135deg,#f6fcff,#eaf8ff);
+    }
+
+    .chapter-card:disabled {
+      opacity: .58;
+      cursor: default;
+    }
+
+    .chapter-number {
+      display: grid;
+      width: 40px;
+      height: 40px;
+      place-items: center;
+      border-radius: 13px;
+      background: #e9f5fd;
+      color: #246daf;
+      font-weight: 800;
+    }
+
+    .chapter-card strong,
+    .chapter-card small {
+      display: block;
+    }
+
+    .chapter-card strong { font-size: 17px; }
+
+    .chapter-card small {
+      margin-top: 4px;
+      color: #718395;
+      font-size: 13px;
+    }
+
+    .chapter-state {
+      display: block;
+      width: 29px;
+      height: 34px;
+    }
+
+    .chapter-card.completed .chapter-state {
+      background: transparent url("blue_kitsune_flame_optimized.webp") center/contain no-repeat;
+      filter: saturate(1.05) drop-shadow(0 0 5px rgba(56,184,239,.5));
+    }
+
+    .chapter-map-link,
+    .language-progress-card {
+      grid-template-columns: 42px minmax(0,1fr);
+    }
+
+    .parent-guide-card {
+      margin-bottom: 4px;
+      border-color: #e5c68f;
+      background: linear-gradient(135deg,#fffdf7,#fff0d8);
+    }
+
+    .parent-guide-card .chapter-number {
+      background: #f7ddb1;
+      color: #7c521d;
+    }
+
+    .chapter-map-link {
+      border-color: #b9daf0;
+      background: linear-gradient(135deg,#f8fcff,#e8f6ff);
+    }
+
+    .language-progress-card {
+      border-style: dashed;
+      background: #f8fcff;
+    }
+
+    .parent-guide-intro {
+      margin: 10px 0 20px;
+      color: #5b7489;
+      font: 400 16px/1.5 Arial, sans-serif;
+    }
+
+    .parent-guide-list {
+      display: grid;
+      gap: 11px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      counter-reset: guide;
+    }
+
+    .parent-guide-list li {
+      position: relative;
+      padding: 13px 15px 13px 48px;
+      border: 1px solid #d4e7f4;
+      border-radius: 16px;
+      background: rgba(255,255,255,.86);
+      color: #36536c;
+      font: 400 16px/1.48 Arial, sans-serif;
+    }
+
+    .parent-guide-list li::before {
+      counter-increment: guide;
+      content: counter(guide);
+      position: absolute;
+      top: 12px;
+      left: 14px;
+      display: grid;
+      width: 24px;
+      height: 24px;
+      place-items: center;
+      border-radius: 50%;
+      background: #dff3ff;
+      color: #17689f;
+      font-weight: 800;
+    }
+
+    .restart-dialog-icon {
+      display: grid;
+      width: 54px;
+      height: 54px;
+      margin: 0 auto 13px;
+      place-items: center;
+      border-radius: 50%;
+      background: #e1f4ff;
+      color: #227fc0;
+      font: 400 32px/1 Arial, sans-serif;
+    }
+
+    .restart-panel p {
+      max-width: 330px;
+      margin: 10px auto 20px;
+      color: #587087;
+      font: 400 16px/1.5 Arial, sans-serif;
+    }
+
+    .restart-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .restart-confirm,
+    .restart-cancel {
+      min-height: 50px;
+      padding: 11px 15px;
+      border-radius: 15px;
+      font: 700 16px/1.2 Arial, sans-serif;
+      cursor: pointer;
+    }
+
+    .restart-confirm {
+      border: 1px solid #2289cf;
+      background: linear-gradient(180deg,#3ca8ed,#167bc1);
+      color: #fff;
+    }
+
+    .restart-cancel {
+      border: 1px solid #c7deed;
+      background: #fff;
+      color: #42647f;
+    }
+
+    body.dialog-open { overflow: hidden; }
+
+    .toolbar-title {
+      min-width: 0;
+      text-align: center;
+    }
+
+    .toolbar-title strong,
+    .toolbar-title small { display: block; }
+
+    .toolbar-title strong {
+      overflow: hidden;
+      color: #215b8c;
+      font: 700 18px/1.15 Georgia, serif;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .toolbar-title small {
+      margin-top: 3px;
+      color: #70869a;
+      font: 600 11px/1 Arial, sans-serif;
+    }
+
+    .chapter-progress {
+      grid-column: 1 / -1;
+      display: flex;
+      min-height: 27px;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      padding-top: 8px;
+      border-top: 1px solid rgba(207,226,240,.82);
+    }
+
+    .progress-title {
+      color: #65798b;
+      font: 600 12px/1 Arial, sans-serif;
+    }
+
+    .progress-flames {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .progress-flame {
+      display: block;
+      width: 16px;
+      height: 22px;
+      background: url("blue_kitsune_flame_optimized.webp") center/contain no-repeat;
+      opacity: .22;
+      filter: grayscale(.65) saturate(.45);
+      transition: opacity .25s ease, filter .25s ease;
+    }
+
+    .progress-flame.on {
+      opacity: 1;
+      filter: saturate(1) drop-shadow(0 0 5px rgba(65,184,242,.56));
+    }
+
+    .progress-readable {
+      min-width: 36px;
+      color: #285f8d;
+      font: 700 12px/1 Arial, sans-serif;
+    }
+
+    .screen {
+      position: relative;
+      overflow: hidden;
+      scroll-margin-top: 108px;
+      margin: 24px 0;
+      padding: 34px 34px 44px;
+      border: 1px solid rgba(183,218,243,.74);
+      border-radius: 30px;
+      background: rgba(255,255,255,.98);
+      box-shadow: 0 18px 52px rgba(55,115,160,.11);
+    }
+
+    .screen::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto;
+      height: 4px;
+      background: linear-gradient(90deg, transparent, #9bd4fa, transparent);
+      opacity: .72;
+    }
+
+    .screen-kicker {
+      margin: 0 0 8px;
+      color: #6d8ba2;
+      font: 700 11px/1 Arial, sans-serif;
+      letter-spacing: .12em;
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    .screen h1,
+    .screen h2 {
+      max-width: 640px;
+      margin: 0 auto 24px;
+      color: #174f91;
+      font: 700 clamp(30px, 6vw, 42px)/1.15 Georgia, serif;
+      text-align: center;
+    }
+
+    .screen h1:focus,
+    .screen h2:focus {
+      outline: none !important;
+      box-shadow: none !important;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    [data-programmatic-focus="true"],
+    [data-programmatic-focus="true"]:focus,
+    [data-programmatic-focus="true"]:focus-visible {
+      outline: 0 !important;
+      outline-color: transparent !important;
+      box-shadow: none !important;
+      -webkit-tap-highlight-color: transparent !important;
+    }
+
+    .story,
+    .feedback,
+    .reward-panel {
+      max-width: 560px;
+      margin-right: auto;
+      margin-left: auto;
+    }
+
+    .story {
+      font: 400 clamp(19px, 4vw, 23px)/1.7 Arial, sans-serif;
+    }
+
+    .story p { margin: 0 0 1em; }
+
+    .story p:last-child { margin-bottom: 0; }
+
+    .placeholder {
+      position: relative;
+      display: grid;
+      min-height: 310px;
+      place-items: center;
+      overflow: hidden;
+      max-width: 640px;
+      margin: 0 auto 28px;
+      border: 2px dashed rgba(87,165,209,.54);
+      border-radius: 25px;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(255,201,220,.5), transparent 24%),
+        radial-gradient(circle at 80% 30%, rgba(178,229,250,.62), transparent 25%),
+        linear-gradient(145deg, #f8fdff, #dff3ff);
+      color: #4c7694;
+      text-align: center;
+    }
+
+    .placeholder-copy {
+      max-width: 330px;
+      padding: 24px;
+      font: 700 18px/1.45 Georgia, serif;
+    }
+
+    .placeholder-copy small {
+      display: block;
+      margin-top: 8px;
+      color: #7890a2;
+      font: 500 13px/1.4 Arial, sans-serif;
+    }
+
+    .interactive-illustration,
+    .story-illustration {
+      position: relative;
+      overflow: hidden;
+      max-width: 640px;
+      margin: 0 auto 28px;
+      border-radius: 24px;
+      box-shadow: 0 14px 34px rgba(20,66,112,.18);
+    }
+
+    .interactive-illustration img,
+    .story-illustration img {
+      display: block;
+      width: 100%;
+      height: auto;
+      aspect-ratio: 3 / 2;
+      object-fit: cover;
+    }
+
+    .chapter3-illustration img {
+      aspect-ratio: auto;
+      object-fit: contain;
+    }
+
+    .interactive-illustration--dango .branch-hotspot {
+      width: 9%;
+      height: 15%;
+      border-radius: 50%;
+      touch-action: manipulation;
+      transform: translate(-50%, -50%);
+    }
+
+    .interactive-illustration--dango .branch-hotspot:nth-of-type(1) { left: 20%; top: 81%; }
+    .interactive-illustration--dango .branch-hotspot:nth-of-type(2) { left: 52%; top: 78%; right: auto; }
+    .interactive-illustration--dango .branch-hotspot:nth-of-type(3) { left: 62.5%; top: 87%; right: auto; }
+
+    .branch-hotspot {
+      position: absolute;
+      display: block;
+      border: 0;
+      border-radius: 22px;
+      background: transparent;
+      color: transparent;
+      box-shadow: none;
+      font-size: 0;
+      cursor: pointer;
+      transition: .2s;
+    }
+
+    .branch-hotspot:nth-of-type(1) { left: 31%; top: 0; width: 37%; height: 25%; }
+    .branch-hotspot:nth-of-type(2) { right: 0; top: 0; width: 32%; height: 32%; }
+    .branch-hotspot:nth-of-type(3) { right: 0; top: 30%; width: 31%; height: 43%; }
+
+    .interactive-illustration--stars .branch-hotspot {
+      width: 15%;
+      height: 22%;
+      border-radius: 50%;
+      touch-action: manipulation;
+    }
+
+    .interactive-illustration--stars .branch-hotspot:nth-of-type(1) { left: 55.5%; top: .5%; }
+    .interactive-illustration--stars .branch-hotspot:nth-of-type(2) { left: 78.5%; top: 8.5%; right: auto; }
+    .interactive-illustration--stars .branch-hotspot:nth-of-type(3) { left: 67%; top: 20.5%; right: auto; }
+
+    .branch-hotspot.found {
+      pointer-events: none;
+      cursor: default;
+    }
+
+    .task {
+      max-width: 560px;
+      margin: 32px auto 0;
+      padding: 25px 0 0;
+      border: 0;
+      border-top: 1px solid #dbeaf7;
+      border-radius: 0;
+      background: transparent;
+      box-shadow: none;
+    }
+
+    .task h2,
+    .task h3 {
+      margin: 0 0 8px;
+      color: #194f9b;
+      font: 700 clamp(23px, 5vw, 30px)/1.25 Georgia, serif;
+    }
+
+    .task-instruction,
+    .task-status {
+      margin: 0 0 18px;
+      color: #65778a;
+      font: 400 18px/1.45 Arial, sans-serif;
+    }
+
+    .multi-selection-status {
+      display: inline-flex;
+      align-items: center;
+      min-height: 36px;
+      margin: 0 0 14px;
+      padding: 6px 12px;
+      border: 1px solid rgba(74,151,204,.28);
+      border-radius: 999px;
+      background: rgba(227,244,255,.88);
+      color: #286b9d;
+      font: 700 16px/1.25 Arial, sans-serif;
+    }
+
+    [data-branch-status] {
+      display: inline-flex;
+      align-items: center;
+      min-height: 42px;
+      padding: 7px 15px;
+      border: 1px solid #badbf3;
+      border-radius: 999px;
+      background: #edf8ff;
+      color: #245f91;
+      box-shadow: 0 5px 14px rgba(42,116,169,.08);
+      font-weight: 700;
+      transition: background-color .2s ease, border-color .2s ease, color .2s ease;
+    }
+
+    [data-branch-status][data-found="1"] {
+      border-color: #9fceed;
+      background: #e2f3ff;
+      color: #18598d;
+    }
+
+    [data-branch-status][data-found="2"] {
+      border-color: #79bce6;
+      background: #d5edfc;
+      color: #124f81;
+    }
+
+    [data-branch-status][data-found="3"] {
+      border-color: #409ed7;
+      background: #c6e8fb;
+      color: #0d4774;
+      box-shadow: 0 6px 18px rgba(42,116,169,.15);
+    }
+
+    .word-cards,
+    .answers,
+    .grammar-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .word-cards { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+    .word-card,
+    .answer,
+    .grammar-choice {
+      min-height: 64px;
+      padding: 16px 20px;
+      border: 1.5px solid #b9d9f8;
+      border-radius: 18px;
+      background: #fff;
+      color: #263649;
+      box-shadow: 0 4px 14px rgba(44,94,137,.055);
+      font: 400 clamp(20px,4.4vw,22px)/1.45 Arial, sans-serif;
+      cursor: pointer;
+      transition: .16s;
+    }
+
+    .word-card {
+      min-height: 90px;
+      border: 1px solid #c8e0f2;
+      border-radius: 20px;
+      background: linear-gradient(145deg,#f8fcff,#edf7ff);
+      color: #245f91;
+      box-shadow: 0 7px 20px rgba(53,106,148,.07);
+      font: 650 clamp(18px,3.8vw,21px)/1.4 Arial, sans-serif;
+    }
+
+    .word-card.viewed {
+      border-color: #92c5e7;
+      background: linear-gradient(145deg,#f5fbff,#e8f6ff);
+    }
+
+    .answer {
+      width: 100%;
+      text-align: left;
+    }
+
+    .answer.selected,
+    .grammar-choice.selected,
+    .answer.correct,
+    .grammar-choice.correct {
+      border-color: #2777d8;
+      background: #e9f5ff;
+      color: #263649;
+      box-shadow: 0 0 0 3px rgba(39,119,216,.13);
+    }
+
+    .answer.wrong-choice,
+    .grammar-choice.wrong-choice {
+      border-color: #b9cddd;
+      background: #f5f8fa;
+      color: #52697b;
+      box-shadow: 0 0 0 3px rgba(116,147,171,.09);
+    }
+
+    .answer:disabled:not(.correct),
+    .grammar-choice:disabled:not(.correct) {
+      opacity: .67;
+    }
+
+    .answer:focus-visible,
+    .word-card:focus-visible,
+    .grammar-choice:focus-visible,
+    .branch-hotspot:focus-visible,
+    .next-button:focus-visible,
+    .check-button:focus-visible,
+    .feather-button:focus-visible {
+      outline: 3px solid var(--focus);
+      outline-offset: 3px;
+    }
+
+    .check-button,
+    .next-button {
+      display: flex;
+      width: 100%;
+      max-width: 560px;
+      min-height: 60px;
+      align-items: center;
+      justify-content: center;
+      margin: 22px auto 0;
+      padding: 13px 20px;
+      border: 1px solid rgba(48,128,199,.26);
+      border-radius: 19px;
+      background: linear-gradient(180deg,#f5fbff,#e9f5ff);
+      color: #185b9f;
+      box-shadow: 0 7px 20px rgba(42,111,168,.12), inset 0 1px 0 rgba(255,255,255,.95);
+      font: 700 20px/1.25 Arial, sans-serif;
+      cursor: pointer;
+      transition: .2s;
+    }
+
+    .check-button:disabled {
+      border-color: #d1dee7;
+      background: #f3f6f8;
+      color: #91a2ae;
+      cursor: default;
+    }
+
+    .check-button:not(:disabled):hover,
+    .next-button:hover {
+      background: linear-gradient(180deg,#eff9ff,#dcefff);
+      box-shadow: 0 9px 24px rgba(42,111,168,.16), inset 0 1px 0 #fff;
+    }
+
+    .check-button:not(:disabled):active,
+    .next-button:active {
+      transform: translateY(2px);
+    }
+
+    .feedback {
+      margin-top: 17px;
+      padding: 15px 17px;
+      border-radius: 16px;
+      background: #edf7fd;
+      color: #42677f;
+      font: 600 16px/1.5 Arial, sans-serif;
+    }
+
+    .feedback.good {
+      border: 1.5px solid #83c3ee;
+      background: linear-gradient(135deg,#f4fbff,#e8f7ff);
+      color: #194f9b;
+    }
+
+    .feedback.bad {
+      border: 1.5px solid #c7d7e3;
+      background: #f6f9fb;
+      color: #52697b;
+    }
+
+    .next-button.opened {
+      position: relative;
+      min-height: 61px;
+      padding-right: 66px;
+      padding-left: 66px;
+      border-color: rgba(16,79,142,.55);
+      background: linear-gradient(180deg,#4a9bea,#2f82d4 48%,#2069b8);
+      color: #fff;
+      text-shadow: 0 1px 1px rgba(7,53,100,.28);
+      box-shadow:
+        0 5px 0 #15589d,
+        0 11px 23px rgba(18,83,143,.25),
+        inset 0 1px 0 rgba(255,255,255,.48);
+      transform: translateY(-1px);
+      cursor: default;
+    }
+
+    .next-button.opened::before,
+    .next-button.opened::after {
+      content: "🐾";
+      position: absolute;
+      top: 50%;
+      color: rgba(255,255,255,.58);
+      filter: grayscale(1) brightness(4);
+      font-size: 23px;
+      opacity: .58;
+      transform: translateY(-52%);
+    }
+
+    .next-button.opened::before { left: 22px; }
+    .next-button.opened::after { right: 22px; }
+
+    .site-credit {
+      position: absolute;
+      z-index: 5;
+      right: 12px;
+      bottom: 9px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 5px;
+      width: auto;
+      margin: 0;
+      padding: 5px 8px;
+      border: 1px solid rgba(255,255,255,.82);
+      border-radius: 999px;
+      background: rgba(247,252,255,.76);
+      color: #71879a;
+      box-shadow: 0 4px 13px rgba(42,99,139,.12);
+      font: 500 10px/1 Arial, sans-serif;
+      text-align: center;
+      white-space: nowrap;
+      backdrop-filter: blur(8px);
+    }
+
+    .site-credit a {
+      padding: 2px 3px;
+      border-radius: 6px;
+      color: #2b6f9f;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .site-credit a:hover { text-decoration: underline; }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      overflow: hidden;
+      clip: rect(0,0,0,0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    .grammar-row {
+      padding: 16px;
+      border: 1px solid #d4e5f1;
+      border-radius: 17px;
+      background: #f9fdff;
+    }
+
+    .grammar-row strong {
+      display: block;
+      margin-bottom: 10px;
+      color: #345d7b;
+      font: 700 19px/1.3 Georgia, serif;
+    }
+
+    .grammar-options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 9px;
+    }
+
+    [data-screen="5"] [data-grammar-task] {
+      margin-top: 20px;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      box-shadow: none;
+    }
+
+    [data-screen="5"] .grammar-list {
+      gap: 14px;
+    }
+
+    [data-screen="5"] .grammar-row {
+      display: grid;
+      grid-template-columns: 92px minmax(0, 1fr);
+      align-items: center;
+      gap: 12px;
+      padding: 0;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+    }
+
+    [data-screen="5"] .grammar-row strong {
+      margin: 0;
+      font-size: 18px;
+      text-align: left;
+    }
+
+    [data-screen="5"] .grammar-row.needs-retry {
+      padding: 8px;
+      border-radius: 16px;
+      background: rgba(238,246,251,.82);
+      box-shadow: 0 0 0 2px rgba(116,147,171,.12);
+    }
+
+    [data-screen="5"] .grammar-choice {
+      min-height: 54px;
+      padding: 11px 14px;
+      border-radius: 15px;
+      font-size: 18px;
+    }
+
+    .highlight-line {
+      border-radius: 8px;
+      background: #e6f4ff;
+      box-shadow: 0 0 0 4px rgba(39,119,216,.1);
+    }
+
+    .sequence-quiz {
+      max-width: 560px;
+      margin: 26px auto 0;
+    }
+
+    .sequence-panel {
+      animation: sequenceReveal .35s ease;
+    }
+
+    .sequence-panel .task {
+      margin-top: 0;
+    }
+
+    @keyframes sequenceReveal {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: none; }
+    }
+
+    .feather-scene { position: relative; }
+
+    .feather-button {
+      position: absolute;
+      top: 82%;
+      left: 71%;
+      width: 20%;
+      height: 17%;
+      min-width: 44px;
+      min-height: 44px;
+      border: 0;
+      border-radius: 45%;
+      background: transparent;
+      color: transparent;
+      font-size: 0;
+      cursor: pointer;
+      box-shadow: none;
+      transition: opacity .3s;
+    }
+
+    .feather-button.collected {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .tanzaku-button {
+      top: 79%;
+      left: 34%;
+      width: 20%;
+      height: 20%;
+      border-radius: 32%;
+    }
+
+    .maple-leaf-button {
+      top: 78%;
+      left: 58%;
+      width: 17%;
+      height: 17%;
+      border-radius: 38%;
+    }
+
+    .feather-hint {
+      max-width: 560px;
+      margin: 18px auto 24px;
+      color: #496c88;
+      text-align: center;
+      font: 600 17px/1.4 Arial, sans-serif;
+    }
+
+    .clue-slot {
+      display: none;
+      max-width: 560px;
+      margin: 24px auto 0;
+      color: #587187;
+      text-align: center;
+      font: 600 15px/1.35 Arial, sans-serif;
+    }
+
+    .clue-slot strong {
+      display: block;
+      margin-bottom: 3px;
+      color: #244f7a;
+      font: 700 22px/1.2 Georgia, serif;
+    }
+
+    .clue-slot.collected {
+      display: block;
+      animation: sequenceReveal .35s ease both;
+    }
+
+    .reward-placeholder {
+      background:
+        radial-gradient(circle at 24% 24%, rgba(255,190,217,.68), transparent 24%),
+        radial-gradient(circle at 74% 30%, rgba(255,218,231,.66), transparent 27%),
+        linear-gradient(145deg, #fff6fa, #e4f5ff);
+    }
+
+    .reward-illustration {
+      overflow: hidden;
+      border-radius: 25px;
+      background: #dceef7;
+    }
+
+    .reward-illustration img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .reward-real-photo {
+      overflow: hidden;
+      border-radius: 25px;
+      background: #17263f;
+    }
+
+    .reward-real-photo img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .tsukimi-reward-front {
+      position: absolute;
+    }
+
+    .moon-rabbit {
+      position: absolute;
+      z-index: 2;
+      top: calc(5.1% + 5px);
+      left: 32.8%;
+      width: 7.2%;
+      aspect-ratio: 1;
+      color: rgba(111, 78, 61, .72);
+      filter: blur(.25px);
+      mix-blend-mode: multiply;
+      opacity: 0;
+      pointer-events: none;
+      animation: moonRabbitReveal 14s cubic-bezier(.45, 0, .55, 1) infinite;
+      animation-delay: -4.5s;
+    }
+
+    .moon-rabbit svg {
+      display: block;
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+    }
+
+    .moon-rabbit-pestle {
+      transform-box: fill-box;
+      transform-origin: 84% 84%;
+      animation: moonRabbitPound 2.8s cubic-bezier(.45, 0, .55, 1) infinite;
+    }
+
+    @keyframes moonRabbitReveal {
+      0%, 100% { opacity: 0; transform: scale(.98); }
+      18%, 84% { opacity: .12; transform: scale(.99); }
+      38%, 66% { opacity: .64; transform: scale(1); }
+    }
+
+    @keyframes moonRabbitPound {
+      0%, 100% { transform: rotate(-10deg); }
+      50% { transform: rotate(13deg); }
+    }
+
+    .moon-sparkle {
+      position: absolute;
+      z-index: 3;
+      width: clamp(4px, .85vw, 8px);
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background: radial-gradient(circle, #fff 0 16%, rgba(240,248,255,.9) 24%, rgba(205,229,255,.26) 52%, transparent 76%);
+      filter: drop-shadow(0 0 5px rgba(235,247,255,.92));
+      opacity: .2;
+      pointer-events: none;
+      animation: moonSparkle 5.6s cubic-bezier(.45, 0, .55, 1) infinite;
+    }
+
+    .moon-sparkle::before,
+    .moon-sparkle::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      border-radius: 999px;
+      background: rgba(245,250,255,.5);
+      transform: translate(-50%, -50%);
+    }
+
+    .moon-sparkle::before { width: 72%; height: 1px; }
+    .moon-sparkle::after { width: 1px; height: 72%; }
+
+    .moon-sparkle--1 { left: 27.5%; top: 5%; animation-delay: -1.1s; }
+    .moon-sparkle--2 { left: 45%; top: 7.5%; animation-delay: -3.7s; }
+    .moon-sparkle--3 { left: 29.5%; top: 18%; animation-delay: -2.4s; }
+    .moon-sparkle--4 { left: 43%; top: 19.5%; animation-delay: -.4s; }
+    .moon-sparkle--5 { left: 24%; top: 12%; animation-delay: -4.2s; }
+
+    @keyframes moonSparkle {
+      0%, 100% { opacity: .16; transform: scale(.72); }
+      42% { opacity: .94; transform: scale(1.12); }
+      68% { opacity: .48; transform: scale(.92); }
+    }
+
+    .reward-petal {
+      position: absolute;
+      top: -8%;
+      width: clamp(10px, 1.8vw, 15px);
+      height: clamp(15px, 2.7vw, 22px);
+      clip-path: polygon(50% 100%, 20% 78%, 5% 50%, 10% 22%, 28% 3%, 44% 14%, 50% 19%, 56% 14%, 72% 3%, 90% 22%, 95% 50%, 80% 78%);
+      background: linear-gradient(145deg, rgba(255,243,248,.94) 5%, rgba(247,157,190,.9) 56%, rgba(216,101,148,.86));
+      filter: drop-shadow(0 1px 1px rgba(116,40,71,.2));
+      opacity: .72;
+      animation: rewardPetal 11s linear infinite;
+    }
+
+    .reward-petal:nth-child(2) { left: 20%; animation-delay: -3s; }
+    .reward-petal:nth-child(3) { left: 48%; animation-delay: -8s; }
+    .reward-petal:nth-child(4) { left: 76%; animation-delay: -5s; }
+
+    @keyframes rewardPetal {
+      0% { opacity: 0; transform: translate(0,-20px) rotate(0); }
+      12% { opacity: .72; }
+      50% { transform: translate(35px,220px) rotate(170deg); }
+      100% { opacity: 0; transform: translate(-25px,440px) rotate(340deg); }
+    }
+
+    .reward-star {
+      position: absolute;
+      width: clamp(10px, 2.2vw, 18px);
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background: radial-gradient(circle, #fff 0 12%, rgba(221,242,255,.9) 18%, rgba(154,210,255,.28) 45%, transparent 72%);
+      filter: drop-shadow(0 0 5px rgba(180,225,255,.86));
+      pointer-events: none;
+      transform: translate(-50%, -50%) scale(.55);
+      opacity: .3;
+      animation: rewardStarTwinkle var(--star-speed, 3.4s) ease-in-out infinite;
+      animation-delay: var(--star-delay, 0s);
+    }
+
+    .reward-star::before,
+    .reward-star::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      border-radius: 999px;
+      background: rgba(255,255,255,.92);
+      transform: translate(-50%, -50%);
+    }
+
+    .reward-star::before { width: 100%; height: 1px; }
+    .reward-star::after { width: 1px; height: 100%; }
+
+    .reward-flip-card.flipped .reward-star { animation-play-state: paused; }
+
+    @keyframes rewardStarTwinkle {
+      0%, 100% { opacity: .22; transform: translate(-50%, -50%) scale(.5) rotate(0deg); }
+      42% { opacity: 1; transform: translate(-50%, -50%) scale(1.2) rotate(18deg); }
+      58% { opacity: .56; transform: translate(-50%, -50%) scale(.78) rotate(26deg); }
+    }
+
+    .reward-panel {
+      padding: 22px;
+      border: 1px solid #c9e2f2;
+      border-radius: 22px;
+      background: #fff;
+      color: #3c5d74;
+      font: 400 18px/1.55 Arial, sans-serif;
+    }
+
+    .reward-panel strong {
+      display: block;
+      margin-bottom: 8px;
+      color: #215b8c;
+      font: 700 24px/1.25 Georgia, serif;
+    }
+
+    .chapter-art-placeholder {
+      min-height: clamp(260px, 48vw, 510px);
+      margin: 22px 0 26px;
+      padding: 34px;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      border: 2px dashed rgba(66, 121, 134, .34);
+      border-radius: 28px;
+      color: #385f69;
+      background:
+        radial-gradient(circle at 28% 22%, rgba(255,255,255,.9), transparent 28%),
+        linear-gradient(145deg, rgba(225,244,240,.92), rgba(220,232,247,.9));
+    }
+
+    .chapter-art-placeholder strong {
+      display: block;
+      margin-bottom: 8px;
+      font: 700 clamp(20px, 3vw, 30px)/1.2 Georgia, serif;
+      color: #245567;
+    }
+
+    .chapter-art-placeholder p {
+      max-width: 560px;
+      margin: 0;
+      line-height: 1.55;
+    }
+
+    .placeholder-find-list {
+      width: min(520px, 100%);
+      margin: 18px auto 0;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .placeholder-find-button {
+      min-height: 48px;
+      border: 1px solid rgba(48, 103, 118, .28);
+      border-radius: 18px;
+      color: #245567;
+      background: rgba(255,255,255,.7);
+      font: inherit;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .placeholder-find-button.found {
+      color: white;
+      background: #4289a2;
+      box-shadow: 0 7px 18px rgba(35, 105, 128, .22);
+    }
+
+    .placeholder-find-button.collected {
+      color: white;
+      background: #4289a2;
+      box-shadow: 0 7px 18px rgba(35, 105, 128, .22);
+    }
+
+    .findable-word {
+      display: inline;
+      padding: 0 .08em;
+      border: 0;
+      border-radius: .25em;
+      color: inherit;
+      background: transparent;
+      font: inherit;
+      text-decoration: underline dotted rgba(40, 112, 143, .45) 2px;
+      text-underline-offset: .16em;
+      cursor: pointer;
+    }
+
+    .findable-word.viewed {
+      color: #175f79;
+      background: rgba(143, 211, 221, .28);
+      text-decoration: none;
+    }
+
+    .findable-word:not(.viewed):hover,
+    .findable-word:not(.viewed):focus-visible {
+      color: #175f79;
+      background: rgba(143, 211, 221, .2);
+      text-decoration-color: #287a96;
+      outline: none;
+    }
+
+    .search-targets {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .search-target {
+      padding: 7px 11px;
+      border: 1px solid rgba(48, 103, 118, .25);
+      border-radius: 12px;
+      background: rgba(255,255,255,.68);
+      color: #245567;
+      font-weight: 700;
+    }
+
+    .search-target.found {
+      border-color: #75b9e7;
+      background: #dff3ff;
+      color: #185b9f;
+    }
+
+    .search-target.found::before {
+      content: "✓ ";
+      font-weight: 800;
+    }
+
+    .word-search-text {
+      padding: 0;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+    }
+
+    .search-word {
+      display: inline-block;
+      margin: -2px 0;
+      padding: 3px 2px;
+      border: 0;
+      border-radius: 5px;
+      background: transparent;
+      color: inherit;
+      font: inherit;
+      line-height: 1.35;
+      vertical-align: baseline;
+      cursor: pointer;
+      touch-action: manipulation;
+      transition: background .16s, color .16s, box-shadow .16s;
+    }
+
+    .search-word:hover { background: #f1f7fb; }
+    .search-word:focus-visible { outline: 2px solid #82bde6; outline-offset: 2px; }
+    .search-word.found {
+      padding-inline: 4px;
+      background: #dff3ff;
+      color: #185b9f;
+      box-shadow: 0 0 0 2px rgba(72,157,218,.2);
+    }
+
+    .search-word.miss { animation: search-word-miss .28s ease; }
+    @keyframes search-word-miss { 50% { background: #edf2f5; color: #617589; } }
+
+    @media (pointer: coarse) {
+      .search-word { min-width: 28px; min-height: 38px; margin: -5px 0; padding: 6px 5px; }
+    }
+
+    .moon-fact-icon {
+      justify-self: center;
+      color: #d3a83d;
+      font-size: 36px;
+      line-height: 1;
+      filter: drop-shadow(0 2px 4px rgba(91, 74, 29, .2));
+      transition: transform .25s ease;
+    }
+
+    .hanami-fact-button[aria-expanded="true"] .moon-fact-icon {
+      transform: rotate(-18deg) scale(1.08);
+    }
+
+    .read-words {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .read-word {
+      padding: 9px 13px;
+      border-radius: 12px;
+      color: #214f61;
+      background: rgba(132, 204, 213, .2);
+      box-shadow: inset 0 0 0 1px rgba(69, 139, 153, .18);
+      font-weight: 750;
+    }
+
+    .expression-options {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    @media (max-width: 560px) {
+      .placeholder-find-list,
+      .expression-options { grid-template-columns: 1fr; }
+    }
+
+    .reward-flip-card {
+      position: relative;
+      width: 100%;
+      max-width: 640px;
+      min-height: 0;
+      margin: 0 auto;
+      border-radius: 25px;
+      aspect-ratio: 3 / 2;
+      outline: 0;
+      perspective: 1100px;
+      cursor: pointer;
+    }
+
+    .reward-card-inner {
+      position: relative;
+      display: block;
+      width: 100%;
+      height: 100%;
+      min-height: 0;
+      transform-style: preserve-3d;
+      transition: transform .62s cubic-bezier(.2,.72,.2,1);
+    }
+
+    .reward-flip-card.flipped .reward-card-inner {
+      transform: rotateY(180deg);
+    }
+
+    .reward-face {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      max-width: 100%;
+      height: 100%;
+      min-height: 0;
+      margin: 0;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      box-shadow: 0 15px 36px rgba(43,102,146,.14);
+    }
+
+    .reward-face.reward-placeholder { min-height: 0; }
+
+    .reward-face--back {
+      transform: rotateY(180deg);
+    }
+
+    .reward-card-hint {
+      display: block;
+      max-width: 560px;
+      margin: 12px auto 20px;
+      color: #5f788c;
+      font: 500 17px/1.5 Arial, sans-serif;
+      text-align: center;
+      pointer-events: none;
+    }
+
+    .reading-quote {
+      margin: 16px 0 20px;
+      color: #245f91;
+      font: 700 clamp(20px, 4vw, 24px)/1.55 Georgia, serif;
+    }
+
+    .reward-flip-card:hover .reward-card-inner {
+      transform: translateY(-3px);
+    }
+
+    .reward-flip-card.flipped:hover .reward-card-inner {
+      transform: translateY(-3px) rotateY(180deg);
+    }
+
+    .reward-flip-card:focus-visible {
+      outline: 3px solid var(--focus);
+      outline-offset: 4px;
+    }
+
+    .hanami-facts {
+      display: grid;
+      gap: 15px;
+      max-width: 560px;
+      margin: 0 auto;
+    }
+
+    .hanami-fact {
+      padding: 16px 17px;
+      border: 1px solid rgba(126,187,226,.52);
+      border-radius: 21px;
+      background: linear-gradient(145deg,rgba(255,255,255,.98),rgba(237,248,255,.96));
+      box-shadow: 0 8px 22px rgba(43,102,146,.09);
+    }
+
+    .hanami-fact-button {
+      display: grid;
+      grid-template-columns: minmax(0,1fr) 68px;
+      align-items: center;
+      gap: 12px;
+      width: 100%;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      color: #245b89;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .hanami-fact-button strong {
+      font: 700 clamp(21px,4.5vw,26px)/1.3 Georgia, serif;
+    }
+
+    .hanami-fact-button .hanami-petal {
+      justify-self: center;
+      display: block;
+      width: 64px;
+      height: auto;
+      filter: drop-shadow(0 3px 4px rgba(177,83,118,.2));
+      transform-origin: center;
+      transition: transform .25s ease, filter .25s ease;
+    }
+
+    .hanami-fact-button[aria-expanded="true"] .hanami-petal {
+      filter: saturate(1.14) drop-shadow(0 4px 5px rgba(177,83,118,.24));
+      transform: rotate(5deg) scale(1.06);
+    }
+
+    .hanami-fact-answer {
+      margin: 14px 0 0;
+      padding: 15px 2px 2px;
+      border-top: 1px solid rgba(126,187,226,.38);
+      color: #34566f;
+      font: 400 18px/1.58 Arial, sans-serif;
+      animation: sequenceReveal .3s ease both;
+    }
+
+    .hanami-fact-answer strong {
+      color: #175a91;
+    }
+
+    @media (max-width: 620px) {
+      .chapter-toolbar { gap: 7px; padding: 8px 9px; }
+      .toolbar-button { min-height: 44px; padding: 8px 10px; }
+      .toolbar-title strong { font-size: 15px; }
+      .toolbar-button span:last-child { font-size: 11px; }
+      .chapter-dialog { padding: calc(74px + env(safe-area-inset-top)) 9px 18px; }
+      .chapter-panel { padding: 17px 13px; border-radius: 20px; }
+      .chapter-panel h2 { font-size: 26px; }
+      .chapter-card { grid-template-columns: 40px minmax(0,1fr) 28px; gap: 9px; min-height: 68px; padding: 10px; }
+      .chapter-card strong { font-size: 16px; }
+      .parent-guide-dialog { padding: 10px; }
+      .parent-guide-panel { max-height: 88vh; padding: 24px 16px 18px; border-radius: 21px; }
+      .parent-guide-panel h2 { margin-right: 42px; font-size: 26px; }
+      .parent-guide-list li { padding-left: 45px; font-size: 15px; }
+      .chapter-view { width: 100%; }
+      .screen { margin: 14px 10px; padding: 27px 16px 36px; border-radius: 24px; }
+      .word-cards { grid-template-columns: 1fr; }
+      .placeholder { min-height: 260px; border-radius: 20px; }
+      .interactive-illustration,
+      .story-illustration { min-height: 0; border-radius: 20px; }
+      .task { padding: 22px 0 0; }
+      .story { font-size: 20px; line-height: 1.62; }
+      .answer,
+      .grammar-choice { min-height: 58px; padding: 14px 16px; font-size: 19px; }
+      [data-screen="5"] .grammar-row {
+        grid-template-columns: 1fr;
+        align-items: stretch;
+        gap: 8px;
+      }
+      [data-screen="5"] .grammar-row strong {
+        margin-bottom: 2px;
+        font-size: 18px;
+      }
+      [data-screen="5"] .grammar-options { gap: 6px; }
+      [data-screen="5"] .grammar-choice {
+        min-width: 0;
+        min-height: 50px;
+        padding: 9px 7px;
+        overflow-wrap: anywhere;
+        font-size: 16px;
+      }
+      .check-button,
+      .next-button { min-height: 56px; padding: 13px 18px; border-radius: 17px; font-size: 18px; }
+      .reward-flip-card {
+        width: 100%;
+        min-height: 0;
+        aspect-ratio: 3 / 2;
+      }
+      .reward-card-inner,
+      .reward-face { width: 100%; min-height: 0; }
+      .reward-face.chapter-art-placeholder { padding: 18px; }
+      .reward-face.chapter-art-placeholder strong { font-size: 20px; }
+      .reward-face.chapter-art-placeholder p { font-size: 14px; line-height: 1.4; }
+      .reward-card-hint { margin: 11px auto 18px; font-size: 14px; }
+      .hanami-fact { padding: 15px; }
+      .chapter-progress { gap: 5px; padding-top: 7px; }
+      .progress-title { display: none; }
+      .progress-flames { gap: 2px; }
+      .progress-flame { width: 13px; height: 18px; }
+      .progress-readable { min-width: 31px; font-size: 10px; }
+      .map-stop--5 .map-stop-label { min-height: 58px; padding-top: 7px; padding-bottom: 7px; }
+      .site-credit { right: 8px; bottom: 6px; font-size: 9px; }
+    }
+
+    @media (max-width: 480px) {
+      [data-screen="5"] .grammar-row {
+        grid-template-columns: 1fr;
+        align-items: stretch;
+        gap: 8px;
+      }
+
+      [data-screen="5"] .grammar-row strong {
+        margin-bottom: 2px;
+        font-size: 18px;
+        text-align: left;
+      }
+
+      [data-screen="5"] .grammar-options {
+        grid-template-columns: 1fr;
+        gap: 8px;
+      }
+
+      [data-screen="5"] .grammar-choice {
+        width: 100%;
+        min-height: 52px;
+        padding: 11px 14px;
+        font-size: 18px;
+      }
+    }
+
+    @media (min-width: 900px) {
+      main { width: min(980px, 100%); }
+      .chapter-view { width: min(900px, calc(100% - 32px)); }
+      .screen { padding-right: 54px; padding-left: 54px; }
+      .chapter-toolbar {
+        width: 100%;
+        margin-left: 0;
+        padding-right: 18px;
+        padding-left: 18px;
+      }
+    }
+
+    .ios-inapp-browser .chapter-toolbar {
+      top: var(--ios-toolbar-offset, 0px);
+      padding-top: max(8px, env(safe-area-inset-top));
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .reward-petal { display: none; }
+      .reward-star { animation: none; opacity: .55; }
+      .moon-rabbit { animation: none; opacity: .42; transform: none; }
+      .moon-rabbit-pestle { animation: none; }
+      .moon-sparkle { animation: none; opacity: .72; transform: none; }
+    }
+    .next-button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+  </style>
+</head>
+<body>
+  <main>
+    <nav class="part-switch" aria-label="Выбор части путешествия">
+      <a href="hoshi_chapters_1_2_3_4_bilingual_v1.html">Часть 1 · Японские духи</a>
+      <span class="active" aria-current="page">Часть 2 · Японские традиции</span>
+    </nav>
+
+    <section class="map-canvas" data-map-view aria-label="Карта второй части путешествия Хоси">
+      <img
+        src="approved_part2_seasonal_map_background.webp"
+        alt="Карта японских традиций: ханами, Танабата, Цукими, Сэцубун и финальная встреча с Куро"
+        data-map-image
+        width="863"
+        height="1822"
+        decoding="async">
+
+      <header class="map-heading">
+        <small>Часть 2</small>
+        <h1>Японские традиции</h1>
+      </header>
+
+      <button type="button" class="map-stop map-stop--1" data-open-chapter="1" aria-label="Открыть главу 1: Ханами">
+        <span class="map-stop-label">
+          <span class="map-kicker"><span class="map-complete-flame" aria-hidden="true"></span>Глава 1</span>
+          <strong>Ханами</strong>
+        </span>
+      </button>
+
+      <button type="button" class="map-stop map-stop--2" data-open-chapter="2" aria-label="Открыть главу 2: Танабата">
+        <span class="map-stop-label">
+          <span class="map-kicker"><span class="map-complete-flame" aria-hidden="true"></span>Глава 2</span>
+          <strong>Танабата</strong>
+        </span>
+      </button>
+
+      <button type="button" class="map-stop map-stop--3" data-open-chapter="3" aria-label="Открыть главу 3: Цукими" data-en-aria-label="Open Chapter 3: Tsukimi">
+        <span class="map-stop-label">
+          <span class="map-kicker"><span class="map-complete-flame" aria-hidden="true"></span>Глава 3</span>
+          <strong>Цукими</strong>
+        </span>
+      </button>
+
+      <button type="button" class="map-stop map-stop--4" aria-label="Глава 4: Сэцубун, в разработке" aria-disabled="true" disabled>
+        <span class="map-stop-label">
+          <span class="map-kicker"><span class="map-complete-flame" aria-hidden="true"></span>Глава 4</span>
+          <strong>Сэцубун</strong>
+          <small class="map-development-status" data-map-development>В разработке</small>
+        </span>
+      </button>
+
+      <button type="button" class="map-stop map-stop--5" aria-label="Финал: тайна Куро, в разработке" aria-disabled="true" disabled>
+        <span class="map-stop-label">
+          <span class="map-kicker"><span class="map-complete-flame" aria-hidden="true"></span>Финал</span>
+          <strong>Тайна Куро</strong>
+          <small class="map-development-status" data-map-development>В разработке</small>
+        </span>
+      </button>
+
+      <footer class="site-credit">Designed by <a href="https://www.linkedin.com/in/marina-medved-design" target="_blank" rel="noopener noreferrer" aria-label="Marina Medved on LinkedIn">Marina Medved</a></footer>
+    </section>
+
+    <section class="chapter-view" data-chapter-view hidden aria-label="Глава 1: Праздник лепестков">
+      <header class="chapter-toolbar">
+        <button type="button" class="toolbar-button" data-chapter-menu aria-label="Открыть список глав" aria-expanded="false">
+          <span class="toolbar-icon" aria-hidden="true">☰</span>
+          <span data-menu-button-label>Главы</span>
+        </button>
+        <div class="toolbar-title">
+          <strong data-toolbar-chapter-title>Праздник лепестков</strong>
+          <small data-progress-label>Экран 1 из 7</small>
+        </div>
+        <button type="button" class="toolbar-button" data-restart aria-label="Начать текущую главу заново">
+          <span class="toolbar-icon toolbar-icon--restart" aria-hidden="true">↻</span>
+          <span data-restart-label>Заново</span>
+        </button>
+        <div class="chapter-progress">
+          <span class="progress-title" data-progress-title>Прогресс</span>
+          <div class="progress-flames" aria-hidden="true">
+            <i class="progress-flame on"></i>
+            <i class="progress-flame"></i>
+            <i class="progress-flame"></i>
+            <i class="progress-flame"></i>
+            <i class="progress-flame"></i>
+            <i class="progress-flame"></i>
+            <i class="progress-flame"></i>
+          </div>
+          <span class="progress-readable" data-progress-readable>1 / 7</span>
+          <span class="sr-only" data-progress-status aria-live="polite">Экран 1 из 7</span>
+        </div>
+      </header>
+
+      <article class="screen" data-screen="1">
+        <p class="screen-kicker">Глава 1 · Экран 1</p>
+        <h1>Розовое облако</h1>
+        <section class="interactive-illustration" aria-label="Хоси рассматривает три цветущие ветки сакуры рядом со своим храмом">
+          <img src="hoshi_part2_chapter1_screen1_v2.webp" alt="Хоси смотрит на три цветущие ветки сакуры рядом со своим храмом" data-en-alt="Hoshi looks at three flowering cherry branches beside her shrine" width="1536" height="1024" decoding="async">
+          <button type="button" class="branch-hotspot" data-branch="1" aria-label="Выбрать длинную верхнюю ветку сакуры"></button>
+          <button type="button" class="branch-hotspot" data-branch="2" aria-label="Выбрать короткую верхнюю ветку сакуры"></button>
+          <button type="button" class="branch-hotspot" data-branch="3" aria-label="Выбрать нижнюю ветку сакуры"></button>
+        </section>
+        <section class="task">
+          <h2>Нажми на три цветущие ветки на картинке</h2>
+          <p class="task-status" data-branch-status data-found="0" aria-live="polite">Найдено: 0 из 3</p>
+        </section>
+        <section class="story">
+          <p>После путешествия через заснеженный лес и Долину туманов у Хоси появились настоящие друзья.</p>
+          <p>Тем временем зима понемногу отступала. Снег растаял, и однажды утром началось новое приключение.</p>
+          <p>На рассвете Хоси увидела над лесом розовое облако.</p>
+          <p>Но облако не плыло по небу. Оно тихо качалось над деревьями.</p>
+          <p>— Сакура расцвела! — догадалась Хоси.</p>
+          <p>Она позвала Понту и Бико на весенний праздник.</p>
+        </section>
+        <button type="button" class="next-button" data-next-screen="2" hidden>Посмотрим поближе</button>
+      </article>
+
+      <article class="screen" data-screen="2" hidden>
+        <p class="screen-kicker">Глава 1 · Экран 2</p>
+        <h2>Слова перед праздником</h2>
+        <section class="task">
+          <h3>Эти слова скоро встретятся в истории</h3>
+          <p class="task-instruction">Нажми на слово: оно раскроется по слогам. Нажми ещё раз, чтобы собрать его целиком.</p>
+          <div class="word-cards">
+            <button type="button" class="word-card" data-word="admire" data-whole="любоваться" data-parts="лю-бо-вать-ся">любоваться</button>
+            <button type="button" class="word-card" data-word="spread" data-whole="расстелили" data-parts="рас-сте-ли-ли">расстелили</button>
+            <button type="button" class="word-card" data-word="swirled" data-whole="закружились" data-parts="за-кру-жи-лись">закружились</button>
+          </div>
+        </section>
+        <section class="story" data-screen2-story hidden>
+          <p>Под цветущим деревом друзья расстелили покрывало.</p>
+          <p>Понта поставил корзинку с угощением. Бико осторожно положила рядом чашки.</p>
+          <p>— Сегодня у нас ханами, — сказала Хоси. — Будем любоваться сакурой.</p>
+          <p>Несколько лепестков уже закружились в воздухе.</p>
+        </section>
+        <button type="button" class="next-button" data-next-screen="3" hidden>Всё готово</button>
+      </article>
+
+      <article class="screen" data-screen="3" hidden>
+        <p class="screen-kicker">Глава 1 · Экран 3</p>
+        <h2>Незваный знаток</h2>
+        <section class="story-illustration" aria-label="Куро впервые появляется перед Хоси, Понтой и Бико на празднике ханами">
+          <img
+            src="hoshi_part2_chapter1_screen3_v1.webp"
+            alt="Куро командует с ветки, а Хоси, Понта и Бико удивлённо смотрят на него"
+            data-en-alt="Kuro commands from a branch while Hoshi, Ponta, and Biko look up at him in surprise"
+            data-screen3-image
+            width="1536"
+            height="1024"
+            loading="lazy"
+            decoding="async">
+        </section>
+        <section class="story">
+          <p>Друзья ещё не успели сесть, как над ними промелькнула чёрная тень.</p>
+          <p>— Эй-эй-эй! Стоп-стоп-стоп!</p>
+          <p>На ветку опустилась чёрная птица в тёмно-синей одежде.</p>
+          <p>— Я Куро, великий знаток праздников. Вы всё приготовили неправильно!</p>
+          <p>Он спрыгнул на землю и потянул покрывало в сторону.</p>
+          <p>— Здесь мало лепестков. Сейчас я всё исправлю. Не благодарите.</p>
+          <p>Друзья переглянулись. Неужели Куро действительно знал, как проводить ханами?</p>
+        </section>
+        <section class="task" data-single-task="screen3" data-correct-value="move">
+          <h3>Что Куро решил сделать, не спросив остальных?</h3>
+          <div class="answers" data-shuffle>
+            <button type="button" class="answer" data-value="guests">Позвать ещё гостей</button>
+            <button type="button" class="answer" data-value="move">Передвинуть покрывало</button>
+            <button type="button" class="answer" data-value="cups">Принести чашки</button>
+            <button type="button" class="answer" data-value="petals">Собрать опавшие лепестки</button>
+          </div>
+          <button type="button" class="check-button" data-check disabled>Проверить</button>
+          <div class="feedback" data-feedback hidden aria-live="polite"></div>
+        </section>
+        <button type="button" class="next-button" data-next-screen="4" hidden>Посмотрим, как он поможет</button>
+      </article>
+
+      <article class="screen" data-screen="4" hidden>
+        <p class="screen-kicker">Глава 1 · Экран 4</p>
+        <h2>Помощь или вмешательство?</h2>
+        <section class="story">
+          <p>Хотя друзья уже расстелили покрывало, Куро потянул его к другому дереву.</p>
+          <p>Потом он передвинул корзинку на солнце и переставил все чашки.</p>
+          <p>— Может быть, сначала спросишь нас? — тихо сказала Бико.</p>
+          <p>— Некогда! Лепесткам тоже нужна помощь.</p>
+          <p>Куро подлетел к нижней ветке сакуры и протянул к ней крыло.</p>
+          <p>— Сейчас устроим настоящий розовый дождь!</p>
+        </section>
+        <section class="task" data-multi-task>
+          <h3>Какие два действия действительно были бы помощью?</h3>
+          <p class="task-instruction">Выбери два ответа.</p>
+          <p class="multi-selection-status" data-multi-status aria-live="polite">Выбрано: 0 из 2</p>
+          <div class="answers" data-shuffle>
+            <button type="button" class="answer" data-value="ask" data-correct="true">Поставить корзинку туда, куда попросили</button>
+            <button type="button" class="answer" data-value="own">Передвинуть всё по-своему</button>
+            <button type="button" class="answer" data-value="bring" data-correct="true">Принести то, о чём попросили</button>
+            <button type="button" class="answer" data-value="shake">Потрясти цветущую ветку</button>
+          </div>
+          <button type="button" class="check-button" data-check disabled>Проверить</button>
+          <div class="feedback" data-feedback hidden aria-live="polite"></div>
+        </section>
+        <button type="button" class="next-button" data-next-screen="5" hidden>Остановим Куро</button>
+      </article>
+
+      <article class="screen" data-screen="5" hidden>
+        <p class="screen-kicker">Глава 1 · Экран 5</p>
+        <h2>Розовый дождь</h2>
+        <section class="story-illustration" aria-label="Хоси, Понта и Бико радуются лепесткам сакуры, которые подхватил ветер">
+          <img
+            src="hoshi_part2_chapter1_screen5_v1.webp"
+            alt="Хоси, Понта и Бико радостно смотрят на летящие лепестки сакуры; один лепесток лежит на носу Понты"
+            data-en-alt="Hoshi, Ponta, and Biko joyfully watch cherry petals fly through the air; one petal rests on Ponta’s nose"
+            data-screen5-image
+            width="1536"
+            height="1024"
+            loading="lazy"
+            decoding="async">
+        </section>
+        <section class="story">
+          <p>Куро уже потянулся к ветке.</p>
+          <p>— Эй-эй-эй! Теперь действительно стоп! — крикнул Понта.</p>
+          <p>— Не трогай сакуру! — добавила Хоси.</p>
+          <p>Но в этот момент налетел ветер.</p>
+        </section>
+        <section class="task" data-grammar-task>
+          <h3>Продолжи историю</h3>
+          <p class="task-instruction">Выбери целое слово для каждого предложения.</p>
+          <div class="grammar-list">
+            <section class="grammar-row" data-grammar-row data-correct-value="качнулась">
+              <strong>Ветка…</strong>
+              <div class="grammar-options" data-shuffle>
+                <button type="button" class="grammar-choice" data-value="качнулась">качнулась</button>
+                <button type="button" class="grammar-choice" data-value="качнулись">качнулись</button>
+              </div>
+            </section>
+            <section class="grammar-row" data-grammar-row data-correct-value="закружились">
+              <strong>Лепестки…</strong>
+              <div class="grammar-options" data-shuffle>
+                <button type="button" class="grammar-choice" data-value="закружился">закружился</button>
+                <button type="button" class="grammar-choice" data-value="закружились">закружились</button>
+              </div>
+            </section>
+            <section class="grammar-row" data-grammar-row data-correct-value="замерла">
+              <strong>Бико…</strong>
+              <div class="grammar-options" data-shuffle>
+                <button type="button" class="grammar-choice" data-value="замерла">замерла</button>
+                <button type="button" class="grammar-choice" data-value="замерли">замерли</button>
+              </div>
+            </section>
+          </div>
+          <button type="button" class="check-button" data-check disabled>Проверить</button>
+          <div class="feedback" data-feedback hidden aria-live="polite"></div>
+        </section>
+        <section class="story" data-screen5-continuation hidden>
+          <p>Ветка качнулась. Лепестки закружились над поляной и медленно опустились на покрывало.</p>
+          <p>Бико встрепенулась и замерла от восхищения. Понта попытался поймать лепесток носом.</p>
+          <p>Куро гордо расправил крылья.</p>
+          <p>— Видели? Всё получилось благодаря мне!</p>
+        </section>
+        <button type="button" class="next-button" data-next-screen="6" hidden>Так ли это?</button>
+      </article>
+
+      <article class="screen" data-screen="6" hidden>
+        <p class="screen-kicker">Глава 1 · Экран 6</p>
+        <h2>Блестящее объяснение Куро</h2>
+        <section class="story" data-screen6-story>
+          <p>Хоси внимательно посмотрела на Куро.</p>
+          <p data-truth-line>— Ветер поднял лепестки раньше, чем ты тронул ветку.</p>
+          <p data-excuse-line>— Именно так я всё и задумал, — ответил Куро.</p>
+          <p>— А корзинку зачем поставил на солнце? — спросил Понта.</p>
+          <p>— Чтобы угощение стало теплее.</p>
+          <p>— И покрывало передвинул?</p>
+          <p>— Я проверял, заметите ли вы.</p>
+          <p>Бико прикрыла рот лапками, чтобы не рассмеяться.</p>
+        </section>
+        <div class="sequence-quiz">
+          <section class="sequence-panel" data-screen6-step="1">
+            <section class="task" data-single-task="screen6a" data-correct-value="wind">
+              <h3>Что произошло на самом деле?</h3>
+              <div class="answers" data-shuffle>
+                <button type="button" class="answer" data-value="kuro">Куро встряхнул ветку</button>
+                <button type="button" class="answer" data-value="wind">Ветер поднял лепестки</button>
+                <button type="button" class="answer" data-value="hoshi">Хоси подбросила лепестки</button>
+              </div>
+              <button type="button" class="check-button" data-check disabled>Проверить</button>
+              <div class="feedback" data-feedback hidden aria-live="polite"></div>
+            </section>
+            <button type="button" class="next-button" data-screen6-next-step hidden>Следующий вопрос</button>
+          </section>
+          <section class="sequence-panel" data-screen6-step="2" hidden>
+            <section class="task" data-single-task="screen6b" data-correct-value="planned">
+              <h3>Как Куро попытался выдать это за свой план?</h3>
+              <div class="answers" data-shuffle>
+                <button type="button" class="answer" data-value="planned">«Именно так я всё и задумал»</button>
+                <button type="button" class="answer" data-value="missed">«Я не заметил ветра»</button>
+                <button type="button" class="answer" data-value="hoshi">«Это сделала Хоси»</button>
+              </div>
+              <button type="button" class="check-button" data-check disabled>Проверить</button>
+              <div class="feedback" data-feedback hidden aria-live="polite"></div>
+            </section>
+          </section>
+        </div>
+        <section class="story" data-ponta-reaction hidden>
+          <p>— Удобно ты всё задумал. Особенно ветер, — сказал Понта.</p>
+        </section>
+        <button type="button" class="next-button" data-next-screen="7" hidden>Что ответит Куро?</button>
+      </article>
+
+      <article class="screen" data-screen="7" hidden>
+        <p class="screen-kicker">Глава 1 · Экран 7</p>
+        <h2>Чёрное перо</h2>
+        <section class="interactive-illustration feather-scene" aria-label="Хоси объясняет Куро традицию ханами; рядом с Куро на покрывале лежит чёрное перо">
+          <img
+            src="hoshi_part2_chapter1_screen7_v1.webp"
+            alt="Хоси разговаривает с Куро под цветущей сакурой; на покрывале рядом с Куро лежит чёрное перо"
+            data-en-alt="Hoshi talks with Kuro beneath the blooming cherry tree; a black feather lies on the blanket beside him"
+            data-screen7-image
+            width="1536"
+            height="1024"
+            loading="lazy"
+            decoding="async">
+          <button type="button" class="feather-button" data-feather aria-label="Собрать чёрное перо"></button>
+        </section>
+        <section class="story">
+          <p>Хоси подняла с покрывала розовый лепесток.</p>
+          <p>— Розовый дождь не нужно устраивать, — сказала она. — На ханами приходят любоваться цветами. Сакура справится сама.</p>
+          <p>Куро посмотрел на ветку, которую едва не потревожил.</p>
+          <p>— Я просто хотел сделать праздник зрелищнее. А вы всё делаете по старым правилам.</p>
+          <p>— Традиции появились не просто так, — ответила Хоси. — Они помогают любоваться цветами и беречь деревья.</p>
+          <p>Куро поправил маленькую шапочку.</p>
+          <p>— Я это знал. Просто хотел проверить вас.</p>
+          <p>— И как, мы справились? — спросил Понта.</p>
+          <p>— Вам ещё нужно потренироваться, — важно ответил Куро.</p>
+          <p>Он взмахнул крыльями и исчез между деревьями.</p>
+          <p>На покрывале осталось одно чёрное перо.</p>
+        </section>
+        <p class="feather-hint" data-feather-hint>Найди чёрное перо на картинке и нажми на него</p>
+        <div class="clue-slot" data-clue-slot aria-live="polite">
+          <strong>Тайна Куро</strong>
+          <span>Первая улика найдена</span>
+        </div>
+        <button type="button" class="next-button" data-next-screen="8" hidden>Открыть награду</button>
+      </article>
+
+      <article class="screen" data-screen="8" hidden>
+        <p class="screen-kicker">Награда главы 1</p>
+        <h2>Настоящее ханами</h2>
+        <div
+          class="reward-flip-card"
+          data-reward-card
+          role="button"
+          tabindex="0"
+          aria-pressed="false"
+          aria-label="Перевернуть карточку и увидеть настоящее ханами">
+          <div class="reward-card-inner">
+            <section class="reward-illustration reward-face reward-face--front" data-fairy-reward>
+              <img
+                src="hoshi_part2_chapter1_reward_fairy_v1.webp"
+                alt="Хоси, Понта и Бико рассматривают отражение цветущей сакуры и дорожку лепестков в пруду"
+                data-en-alt="Hoshi, Ponta, and Biko admire the reflection of blooming cherry trees and a trail of petals in the pond"
+                data-reward-fairy-image
+                width="1536"
+                height="1024"
+                loading="lazy"
+                decoding="async">
+              <span class="reward-petal" aria-hidden="true"></span>
+              <span class="reward-petal" aria-hidden="true"></span>
+              <span class="reward-petal" aria-hidden="true"></span>
+            </section>
+            <section class="reward-real-photo reward-face reward-face--back" data-real-reward>
+              <img
+                src="hoshi_part2_chapter1_reward_real_v1.webp"
+                alt="Цветущая сакура в вечернем японском саду отражается в ручье рядом с фонарями и мостиком"
+                data-en-alt="Cherry blossoms in an evening Japanese garden reflect in a stream beside lanterns and a small bridge"
+                data-reward-real-image
+                width="1440"
+                height="960"
+                loading="lazy"
+                decoding="async">
+            </section>
+          </div>
+        </div>
+
+        <p class="reward-card-hint" data-reward-hint>Нажми на иллюстрацию, чтобы карточка перевернулась</p>
+
+        <div class="hanami-facts" data-hanami-facts>
+          <section class="hanami-fact">
+            <button type="button" class="hanami-fact-button" data-hanami-fact="0" aria-expanded="false">
+              <strong>Что означает «ханами»?</strong>
+              <img class="hanami-petal" src="hoshi_sakura_branch_icon_v1.png" alt="" width="240" height="157" aria-hidden="true">
+            </button>
+            <p class="hanami-fact-answer" data-hanami-answer hidden>«Хана» по-японски означает «цветы», а «ми» — «смотреть». Получается: «любоваться цветами».</p>
+          </section>
+          <section class="hanami-fact">
+            <button type="button" class="hanami-fact-button" data-hanami-fact="1" aria-expanded="false">
+              <strong>Почему все ждут сакуру?</strong>
+              <img class="hanami-petal" src="hoshi_sakura_branch_icon_v1.png" alt="" width="240" height="157" aria-hidden="true">
+            </button>
+            <p class="hanami-fact-answer" data-hanami-answer hidden>Сакура цветёт совсем недолго. Поэтому японцы стараются не пропустить эти несколько красивых дней.</p>
+          </section>
+          <section class="hanami-fact">
+            <button type="button" class="hanami-fact-button" data-hanami-fact="2" aria-expanded="false">
+              <strong>Что делают на ханами?</strong>
+              <img class="hanami-petal" src="hoshi_sakura_branch_icon_v1.png" alt="" width="240" height="157" aria-hidden="true">
+            </button>
+            <p class="hanami-fact-answer" data-hanami-answer hidden>Люди гуляют, устраивают пикники и рассматривают цветущие деревья. А вечером сакуру иногда подсвечивают фонарями — это называется ёдзакура.</p>
+          </section>
+        </div>
+        <button type="button" class="next-button" data-open-chapter="2" data-en="Go to Chapter 2">Перейти к главе 2</button>
+      </article>
+    </section>
+
+    <template data-chapter-content="2">
+      <header class="chapter-toolbar">
+        <button type="button" class="toolbar-button" data-chapter-menu aria-label="Открыть список глав" aria-expanded="false">
+          <span class="toolbar-icon" aria-hidden="true">☰</span>
+          <span data-menu-button-label>Главы</span>
+        </button>
+        <div class="toolbar-title">
+          <strong data-toolbar-chapter-title>Небесная почта</strong>
+          <small data-progress-label>Экран 1 из 7</small>
+        </div>
+        <button type="button" class="toolbar-button" data-restart aria-label="Начать текущую главу заново">
+          <span class="toolbar-icon toolbar-icon--restart" aria-hidden="true">↻</span>
+          <span data-restart-label>Заново</span>
+        </button>
+        <div class="chapter-progress">
+          <span class="progress-title" data-progress-title>Прогресс</span>
+          <div class="progress-flames" aria-hidden="true">
+            <i class="progress-flame on"></i><i class="progress-flame"></i><i class="progress-flame"></i>
+            <i class="progress-flame"></i><i class="progress-flame"></i><i class="progress-flame"></i><i class="progress-flame"></i>
+          </div>
+          <span class="progress-readable" data-progress-readable>1 / 7</span>
+          <span class="sr-only" data-progress-status aria-live="polite">Экран 1 из 7</span>
+        </div>
+      </header>
+
+      <article class="screen" data-screen="1">
+        <p class="screen-kicker" data-en="Chapter 2 · Screen 1">Глава 2 · Экран 1</p>
+        <h1 data-en="The first summer stars">Первые летние звёзды</h1>
+        <section class="interactive-illustration interactive-illustration--stars" aria-label="Хоси, Понта и Бико слушают бабушку-лисицу и замечают три яркие звезды" data-en-aria-label="Hoshi, Ponta, and Biko listen to their fox grandmother and notice three bright stars">
+          <img src="hoshi_part2_chapter2_screen1_v1.webp" alt="Пожилая белая лисица рассказывает Хоси, Понте и Бико о Танабате под тремя яркими звёздами" data-en-alt="An elderly white fox tells Hoshi, Ponta, and Biko about Tanabata beneath three bright stars" width="1536" height="1024" decoding="async">
+          <button type="button" class="branch-hotspot" data-branch="1" aria-label="Нажать на первую яркую звезду" data-en-aria-label="Tap the first bright star"></button>
+          <button type="button" class="branch-hotspot" data-branch="2" aria-label="Нажать на вторую яркую звезду" data-en-aria-label="Tap the second bright star"></button>
+          <button type="button" class="branch-hotspot" data-branch="3" aria-label="Нажать на третью яркую звезду" data-en-aria-label="Tap the third bright star"></button>
+        </section>
+        <section class="task">
+          <h2 data-en="Tap the three bright stars in the picture">Нажми на три яркие звезды на картинке</h2>
+          <p class="task-status" data-branch-status data-found="0" aria-live="polite">Найдено: 0 из 3</p>
+        </section>
+        <section class="story">
+          <p data-en="Spring passed, and warm summer evenings arrived.">Весна закончилась, и наступили тёплые летние вечера.</p>
+          <p data-en="One evening, Grandma invited Hoshi, Ponta, and Biko to her house. A slender bamboo branch stood in the garden, and colourful paper strips lay on the low table.">Однажды бабушка позвала Хоси, Понту и Бико к себе. В саду стояла тонкая ветка бамбука, а на низком столике лежали цветные полоски бумаги.</p>
+          <p data-en="— Tonight we will celebrate Tanabata, the Festival of Stars, — Grandma said.">— Сегодня мы будем отмечать Танабату — Праздник звёзд, — сказала бабушка.</p>
+          <p data-en="The friends settled around her and looked up at the sky.">Друзья уселись вокруг неё и посмотрели на небо.</p>
+        </section>
+        <button type="button" class="next-button" data-next-screen="2" hidden data-en="Listen to the legend">Послушать легенду</button>
+      </article>
+
+      <article class="screen" data-screen="2" hidden>
+        <p class="screen-kicker" data-en="Chapter 2 · Screen 2">Глава 2 · Экран 2</p>
+        <h2 data-en="Across the Milky Way">По разные стороны Млечного Пути</h2>
+        <section class="story-illustration" aria-label="Орихимэ и Хикобоси смотрят друг на друга через Млечный Путь" data-en-aria-label="Orihime and Hikoboshi look toward each other across the Milky Way">
+          <img src="hoshi_part2_chapter2_screen2_v1.webp" alt="Звёздные силуэты ткачихи Орихимэ и пастуха Хикобоси по разные стороны Млечного Пути" data-en-alt="Constellation silhouettes of the weaver Orihime and the cowherd Hikoboshi on opposite sides of the Milky Way" width="1536" height="1024" loading="lazy" decoding="async">
+        </section>
+        <section class="task">
+          <h3 data-en="These words will appear in Grandma’s story">Эти слова встретятся в рассказе бабушки</h3>
+          <p class="task-instruction" data-en="Tap a word to split it into syllables. Tap it again to put it back together.">Нажми на слово, чтобы разделить его на слоги. Нажми ещё раз, чтобы собрать обратно.</p>
+          <div class="word-cards">
+            <button type="button" class="word-card" data-word="beautiful" data-whole="прекрасные" data-parts="пре-крас-ны-е" data-en-whole="beautiful" data-en-parts="beau-ti-ful">прекрасные</button>
+            <button type="button" class="word-card" data-word="separated" data-whole="разлучил" data-parts="раз-лу-чил" data-en-whole="separated" data-en-parts="sep-a-ra-ted">разлучил</button>
+            <button type="button" class="word-card" data-word="opposite" data-whole="оказались" data-parts="о-ка-за-лись" data-en-whole="opposite" data-en-parts="op-po-site">оказались</button>
+          </div>
+        </section>
+        <section class="story" data-screen2-story hidden>
+          <p data-en="— Long ago, Orihime, the heavenly weaver, lived among the stars, — Grandma began. — Every day she wove beautiful cloth. On the other side of the Milky Way, Hikoboshi looked after his herd.">— Давным-давно среди звёзд жила небесная ткачиха Орихимэ, — начала бабушка. — Каждый день она ткала прекрасные ткани. А на другом берегу Млечного Пути Хикобоси пас своё стадо.</p>
+          <p data-en="One day they met and fell in love. They were so happy together that they forgot their work.">Однажды они встретились и полюбили друг друга. Им было так хорошо вместе, что они совсем забыли о работе.</p>
+          <p data-en="The ruler of the heavens grew angry and separated them. Orihime and Hikoboshi ended up on opposite sides of the Milky Way.">Небесный правитель рассердился и разлучил их. Орихимэ и Хикобоси оказались по разные стороны Млечного Пути.</p>
+          <p data-en="Biko pressed her ears down sadly.">Бико грустно прижала уши.</p>
+          <p data-en="— Do not worry, — Grandma smiled. — They were allowed to meet once a year, on the seventh night of the seventh month. Tanabata reminds us of that meeting.">— Не переживай, — улыбнулась бабушка. — Им разрешили встречаться раз в год, в седьмую ночь седьмого месяца. Об этой встрече и напоминает Танабата.</p>
+        </section>
+        <button type="button" class="next-button" data-next-screen="3" hidden data-en="Prepare the wishes">Приготовить желания</button>
+      </article>
+
+      <article class="screen" data-screen="3" hidden>
+        <p class="screen-kicker" data-en="Chapter 2 · Screen 3">Глава 2 · Экран 3</p>
+        <h2 data-en="Wishes on paper">Желания на бумаге</h2>
+        <section class="story-illustration" aria-label="Хоси, Понта и Бико обдумывают свои тайные желания за столиком" data-en-aria-label="Hoshi, Ponta, and Biko think about their secret wishes around a low table">
+          <img src="hoshi_part2_chapter2_screen3_v1.webp" alt="Хоси внимательно изучает свою полоску, Понта радостно улыбается, а Бико мечтательно держит тандзаку" data-en-alt="Hoshi studies her paper carefully, Ponta smiles with delight, and Biko holds her tanzaku dreamily" width="1536" height="1024" loading="lazy" decoding="async">
+        </section>
+        <section class="story">
+          <p data-en="Grandma handed each friend a coloured strip of paper.">Бабушка дала каждому по цветной полоске бумаги.</p>
+          <p data-en="— These are called tanzaku. People write wishes on them and hang them on bamboo.">— Такие полоски называются тандзаку. На них пишут желания и привязывают к бамбуку.</p>
+          <p data-en="— Can I write anything at all? — Ponta asked.">— Можно написать всё что угодно? — спросил Понта.</p>
+          <p data-en="— First think about what truly matters to you, — Grandma replied. — A wish can remind you what you want to learn or accomplish.">— Сначала подумай, что для тебя действительно важно, — ответила бабушка. — Желание может напоминать, чему ты хочешь научиться или чего добиться.</p>
+          <p data-en="The friends bent over their tanzaku. No one looked at anyone else’s words.">Друзья склонились над своими тандзаку. Никто не стал заглядывать в чужую запись.</p>
+        </section>
+        <section class="task" data-single-task="screen3" data-correct-value="think">
+          <h3 data-en="What did Grandma advise them to do before writing?">Что бабушка посоветовала сделать перед записью?</h3>
+          <div class="answers" data-shuffle>
+            <button type="button" class="answer" data-value="copy" data-en="Copy someone else’s wish">Списать чужое желание</button>
+            <button type="button" class="answer" data-value="think" data-en="Think about what truly matters">Подумать, что действительно важно</button>
+            <button type="button" class="answer" data-value="show" data-en="Show the paper to everyone">Показать запись всем</button>
+          </div>
+          <button type="button" class="check-button" data-check disabled>Проверить</button>
+          <div class="feedback" data-feedback hidden aria-live="polite"></div>
+        </section>
+        <button type="button" class="next-button" data-next-screen="4" hidden data-en="Who is making that noise?">Кто там шумит?</button>
+      </article>
+
+      <article class="screen" data-screen="4" hidden>
+        <p class="screen-kicker" data-en="Chapter 2 · Screen 4">Глава 2 · Экран 4</p>
+        <h2 data-en="Heavenly delivery">Небесная доставка</h2>
+        <section class="story-illustration" aria-label="Куро озорно уносит тандзаку, а встревоженная бабушка окликает его" data-en-aria-label="Kuro mischievously carries away the tanzaku while a concerned Grandma calls after him">
+          <img src="hoshi_part2_chapter2_screen4_v1.webp" alt="Куро уходит по освещённой дорожке с цветными тандзаку и оглядывается на бабушку у столика" data-en-alt="Kuro walks along the lantern-lit path with colourful tanzaku and looks back at Grandma beside the low table" width="1536" height="1024" loading="lazy" decoding="async">
+        </section>
+        <section class="story">
+          <p data-en="A clatter suddenly came from the path. Kuro hurried into the garden and stopped beside the table.">Со стороны дорожки вдруг раздался грохот. В сад вбежал Куро и остановился возле столика.</p>
+          <p data-en="— I have built a real glider! It is waiting on the upper terrace by the temple.">— Я построил настоящий планер! Он ждёт на верхней площадке у храма.</p>
+          <p data-en="— Wishes for the stars? Excellent! You are lucky I arrived in time.">— Желания для звёзд? Отлично! Вам повезло, что я прилетел вовремя.</p>
+          <p data-en="— Why? — Hoshi asked.">— Почему? — спросила Хоси.</p>
+          <p data-en="— Who will deliver them without me? Stars are high up, bamboo is down here. Clearly, you need a courier.">— А кто без меня доставит их наверх? Звёзды высоко, бамбук внизу. Очевидно же: нужен курьер.</p>
+          <p data-en="Grandma was about to answer, but Kuro had already gathered the four tanzaku and hurried up the steps.">Бабушка хотела что-то сказать, но Куро уже собрал четыре тандзаку и поспешил вверх по ступеням.</p>
+        </section>
+        <section class="task" data-multi-task>
+          <h3 data-en="Which two questions should Kuro have asked before taking the tanzaku?">Какие два вопроса Куро стоило задать, прежде чем забирать тандзаку?</h3>
+          <p class="task-instruction" data-en="Choose two answers.">Выбери два ответа.</p>
+          <p class="multi-selection-status" data-multi-status aria-live="polite">Выбрано: 0 из 2</p>
+          <div class="answers" data-shuffle>
+            <button type="button" class="answer" data-value="permission" data-correct="true" data-en="May I take them?">Можно я их возьму?</button>
+            <button type="button" class="answer" data-value="tradition" data-correct="true" data-en="What are you meant to do with them?">Что с ними делают по традиции?</button>
+            <button type="button" class="answer" data-value="fame" data-en="Will everyone praise me?">Все будут меня хвалить?</button>
+            <button type="button" class="answer" data-value="speed" data-en="How fast can my glider fly?">Как быстро летает мой планер?</button>
+          </div>
+          <button type="button" class="check-button" data-check disabled>Проверить</button>
+          <div class="feedback" data-feedback hidden aria-live="polite"></div>
+        </section>
+        <button type="button" class="next-button" data-next-screen="5" hidden data-en="Watch the delivery">Посмотреть на доставку</button>
+      </article>
+
+      <article class="screen" data-screen="5" hidden>
+        <p class="screen-kicker" data-en="Chapter 2 · Screen 5">Глава 2 · Экран 5</p>
+        <h2 data-en="A flight to the shed">Полёт до сарая</h2>
+        <section class="story-illustration" aria-label="Куро спускается со склона на белом бумажном планере с бамбуковым каркасом" data-en-aria-label="Kuro glides down the slope on a white paper glider with a bamboo frame">
+          <img src="hoshi_part2_chapter2_screen5_v1.webp" alt="Куро держится за нижнюю раму белого планера; за ним развеваются четыре тандзаку, а внизу виден сарай" data-en-alt="Kuro holds the lower frame of a white glider; four tanzaku stream behind him and a shed can be seen below" width="1536" height="1024" loading="lazy" decoding="async">
+        </section>
+        <section class="story">
+          <p data-en="— Heavenly Post is departing! — Kuro announced. — Direct delivery, no waiting!">— Небесная почта отправляется! — объявил Куро. — Доставка без очереди и ожидания!</p>
+          <p data-en="Kuro gripped the lower frame and ran down the slope. The glider caught the wind and sailed over the garden towards the shed.">Куро ухватился за нижнюю раму и разбежался вниз по склону. Планер поймал ветер и полетел над садом, к сараю.</p>
+        </section>
+        <section class="task" data-grammar-task>
+          <h3 data-en="Complete the story">Продолжи историю</h3>
+          <p class="task-instruction" data-en="Choose the complete word for each sentence.">Выбери целое слово для каждого предложения.</p>
+          <div class="grammar-list">
+            <section class="grammar-row" data-grammar-row data-correct-value="качнулся"><strong data-en="The glider…">Планер…</strong><div class="grammar-options" data-shuffle><button type="button" class="grammar-choice" data-value="качнулся" data-en="tilted">качнулся</button><button type="button" class="grammar-choice" data-value="качнулись" data-en="tilted (plural)">качнулись</button></div></section>
+            <section class="grammar-row" data-grammar-row data-correct-value="разлетелись"><strong data-en="The strips…">Полоски…</strong><div class="grammar-options" data-shuffle><button type="button" class="grammar-choice" data-value="разлетелась" data-en="scattered (one strip)">разлетелась</button><button type="button" class="grammar-choice" data-value="разлетелись" data-en="scattered (several strips)">разлетелись</button></div></section>
+            <section class="grammar-row" data-grammar-row data-correct-value="приземлился"><strong data-en="Kuro…">Куро…</strong><div class="grammar-options" data-shuffle><button type="button" class="grammar-choice" data-value="приземлился" data-en="landed">приземлился</button><button type="button" class="grammar-choice" data-value="приземлились" data-en="landed (plural)">приземлились</button></div></section>
+          </div>
+          <button type="button" class="check-button" data-check disabled>Проверить</button>
+          <div class="feedback" data-feedback hidden aria-live="polite"></div>
+        </section>
+        <section class="story" data-screen5-continuation hidden>
+          <p data-en="The glider tilted. The paper strips came loose and scattered across the grass, while Kuro landed on the roof of the shed.">Планер качнулся. Бумажные полоски сорвались с него и разлетелись по траве, а Куро приземлился на крыше сарая.</p>
+          <p data-en="— So, — Ponta called, — have you reached the stars?">— Ну что, — крикнул Понта, — до звёзд уже добрался?</p>
+          <p data-en="— This is a transfer station! — Kuro replied.">— Это пересадочная станция! — ответил Куро.</p>
+        </section>
+        <button type="button" class="next-button" data-next-screen="6" hidden data-en="Read Kuro’s announcement">Прочитать объявление Куро</button>
+      </article>
+
+      <article class="screen" data-screen="6" hidden>
+        <p class="screen-kicker" data-en="Chapter 2 · Screen 6">Глава 2 · Экран 6</p>
+        <h2 data-en="Kuro’s grand announcement">Великое объявление Куро</h2>
+        <section class="story" data-screen6-story>
+          <p data-truth-line data-en="Kuro climbed down from the shed, took the glider off the roof, and carefully folded its paper wings.">Куро спустился с сарая, снял с крыши планер и осторожно сложил его бумажные крылья.</p>
+          <p data-excuse-line data-en="— The first flight of Heavenly Post was a success! — he declared. — The wishes travelled almost all the way to the sky.">— Первый полёт Небесной почты прошёл успешно! — объявил он. — Желания проделали почти весь путь до неба.</p>
+          <p data-en="— They flew as far as the shed, — Biko reminded him.">— Они долетели до сарая, — напомнила Бико.</p>
+          <p data-en="— Every great route begins with a short test flight.">— Любой великий маршрут начинается с короткого пробного полёта.</p>
+          <p data-en="— If it was only a test flight, why did you take our real wishes? — Hoshi asked.">— Если это был только пробный полёт, зачем ты взял наши настоящие желания? — спросила Хоси.</p>
+          <p data-en="Kuro looked away.">Куро отвёл взгляд.</p>
+        </section>
+        <div class="sequence-quiz">
+          <section class="sequence-panel" data-screen6-step="1">
+            <section class="task" data-single-task="screen6a" data-correct-value="grand">
+              <h3 data-en="Read Kuro’s line grandly and proudly">Прочитай реплику Куро торжественно и гордо</h3>
+              <p class="reading-quote" data-en="— The first flight of Heavenly Post was a success! The wishes travelled almost all the way to the sky.">— Первый полёт Небесной почты прошёл успешно! Желания проделали почти весь путь до неба.</p>
+              <div class="answers"><button type="button" class="answer" data-value="grand" data-en="Done">Готово</button></div>
+              <button type="button" class="check-button" data-check disabled>Проверить</button><div class="feedback" data-feedback hidden aria-live="polite"></div>
+            </section>
+            <button type="button" class="next-button" data-screen6-next-step hidden data-en="One more time">Ещё один раз</button>
+          </section>
+          <section class="sequence-panel" data-screen6-step="2" hidden>
+            <section class="task" data-single-task="screen6b" data-correct-value="annoyed">
+              <h3 data-en="Now read the same line as if Kuro is annoyed that nobody believes him">А теперь прочитай ту же реплику так, будто Куро сердится, что ему не верят</h3>
+              <p class="reading-quote" data-en="— The first flight of Heavenly Post was a success! The wishes travelled almost all the way to the sky.">— Первый полёт Небесной почты прошёл успешно! Желания проделали почти весь путь до неба.</p>
+              <div class="answers"><button type="button" class="answer" data-value="annoyed" data-en="Done">Готово</button></div>
+              <button type="button" class="check-button" data-check disabled>Проверить</button><div class="feedback" data-feedback hidden aria-live="polite"></div>
+            </section>
+          </section>
+        </div>
+        <button type="button" class="next-button" data-next-screen="7" hidden data-en="Hang the wishes">Повесить желания</button>
+      </article>
+
+      <article class="screen" data-screen="7" hidden>
+        <p class="screen-kicker" data-en="Chapter 2 · Screen 7">Глава 2 · Экран 7</p>
+        <h2 data-en="The dark-blue tanzaku">Тёмно-синяя полоска</h2>
+        <section class="interactive-illustration feather-scene" aria-label="Хоси, Понта и Бико привязывают желания к бамбуку; на траве лежит тёмно-синий тандзаку" data-en-aria-label="Hoshi, Ponta and Biko tie their wishes to bamboo; a dark-blue tanzaku lies on the grass">
+          <img src="hoshi_part2_chapter2_screen7_v1.webp" alt="Трое друзей привязывают разноцветные тандзаку к бамбуку ночью; перед ними на траве лежит тёмно-синяя полоска" data-en-alt="The three friends tie colourful tanzaku to bamboo at night; a dark-blue strip lies on the grass in front of them" width="1536" height="1024" loading="lazy" decoding="async">
+          <button type="button" class="feather-button tanzaku-button" data-feather aria-label="Найти тёмно-синий тандзаку" data-en-aria-label="Find the dark-blue tanzaku"></button>
+        </section>
+        <section class="story">
+          <p data-en="Grandma gathered the scattered tanzaku and returned them to their owners.">Бабушка собрала разлетевшиеся тандзаку и вернула каждому его полоску.</p>
+          <p data-en="Together, the friends tied their wishes to the bamboo. The papers rustled quietly in the warm evening wind.">Все вместе друзья привязали желания к бамбуку. Бумажки тихо шуршали на тёплом вечернем ветру.</p>
+          <p data-en="Kuro remained beside his glider.">Куро остался рядом со своим планером.</p>
+          <p data-en="— Did you write a wish? — Biko asked.">— А ты написал желание? — спросила Бико.</p>
+          <p data-en="— Me? Of course not. Great couriers do not need wishes.">— Я? Конечно нет. Великим курьерам желания ни к чему.</p>
+          <p data-en="When Kuro took off, a dark-blue tanzaku remained on the grass. Only the end of the sentence could be read: “…so that someone will wait for me too.”">Когда Куро улетел, на траве остался тёмно-синий тандзаку. На нём был виден только конец фразы: «…чтобы меня тоже ждали».</p>
+          <p data-en="Hoshi did not read the rest. She carefully tied the strip to the bamboo with the others.">Хоси не стала читать остальное. Она бережно привязала полоску к бамбуку рядом с другими.</p>
+        </section>
+        <p class="feather-hint" data-feather-hint data-en="Find the dark-blue tanzaku and tap it">Найди тёмно-синий тандзаку и нажми на него</p>
+        <div class="clue-slot" data-clue-slot aria-live="polite"><strong data-en="Kuro’s secret">Тайна Куро</strong><span data-en="The second clue has been found">Вторая улика найдена</span></div>
+        <button type="button" class="next-button" data-next-screen="8" hidden data-en="Open the reward">Открыть награду</button>
+      </article>
+
+      <article class="screen" data-screen="8" hidden>
+        <p class="screen-kicker" data-en="Chapter 2 reward">Награда главы 2</p>
+        <h2 data-en="The real Tanabata">Настоящая Танабата</h2>
+        <div class="reward-flip-card" data-reward-card role="button" tabindex="0" aria-pressed="false" aria-label="Перевернуть карточку и увидеть настоящую Танабату">
+          <div class="reward-card-inner">
+            <section class="reward-illustration reward-face reward-face--front" data-fairy-reward>
+              <img src="hoshi_part2_chapter2_reward_fairy_v1.webp" alt="Хоси, Понта и Бико смотрят на Млечный Путь рядом с бамбуком, украшенным четырьмя тандзаку" data-en-alt="Hoshi, Ponta and Biko watch the Milky Way beside bamboo decorated with four tanzaku" width="1536" height="1024" loading="lazy" decoding="async">
+              <span class="reward-star" style="left:9.4%;top:23%;--star-speed:3.1s;--star-delay:-.8s" aria-hidden="true"></span>
+              <span class="reward-star" style="left:27.1%;top:19.1%;--star-speed:4.2s;--star-delay:-2.1s" aria-hidden="true"></span>
+              <span class="reward-star" style="left:92.4%;top:9.9%;--star-speed:3.6s;--star-delay:-1.4s" aria-hidden="true"></span>
+              <span class="reward-star" style="left:26.7%;top:42.9%;--star-speed:4.5s;--star-delay:-3.2s" aria-hidden="true"></span>
+              <span class="reward-star" style="left:58.9%;top:40.6%;--star-speed:3.8s;--star-delay:-2.6s" aria-hidden="true"></span>
+              <span class="reward-star" style="left:65.4%;top:52.6%;--star-speed:4.8s;--star-delay:-1.9s" aria-hidden="true"></span>
+            </section>
+            <section class="reward-real-photo reward-face reward-face--back" data-real-reward>
+              <img
+                src="hoshi_part2_chapter2_reward_real_v1.webp"
+                alt="Две девочки вешают тандзаку на бамбук во время вечернего праздника Танабаты под звёздным небом и большим фейерверком"
+                data-en-alt="Two girls hang tanzaku on bamboo during an evening Tanabata celebration beneath a starry sky and a large firework"
+                width="1536"
+                height="1024"
+                loading="lazy"
+                decoding="async">
+            </section>
+          </div>
+        </div>
+        <p class="reward-card-hint" data-reward-hint data-en="Tap the illustration to flip the card">Нажми на иллюстрацию, чтобы карточка перевернулась</p>
+        <div class="hanami-facts" data-hanami-facts>
+          <section class="hanami-fact"><button type="button" class="hanami-fact-button" data-hanami-fact="0" aria-expanded="false"><strong data-en="Why is Tanabata celebrated on different dates?">Почему Танабату отмечают в разные дни?</strong><span class="hanami-petal" aria-hidden="true">✦</span></button><p class="hanami-fact-answer" data-hanami-answer hidden data-en="It is often celebrated on July 7. In some places it is held in August, closer to the date in Japan’s old calendar.">Чаще всего Танабату празднуют 7 июля. Но в некоторых местах праздник проходит в августе — ближе к дате по старому японскому календарю.</p></section>
+          <section class="hanami-fact"><button type="button" class="hanami-fact-button" data-hanami-fact="1" aria-expanded="false"><strong data-en="What do the paper decorations mean?">Что означают бумажные украшения?</strong><span class="hanami-petal" aria-hidden="true">✦</span></button><p class="hanami-fact-answer" data-hanami-answer hidden data-en="Each decoration can carry a wish. Cranes stand for health and long life, nets for a good catch, and long streamers recall Orihime’s weaving.">У украшений есть свои пожелания. Журавлики означают здоровье и долгую жизнь, сети — хороший улов, а длинные ленты напоминают о мастерстве небесной ткачихи Орихимэ.</p></section>
+          <section class="hanami-fact"><button type="button" class="hanami-fact-button" data-hanami-fact="2" aria-expanded="false"><strong data-en="How does Tanabata transform ordinary streets?">Как Танабата меняет обычные улицы?</strong><span class="hanami-petal" aria-hidden="true">✦</span></button><p class="hanami-fact-answer" data-hanami-answer hidden data-en="Bamboo branches with wishes decorate homes, schools, stations, and whole shopping streets. Huge colourful paper ornaments sway above people’s heads.">Бамбуковые ветви с желаниями ставят не только дома. Ими украшают школы, вокзалы и целые торговые улицы. Над прохожими покачиваются огромные цветные украшения.</p></section>
+        </div>
+        <button type="button" class="next-button" data-back-map data-en="Back to the map">Вернуться на карту</button>
+      </article>
+    </template>
+
+    <template data-chapter-content="3">
+      <header class="chapter-toolbar">
+        <button type="button" class="toolbar-button" data-chapter-menu aria-label="Открыть список глав" aria-expanded="false">
+          <span class="toolbar-icon" aria-hidden="true">☰</span>
+          <span data-menu-button-label>Главы</span>
+        </button>
+        <div class="toolbar-title">
+          <strong data-toolbar-chapter-title>Дорога для луны</strong>
+          <small data-progress-label>Экран 1 из 7</small>
+        </div>
+        <button type="button" class="toolbar-button" data-restart aria-label="Начать текущую главу заново">
+          <span class="toolbar-icon toolbar-icon--restart" aria-hidden="true">↻</span>
+          <span data-restart-label>Заново</span>
+        </button>
+        <div class="chapter-progress">
+          <span class="progress-title" data-progress-title>Прогресс</span>
+          <div class="progress-flames" aria-hidden="true">
+            <i class="progress-flame on"></i><i class="progress-flame"></i><i class="progress-flame"></i>
+            <i class="progress-flame"></i><i class="progress-flame"></i><i class="progress-flame"></i><i class="progress-flame"></i>
+          </div>
+          <span class="progress-readable" data-progress-readable>1 / 7</span>
+          <span class="sr-only" data-progress-status aria-live="polite">Экран 1 из 7</span>
+        </div>
+      </header>
+
+      <article class="screen" data-screen="1">
+        <p class="screen-kicker" data-en="Chapter 3 · Screen 1">Глава 3 · Экран 1</p>
+        <h1 data-en="Ponta hosts the celebration">Праздник устраивает Понта</h1>
+        <section class="interactive-illustration interactive-illustration--dango chapter3-illustration" aria-label="Понта несёт коробку с данго по осеннему лесу; три шарика лежат на дорожке" data-en-aria-label="Ponta carries a box of dango through the autumn forest; three balls lie on the path">
+          <img src="hoshi_part2_chapter3_screen1.png" alt="Понта принёс Хоси коробку с данго; три белых шарика выкатились на осеннюю дорожку" data-en-alt="Ponta brings Hoshi a box of dango; three white balls have rolled onto the autumn path" width="1672" height="941" decoding="async">
+          <button type="button" class="branch-hotspot" data-branch="1" aria-label="Нажать на первый данго" data-en-aria-label="Tap the first dango"></button>
+          <button type="button" class="branch-hotspot" data-branch="2" aria-label="Нажать на второй данго" data-en-aria-label="Tap the second dango"></button>
+          <button type="button" class="branch-hotspot" data-branch="3" aria-label="Нажать на третий данго" data-en-aria-label="Tap the third dango"></button>
+        </section>
+        <section class="task">
+          <h2 data-en="Tap the three dango that rolled out of the box">Нажми на три данго, которые выкатились из коробки</h2>
+          <p class="task-status" data-branch-status data-found="0" aria-live="polite">Найдено: 0 из 3</p>
+        </section>
+        <section class="story">
+          <p data-en="Autumn painted the forest in golden and red leaves. One day, Ponta came to Hoshi carrying a large box.">Осень окрасила лес золотыми и красными листьями. Однажды Понта пришёл к Хоси с большой коробкой.</p>
+          <p data-en="— I am hosting the celebration today! My whole family helped me make dango.">— Сегодня праздник устраиваю я! Мы всей семьёй готовили данго.</p>
+          <p data-en="Inside the box were white balls.">В коробке лежали белые шарики.</p>
+          <p data-en="— We mixed rice flour with water, rolled it into balls, and boiled them, — Ponta explained proudly.">— Мы смешали рисовую муку с водой, скатали шарики и сварили их, — гордо объяснил Понта.</p>
+        </section>
+        <button type="button" class="next-button" data-next-screen="2" hidden data-en="Learn about the celebration">Узнать о празднике</button>
+      </article>
+
+      <article class="screen" data-screen="2" hidden>
+        <p class="screen-kicker" data-en="Chapter 3 · Screen 2">Глава 3 · Экран 2</p>
+        <h2 data-en="Little moons">Маленькие луны</h2>
+        <section class="task">
+          <h3 data-en="These words will appear in the story">Эти слова встретятся в истории</h3>
+          <p class="task-instruction" data-en="Tap a word to split it into syllables. Tap it again to put it back together.">Нажми на слово, чтобы разделить его на слоги. Нажми ещё раз, чтобы собрать обратно.</p>
+          <div class="word-cards">
+            <button type="button" class="word-card" data-word="carefully" data-whole="любуются" data-parts="лю-бу-ют-ся" data-en-whole="carefully" data-en-parts="care-ful-ly">любуются</button>
+            <button type="button" class="word-card" data-word="celebration" data-whole="угощение" data-parts="у-го-ще-ни-е" data-en-whole="celebration" data-en-parts="cel-e-bra-tion">угощение</button>
+            <button type="button" class="word-card" data-word="understand" data-whole="урожай" data-parts="у-ро-жай" data-en-whole="understand" data-en-parts="un-der-stand">урожай</button>
+          </div>
+        </section>
+        <section class="story" data-screen2-story hidden>
+          <p data-en="Biko carefully sniffed one of the balls.">Бико осторожно понюхала один шарик.</p>
+          <p data-en="— They look like snowballs.">— Они похожи на снежки.</p>
+          <p data-en="— Dango are made round like the full moon, — Ponta said. — During Tsukimi, people admire the autumn moon and give thanks for the harvest. First they place the treats before the moon, and after the celebration they eat them.">— Данго делают круглыми, как полную луну, — сказал Понта. — На Цукими люди любуются осенней луной и благодарят за урожай. Сначала угощение ставят перед луной, а после праздника съедают.</p>
+          <p data-en="— Now I understand why you have not eaten them yet, — Hoshi smiled.">— Теперь понятно, почему ты до сих пор их не съел, — улыбнулась Хоси.</p>
+        </section>
+        <button type="button" class="next-button" data-next-screen="3" hidden data-en="Done">Готово</button>
+      </article>
+
+      <article class="screen" data-screen="3" hidden>
+        <p class="screen-kicker" data-en="Chapter 3 · Screen 3">Глава 3 · Экран 3</p>
+        <h2 data-en="Everything is ready">Всё готово</h2>
+        <section class="story-illustration chapter3-illustration" aria-label="Друзья готовят место для Цукими в осеннем саду" data-en-aria-label="The friends prepare a place for Tsukimi in the autumn garden">
+          <img src="hoshi_part2_chapter3_screen3.png" alt="Хоси и Понта расстилают циновку, а Бико ставит сусуки рядом со столиком с данго" data-en-alt="Hoshi and Ponta spread a mat while Biko places susuki beside the low table with dango" width="1672" height="941" loading="lazy" decoding="async">
+        </section>
+        <section class="story">
+          <p data-en="The friends spread a mat in the garden. Ponta placed a tray of dango on a low table.">Друзья расстелили в саду циновку. Понта поставил на низкий столик поднос с данго.</p>
+          <p data-en="Biko brought fluffy susuki plumes and placed them nearby.">Бико принесла пушистые метёлки сусуки и поставила их рядом.</p>
+          <p data-en="— They look like ears of grain, — Ponta observed.">— Похожи на колосья, — заметил Понта.</p>
+          <p data-en="— That is why people display them during Tsukimi, — Hoshi said. — In hope of a good harvest.">— Поэтому их и ставят на Цукими, — сказала Хоси. — В надежде на хороший урожай.</p>
+          <p data-en="All that remained was to wait for the moon.">Оставалось дождаться луны.</p>
+        </section>
+        <section class="task" data-multi-task data-solved-key="screen3" data-complete-next="3" data-success-message="Верно! Для Цукими друзья приготовили данго и сусуки." data-en-success-message="Correct! The friends prepared dango and susuki for Tsukimi." data-retry-message="Перечитай текст и попробуй ещё раз." data-en-retry-message="Read the story again and try once more.">
+          <h3 data-en="Which two things did the friends prepare for Tsukimi?">Какие два предмета друзья приготовили для Цукими?</h3>
+          <p class="task-instruction" data-en="Choose two answers.">Выбери два ответа.</p>
+          <p class="multi-selection-status" data-multi-status aria-live="polite">Выбрано: 0 из 2</p>
+          <div class="answers" data-shuffle>
+            <button type="button" class="answer" data-value="bird" data-en="a paper bird">бумажная птица</button>
+            <button type="button" class="answer" data-value="susuki" data-correct="true" data-en="susuki">сусуки</button>
+            <button type="button" class="answer" data-value="petals" data-en="a basket of petals">корзина с лепестками</button>
+            <button type="button" class="answer" data-value="dango" data-correct="true" data-en="dango">данго</button>
+          </div>
+          <button type="button" class="check-button" data-check disabled data-en="Check">Проверить</button>
+          <div class="feedback" data-feedback hidden aria-live="polite"></div>
+        </section>
+        <button type="button" class="next-button" data-next-screen="4" hidden data-en="Wait for the moon">Ждать луну</button>
+      </article>
+
+      <article class="screen" data-screen="4" hidden>
+        <p class="screen-kicker" data-en="Chapter 3 · Screen 4">Глава 3 · Экран 4</p>
+        <h2 data-en="The first disappearance">Первое исчезновение</h2>
+        <section class="story-illustration chapter3-illustration" aria-label="Облако закрывает полную луну, а друзья замечают пропажу данго" data-en-aria-label="A cloud covers the full moon as the friends notice that dango are missing">
+          <img src="hoshi_part2_chapter3_screen4.png" alt="Хоси, Понта и Бико пересчитывают данго у низкого столика, пока облако закрывает луну" data-en-alt="Hoshi, Ponta, and Biko recount the dango at the low table while a cloud covers the moon" width="1672" height="941" loading="lazy" decoding="async">
+        </section>
+        <section class="story">
+          <p data-en="A large moon rose over the garden. Before long, a cloud drifted across it.">Над садом поднялась большая луна. Но вскоре на неё наползло облако.</p>
+          <p data-en="Ponta straightened the tray and frowned:">Понта поправил поднос и нахмурился:</p>
+          <p data-en="— There used to be more dango here.">— Здесь было больше данго.</p>
+          <p data-en="While the friends counted the white balls, the cloud grew even darker. Ponta looked at the tray once more.">Пока друзья считали белые шарики, облако стало ещё темнее. Понта снова посмотрел на поднос.</p>
+          <p data-en="Another dango had disappeared.">Ещё один данго исчез.</p>
+        </section>
+        <section class="task">
+          <h3 data-en="Read the line first with surprise, then with suspicion">Прочитай реплику сначала удивлённо, а потом подозрительно</h3>
+          <p class="reading-quote" data-en="— There used to be more dango here.">— Здесь было больше данго.</p>
+        </section>
+        <button type="button" class="next-button" data-next-screen="5" data-en="Done">Готово</button>
+      </article>
+
+      <article class="screen" data-screen="5" hidden>
+        <p class="screen-kicker" data-en="Chapter 3 · Screen 5">Глава 3 · Экран 5</p>
+        <h2 data-en="The white trail">Белая дорожка</h2>
+        <section class="story-illustration chapter3-illustration" aria-label="Дорожка из данго ведёт друзей через осенний сад к пруду" data-en-aria-label="A trail of dango leads the friends through the autumn garden to the pond">
+          <img src="hoshi_part2_chapter3_screen5.png" alt="Хоси, Понта и Бико идут по дорожке из данго к лунному пруду; на ветке висит чёрное перо" data-en-alt="Hoshi, Ponta, and Biko follow a trail of dango toward the moonlit pond; a black feather hangs from a branch" width="1536" height="864" loading="lazy" decoding="async">
+        </section>
+        <section class="task">
+          <h3 data-en="Find and tap three words in the story">Найди и нажми три слова в тексте</h3>
+          <p class="task-instruction" data-en="Tap words in the story. Correct finds will be marked here.">Нажимай на слова в тексте. Правильные находки отметятся здесь.</p>
+          <div class="search-targets" aria-label="Слова для поиска" data-en-aria-label="Words to find">
+            <span class="search-target" data-find-target="maple" data-en="maple">клёновый</span>
+            <span class="search-target" data-find-target="ball" data-en="ball">шарик</span>
+            <span class="search-target" data-find-target="trail" data-en="trail">дорожке</span>
+          </div>
+          <p class="task-status" data-find-word-status aria-live="polite">Найдено: 0 из 3</p>
+        </section>
+        <section class="story word-search-text" data-word-hunt>
+          <p><button type="button" class="search-word" data-en="Biko">Бико</button> <button type="button" class="search-word" data-en="noticed">заметила</button> <button type="button" class="search-word" data-en="one">под</button> <button type="button" class="search-word" data-en="dry">столиком</button> <button type="button" class="search-word" data-en="brown">сухой</button> <button type="button" class="search-word" data-find-word="maple" data-en="maple">клёновый</button> <button type="button" class="search-word" data-en="leaf.">лист.</button> <button type="button" class="search-word" data-en="Missing">На</button> <button type="button" class="search-word" data-en="dango">нём</button> <button type="button" class="search-word" data-en="lay">лежал</button> <button type="button" class="search-word" data-en="underneath">пропавший</button> <button type="button" class="search-word" data-en="it.">данго.</button></p>
+          <p><button type="button" class="search-word" data-en="A">Чуть</button> <button type="button" class="search-word" data-en="little">дальше</button> <button type="button" class="search-word" data-en="farther">белел</button> <button type="button" class="search-word" data-en="away,">ещё</button> <button type="button" class="search-word" data-en="another">один</button> <button type="button" class="search-word" data-find-word="ball" data-en="ball">шарик.</button> <button type="button" class="search-word" data-en="It">Он</button> <button type="button" class="search-word" data-en="also">тоже</button> <button type="button" class="search-word" data-en="lay">лежал</button> <button type="button" class="search-word" data-en="on">на</button> <button type="button" class="search-word" data-en="a">чистом</button> <button type="button" class="search-word" data-en="leaf.">листе.</button></p>
+          <p><button type="button" class="search-word" data-en="The">Друзья</button> <button type="button" class="search-word" data-en="friends">пошли</button> <button type="button" class="search-word" data-en="followed">по</button> <button type="button" class="search-word" data-en="this">необычной</button> <button type="button" class="search-word" data-find-word="trail" data-en="trail.">дорожке.</button> <button type="button" class="search-word" data-en="It">Она</button> <button type="button" class="search-word" data-en="led">вела</button> <button type="button" class="search-word" data-en="through">через</button> <button type="button" class="search-word" data-en="grass">траву</button> <button type="button" class="search-word" data-en="toward">к</button> <button type="button" class="search-word" data-en="a">маленькому</button> <button type="button" class="search-word" data-en="pond.">пруду.</button></p>
+          <p><button type="button" class="search-word" data-en="On">На</button> <button type="button" class="search-word" data-en="a">чёрной</button> <button type="button" class="search-word" data-en="branch">ветке</button> <button type="button" class="search-word" data-en="a">блеснуло</button> <button type="button" class="search-word" data-en="feather.">перо.</button></p>
+        </section>
+        <button type="button" class="next-button" data-next-screen="6" hidden data-en="Follow the trail">Идти по следу</button>
+      </article>
+
+      <article class="screen" data-screen="6" hidden>
+        <p class="screen-kicker" data-en="Chapter 3 · Screen 6">Глава 3 · Экран 6</p>
+        <h2 data-en="Kuro’s plan">План Куро</h2>
+        <section class="story">
+          <p data-en="By the pond, the friends saw Kuro. He was just placing the last dango on a broad leaf.">У пруда друзья увидели Куро. Он как раз укладывал последний данго на широкий лист.</p>
+          <p data-en="— Why did you take our treats? — Hoshi asked.">— Зачем ты забрал наше угощение? — спросила Хоси.</p>
+          <p data-en="— The moon is hidden and cannot see where it is awaited, — Kuro replied. — I left it a road.">— Луна спряталась и не видит, где её ждут, — ответил Куро. — Я оставил ей дорогу.</p>
+          <p data-en="— During Tsukimi, people do not call the moon closer, — Hoshi said. — They wait for it quietly, even when it is hidden behind clouds.">— На Цукими луну не зовут поближе, — сказала Хоси. — Её спокойно ждут, даже если она скрылась за облаками.</p>
+        </section>
+        <section class="task" data-single-task="screen6" data-correct-value="road" data-complete-next="6" data-retry-message="Подумай ещё. Зачем Куро понадобилась дорожка?" data-en-retry-message="Think again. Why did Kuro need a trail?">
+          <h3 data-en="How did Kuro explain the trail of dango?">Как Куро объяснил дорожку из данго?</h3>
+          <div class="answers" data-shuffle>
+            <button type="button" class="answer" data-value="nest" data-en="He wanted to decorate his nest">хотел украсить своё гнездо</button>
+            <button type="button" class="answer" data-value="road" data-en="He wanted to show the moon the way">хотел показать луне дорогу</button>
+            <button type="button" class="answer" data-value="eat" data-en="He planned to eat the dango by the pond">собирался съесть данго у пруда</button>
+          </div>
+          <button type="button" class="check-button" data-check disabled>Проверить</button>
+          <div class="feedback" data-feedback hidden aria-live="polite"></div>
+        </section>
+        <button type="button" class="next-button" data-next-screen="7" hidden data-en="Return the dango">Вернуть данго</button>
+      </article>
+
+      <article class="screen" data-screen="7" hidden>
+        <p class="screen-kicker" data-en="Chapter 3 · Screen 7">Глава 3 · Экран 7</p>
+        <h2 data-en="The third clue">Третья улика</h2>
+        <section class="interactive-illustration feather-scene chapter3-illustration" aria-label="Друзья собрались у подноса под полной луной; возле чёрного пера лежит маленький клёновый лист" data-en-aria-label="The friends gather by the tray under the full moon; a small maple leaf lies beside a black feather">
+          <img src="hoshi_part2_chapter3_screen7.png" alt="Хоси, Понта, Бико и Куро возле столика с данго; на циновке лежат чёрное перо и клёновые листья" data-en-alt="Hoshi, Ponta, Biko, and Kuro beside the dango table; a black feather and maple leaves lie on the mat" width="1672" height="941" loading="lazy" decoding="async">
+          <button type="button" class="feather-button maple-leaf-button" data-feather aria-label="Нажать на маленький клёновый лист" data-en-aria-label="Tap the small maple leaf"></button>
+        </section>
+        <section class="story">
+          <p data-en="Kuro gathered the dango from the leaves and carried them back to the table with his friends.">Куро собрал данго с листьев и вместе с друзьями отнёс их обратно к столу.</p>
+          <p data-en="The clouds parted. Silver light filled the garden, and a round moon appeared in the pond.">Облака разошлись. Сад залило серебряным светом, а в пруду появилась круглая луна.</p>
+          <p data-en="Ponta put the tray back in its place.">Понта поставил поднос на место.</p>
+          <p data-en="A black feather lay beside it. Near the feather, Hoshi noticed a small maple leaf.">Рядом с ним лежало чёрное перо. Возле пера Хоси заметила маленький клёновый лист.</p>
+        </section>
+        <p class="feather-hint" data-feather-hint data-en="Tap the small maple leaf beside the tray">Нажми на маленький клёновый лист рядом с подносом</p>
+        <div class="clue-slot" data-clue-slot aria-live="polite">
+          <strong data-en="How can you tell where someone is waiting for you?">А как узнать, где тебя ждут?</strong>
+          <span data-en="Kuro’s secret: the third clue has been found">Тайна Куро: найдена третья улика</span>
+        </div>
+        <button type="button" class="next-button" data-next-screen="8" hidden data-en="Receive the reward">Получить награду</button>
+      </article>
+
+      <article class="screen" data-screen="8" hidden>
+        <p class="screen-kicker" data-en="Chapter 3 reward">Награда главы 3</p>
+        <h2 data-en="Reward unlocked: Moonlit Night">Награда получена: Лунная ночь</h2>
+        <div class="reward-flip-card" data-reward-card role="button" tabindex="0" aria-pressed="false" aria-label="Перевернуть карточку и увидеть настоящее Цукими" data-en-aria-label="Flip the card to see a real Tsukimi celebration">
+          <div class="reward-card-inner">
+            <section class="reward-illustration reward-face reward-face--front tsukimi-reward-front" data-fairy-reward>
+              <img src="hoshi_part2_chapter3_reward_fairy.png" alt="Хоси, Понта, Бико и Куро празднуют Цукими под полной осенней луной" data-en-alt="Hoshi, Ponta, Biko, and Kuro celebrate Tsukimi beneath the full autumn moon" width="1536" height="1024" loading="lazy" decoding="async">
+              <span class="moon-rabbit" aria-hidden="true">
+                <svg viewBox="0 0 100 100" focusable="false">
+                  <g fill="currentColor">
+                    <ellipse cx="43" cy="62" rx="21" ry="25"></ellipse>
+                    <circle cx="49" cy="36" r="15"></circle>
+                    <ellipse cx="40" cy="14" rx="6" ry="19" transform="rotate(-13 40 14)"></ellipse>
+                    <ellipse cx="54" cy="13" rx="6" ry="20" transform="rotate(10 54 13)"></ellipse>
+                    <circle cx="23" cy="65" r="9"></circle>
+                    <ellipse cx="59" cy="58" rx="13" ry="6" transform="rotate(-28 59 58)"></ellipse>
+                    <path d="M55 76 Q71 68 87 76 L82 91 H58 Z"></path>
+                  </g>
+                  <g class="moon-rabbit-pestle" fill="currentColor">
+                    <rect x="68" y="35" width="7" height="45" rx="3.5" transform="rotate(25 71.5 57.5)"></rect>
+                  </g>
+                </svg>
+              </span>
+              <span class="moon-sparkle moon-sparkle--1" aria-hidden="true"></span>
+              <span class="moon-sparkle moon-sparkle--2" aria-hidden="true"></span>
+              <span class="moon-sparkle moon-sparkle--3" aria-hidden="true"></span>
+              <span class="moon-sparkle moon-sparkle--4" aria-hidden="true"></span>
+              <span class="moon-sparkle moon-sparkle--5" aria-hidden="true"></span>
+            </section>
+            <section class="reward-real-photo reward-face reward-face--back" data-real-reward>
+              <img src="hoshi_part2_chapter3_reward_real.png" alt="Семья в современной японской квартире любуется полной луной рядом с данго и сусуки" data-en-alt="A family in a modern Japanese home admires the full moon beside dango and susuki" width="1672" height="941" loading="lazy" decoding="async">
+            </section>
+          </div>
+        </div>
+        <p class="reward-card-hint" data-reward-hint data-en="Tap the illustration to flip the card">Нажми на иллюстрацию, чтобы карточка перевернулась</p>
+        <div class="hanami-facts">
+          <section class="hanami-fact"><button type="button" class="hanami-fact-button" data-hanami-fact="0" aria-expanded="false"><strong data-en="Why is it called the fifteenth night?">Почему «пятнадцатая ночь»?</strong><span class="moon-fact-icon" aria-hidden="true">☾</span></button><p class="hanami-fact-answer" data-hanami-answer hidden data-en="The main evening of Tsukimi is called Jūgoya, which means “the fifteenth night.” In the old lunar calendar, it was the fifteenth night of the eighth month. That is why its date changes each year on today’s calendar.">Главный вечер Цукими называют Дзюгоя — «пятнадцатая ночь». По старому лунному календарю это была пятнадцатая ночь восьмого месяца. Поэтому по современному календарю дата праздника каждый год меняется.</p></section>
+          <section class="hanami-fact"><button type="button" class="hanami-fact-button" data-hanami-fact="1" aria-expanded="false"><strong data-en="Why are dango stacked in a pyramid?">Почему данго складывают пирамидкой?</strong><span class="moon-fact-icon" aria-hidden="true">☾</span></button><p class="hanami-fact-answer" data-hanami-answer hidden data-en="For Jūgoya, people often display fifteen dango, matching the number of the fifteenth night. They stack them in a mound on a special stand.">На Дзюгоя часто выставляют пятнадцать данго — по числу пятнадцатой ночи. Их складывают горкой на специальную подставку.</p></section>
+          <section class="hanami-fact"><button type="button" class="hanami-fact-button" data-hanami-fact="2" aria-expanded="false"><strong data-en="Who lives on the Moon?">Кто живёт на Луне?</strong><span class="moon-fact-icon" aria-hidden="true">☾</span></button><p class="hanami-fact-answer" data-hanami-answer hidden data-en="In Japan, people often see a rabbit in the dark markings on the Moon. An old tale says the moon rabbit pounds mochi.">В Японии в рисунке тёмных пятен на Луне часто видят кролика. По старинному поверью, лунный кролик толчёт моти.</p></section>
+        </div>
+        <button type="button" class="next-button" data-back-map data-en="Back to the map">Вернуться на карту</button>
+      </article>
+    </template>
+  </main>
+
+  <div class="chapter-dialog" data-chapter-dialog hidden>
+    <button type="button" class="dialog-backdrop" data-chapter-dialog-close aria-label="Закрыть список глав"></button>
+    <section class="chapter-panel" role="dialog" aria-modal="true" aria-labelledby="part2-chapters-title">
+      <div class="chapter-panel-head">
+        <div>
+          <span class="chapter-panel-kicker" data-journey-kicker>Путешествие Хоси</span>
+          <h2 id="part2-chapters-title" data-all-chapters-title>Все главы</h2>
+        </div>
+        <button type="button" class="dialog-close" data-chapter-dialog-close aria-label="Закрыть">×</button>
+      </div>
+      <div class="chapter-cards">
+        <button type="button" class="chapter-card parent-guide-card" data-parent-guide-open>
+          <span class="chapter-number" aria-hidden="true">?</span>
+          <span><strong data-guide-title>Памятка для родителей</strong><small data-guide-copy>Как бережно помогать при чтении</small></span>
+        </button>
+        <button type="button" class="chapter-card chapter-map-link" data-menu-back-map>
+          <span class="chapter-number" aria-hidden="true">⌖</span>
+          <span><strong data-map-link-title>К карте путешествия</strong><small data-map-link-copy>Выбрать место на карте</small></span>
+        </button>
+        <button type="button" class="chapter-card language-progress-card" data-switch-language>
+          <span class="chapter-number" data-language-badge aria-hidden="true">EN</span>
+          <span><strong data-language-switch-title>Английский прогресс</strong><small data-language-switch-copy>Перейти к прогрессу на английском языке</small></span>
+        </button>
+        <button type="button" class="chapter-card current" data-menu-chapter="1">
+          <span class="chapter-number">1</span>
+          <span><strong>Ханами</strong><small data-chapter-status="1">Открыть главу</small></span>
+          <span class="chapter-state" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="chapter-card" data-menu-chapter="2">
+          <span class="chapter-number">2</span>
+          <span><strong>Танабата</strong><small data-chapter-status="2">Открыть главу</small></span>
+          <span class="chapter-state" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="chapter-card" data-menu-chapter="3">
+          <span class="chapter-number">3</span>
+          <span><strong>Цукими</strong><small data-chapter-status="3">Открыть главу</small></span>
+          <span class="chapter-state" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="chapter-card" data-menu-chapter="4" disabled>
+          <span class="chapter-number">4</span>
+          <span><strong>Сэцубун</strong><small data-chapter-status="4">В разработке</small></span>
+          <span class="chapter-state" aria-hidden="true"></span>
+        </button>
+      </div>
+    </section>
+  </div>
+
+  <div class="parent-guide-dialog" data-parent-guide-dialog hidden>
+    <button type="button" class="dialog-backdrop" data-parent-guide-close aria-label="Закрыть памятку"></button>
+    <section class="parent-guide-panel" role="dialog" aria-modal="true" aria-labelledby="part2-parent-guide-title">
+      <button type="button" class="dialog-close" data-parent-guide-close aria-label="Закрыть" style="position:absolute;right:18px;top:18px">×</button>
+      <div class="chapter-panel-kicker" data-reading-together>Совместное чтение</div>
+      <h2 id="part2-parent-guide-title" data-parent-guide-title>Как помогать ребёнку при чтении</h2>
+      <p class="parent-guide-intro" data-parent-guide-intro>Короткая памятка для спокойного чтения без гонки за скоростью.</p>
+      <ol class="parent-guide-list">
+        <li data-guide-item="1">Сначала дайте ребёнку попробовать прочитать слово самостоятельно.</li>
+        <li data-guide-item="2">Не называйте всё слово сразу. Помогите прочитать первую часть, затем обратите внимание на конец слова.</li>
+        <li data-guide-item="3">Соедините части и спокойно прочитайте слово целиком.</li>
+        <li data-guide-item="4">После исправления вернитесь к предложению, но не заставляйте перечитывать большой отрывок.</li>
+        <li data-guide-item="5">Если ребёнок сам заметил ошибку и исправился, не возвращайтесь к ней ещё раз. Это уже успешное чтение.</li>
+        <li data-guide-item="6">Отмечайте усилие, внимательность и самостоятельное исправление, а не скорость.</li>
+        <li data-guide-item="7">Если ребёнок устал, остановитесь на текущем экране. Прогресс сохранится.</li>
+      </ol>
+    </section>
+  </div>
+
+  <div class="restart-dialog" data-restart-dialog hidden>
+    <button type="button" class="dialog-backdrop" data-restart-cancel aria-label="Отмена"></button>
+    <section class="restart-panel" role="dialog" aria-modal="true" aria-labelledby="part2-restart-title">
+      <span class="restart-dialog-icon" aria-hidden="true">↻</span>
+      <h2 id="part2-restart-title" data-restart-title>Начать главу заново?</h2>
+      <p data-restart-copy>Прогресс текущей главы сбросится. Другие главы сохранятся.</p>
+      <div class="restart-actions">
+        <button type="button" class="restart-confirm" data-restart-confirm>Начать заново</button>
+        <button type="button" class="restart-cancel" data-restart-cancel>Отмена</button>
+      </div>
+    </section>
+  </div>
+
+  <script src="hoshi_core.js?v=20260928-1"></script>
+  <script src="hoshi_part2_app.js?v=20260918-2"></script>
+</body>
+</html>
