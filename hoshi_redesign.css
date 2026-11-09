@@ -187,7 +187,7 @@ body.rd .rd-go:active{transform:translateZ(0) scale(.98)}
    ===================================================================== */
 body.rd:not(.map-view-open){background:#e9eef9 url("hoshi_bg_map_v1.webp") center/cover fixed no-repeat;font-family:var(--rd-sans);color:var(--rd-text)}
 body.rd[data-rd-chapter="1"]:not(.map-view-open){background-image:url("hoshi_bg_chapter1_v5.webp")}
-body.rd[data-rd-chapter="2"]:not(.map-view-open){background-image:url("hoshi_bg_chapter2_v1.webp")}
+body.rd[data-rd-chapter="2"]:not(.map-view-open){background-image:url("hoshi_bg_chapter2_v2.webp")}
 
 /* ---------- Верхняя панель главы ---------- */
 body.rd .top{position:sticky;top:calc(10px + env(safe-area-inset-top,0px));z-index:100;width:min(1080px,calc(100% - 32px));max-width:none;margin:10px auto 0;padding:8px;border:0;border-radius:24px;background:linear-gradient(180deg,rgba(255,255,255,.84),rgba(246,248,252,.66));backdrop-filter:var(--rd-blur);-webkit-backdrop-filter:var(--rd-blur);box-shadow:var(--rd-edge),var(--rd-shadow)}
@@ -631,3 +631,7 @@ body.rd .next.ready.rd-ignite .rd-steps i{animation:rdAFlare .7s ease-out,rdStep
 /* глава 3: карточка тануки — картинка на всю карточку, без синей полосы */
 body.rd .ponta-reward :has(>.inari-card-inner){width:min(560px,100%);margin-left:auto;margin-right:auto}
 body.rd .ponta-reward .inari-card-front .animated-reward-scene{width:100%!important;max-width:none!important}
+/* глава 2: следы и в «Путь открыт», и в полоске прогресса */
+body.rd[data-rd-chapter="2"] .next.opened::before{background-image:url(hoshi_paw_icon_v1.svg)!important;transform:rotate(90deg);filter:drop-shadow(0 0 6px rgba(47,143,240,.6))!important}
+body.rd[data-rd-chapter="2"] .dot{background-image:url(hoshi_paw_icon_v1.svg)!important;transform:rotate(90deg);animation:none!important}
+body.rd[data-rd-chapter="2"] .dot.on{filter:drop-shadow(0 0 4px rgba(47,143,240,.6))}
