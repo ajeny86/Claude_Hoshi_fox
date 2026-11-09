@@ -402,30 +402,30 @@ body.rd .word-card.rd-word.rd-joined .word-parts{animation:rdJoin .45s ease}
 /* ---------- Глава 1: ответы без плашек — над каждым маленький огонёк ---------- */
 body.rd .rd-afl{display:none}
 body.rd[data-rd-chapter="1"] .feedback{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;margin:0;padding:0;border:0}
-body.rd[data-rd-chapter="1"] .answers{display:flex;justify-content:center;gap:clamp(40px,10vw,120px);max-width:none;margin:22px auto 4px}
-body.rd[data-rd-chapter="1"] .answer{position:relative;display:flex;flex-direction:column;align-items:center;gap:6px;min-width:110px;min-height:0;padding:6px 14px 10px;border:0;border-radius:24px;
+body.rd[data-rd-chapter="1"] .answers{display:flex;justify-content:center;gap:clamp(36px,6vw,64px);max-width:none;margin:22px auto 4px}
+body.rd[data-rd-chapter="1"] .answer{position:relative;display:flex;flex-direction:column;align-items:center;gap:6px;flex:0 0 auto;width:auto;min-width:110px;min-height:0;padding:6px 14px 10px;border:0;border-radius:24px;
   background:none!important;box-shadow:none!important;font:italic 500 clamp(30px,3.6vw,40px)/1.1 var(--rd-serif-it);color:#2f3b8f;text-shadow:0 0 10px rgba(255,255,255,.95);
   transition:transform .2s ease,opacity .35s ease,color .35s ease;-webkit-tap-highlight-color:transparent}
 body.rd[data-rd-chapter="1"] .answer:hover:not(:disabled){transform:translateY(-3px)}
 body.rd[data-rd-chapter="1"] .answer:active:not(:disabled){transform:scale(.96)}
 body.rd[data-rd-chapter="1"] .answer:focus-visible{outline:3px solid #8fb6f0;outline-offset:4px}
-body.rd[data-rd-chapter="1"] .rd-afl{position:relative;display:block;width:44px;height:44px}
-body.rd[data-rd-chapter="1"] .rd-afl img{width:100%;height:100%;object-fit:contain;filter:grayscale(1) brightness(1.15);opacity:.45;transform-origin:50% 85%;transition:filter .3s ease,opacity .3s ease}
-body.rd[data-rd-chapter="1"] .answer:hover:not(:disabled) .rd-afl img{opacity:.7}
+body.rd[data-rd-chapter="1"] .rd-afl{position:relative;display:block;width:54px;height:54px}
+body.rd[data-rd-chapter="1"] .rd-afl img{width:100%;height:100%;object-fit:contain;filter:saturate(.55) drop-shadow(0 0 4px rgba(120,190,255,.45));opacity:.8;transform-origin:50% 85%;transition:filter .3s ease,opacity .3s ease}
+body.rd[data-rd-chapter="1"] .answer:hover:not(:disabled) .rd-afl img{opacity:1;filter:drop-shadow(0 0 8px rgba(21,164,253,.7))}
 /* верный: огонёк вспыхивает */
 body.rd[data-rd-chapter="1"] .answer.correct-choice{opacity:1}
 body.rd[data-rd-chapter="1"] .answer.correct-choice .rd-afl img{filter:drop-shadow(0 0 10px rgba(21,164,253,.85)) drop-shadow(0 0 3px #fff);opacity:1;animation:rdAFlare .6s ease-out}
 body.rd[data-rd-chapter="1"] .answer.correct-choice.rd-sent .rd-afl img{opacity:0;transition:opacity .15s}
-@keyframes rdAFlare{0%{transform:scale(.8);filter:grayscale(1);opacity:.45}50%{transform:scale(1.35);filter:brightness(1.6) drop-shadow(0 0 22px rgba(21,164,253,1)) drop-shadow(0 0 4px #fff);opacity:1}100%{transform:scale(1)}}
+@keyframes rdAFlare{0%{transform:scale(.8);filter:saturate(.55);opacity:.8}50%{transform:scale(1.35);filter:brightness(1.6) drop-shadow(0 0 22px rgba(21,164,253,1)) drop-shadow(0 0 4px #fff);opacity:1}100%{transform:scale(1)}}
 /* неверный: вспыхивает и тухнет, идёт дымок */
 body.rd[data-rd-chapter="1"] .answer.wrong-choice{color:#7d82a8}
 body.rd[data-rd-chapter="1"] .answer.wrong-choice .rd-afl img{animation:rdAOut 1.1s ease-out forwards}
-@keyframes rdAOut{0%{filter:grayscale(1);opacity:.45}25%{filter:drop-shadow(0 0 8px rgba(21,164,253,.7));opacity:.9;transform:scale(1.1)}55%{transform:scale(.85) skewX(-6deg)}100%{filter:grayscale(1) brightness(.85);opacity:.22;transform:scale(.7) translateY(6px)}}
+@keyframes rdAOut{0%{filter:saturate(.55);opacity:.8}25%{filter:drop-shadow(0 0 8px rgba(21,164,253,.7));opacity:.9;transform:scale(1.1)}55%{transform:scale(.85) skewX(-6deg)}100%{filter:grayscale(1) brightness(.85);opacity:.22;transform:scale(.7) translateY(6px)}}
 body.rd[data-rd-chapter="1"] .answer.wrong-choice .rd-afl::after{content:"";position:absolute;left:50%;top:6px;width:14px;height:22px;margin-left:-7px;border-radius:50%;background:radial-gradient(circle,rgba(150,155,185,.55),rgba(150,155,185,0) 70%);filter:blur(3px);opacity:0;animation:rdSmoke 1.4s ease-out .45s forwards}
 @keyframes rdSmoke{0%{opacity:0;transform:translateY(0) scale(.6)}30%{opacity:.9}100%{opacity:0;transform:translate(6px,-34px) scale(1.6)}}
 body.rd[data-rd-chapter="1"] .answer:disabled:not(.correct-choice){opacity:.4}
 /* летящий огонёк */
-body.rd .rd-flyer{position:fixed;z-index:400;width:44px;height:44px;margin:-22px 0 0 -22px;pointer-events:none;filter:drop-shadow(0 0 12px rgba(21,164,253,.95)) drop-shadow(0 0 3px #fff)}
+body.rd .rd-flyer{position:fixed;z-index:400;width:54px;height:54px;margin:-27px 0 0 -27px;pointer-events:none;filter:drop-shadow(0 0 12px rgba(21,164,253,.95)) drop-shadow(0 0 3px #fff)}
 /* основной огонёк ждёт, пока прилетит маленький, потом вспыхивает */
 body.rd .next.ready.rd-wait .rd-glow{opacity:0;animation:none}
 body.rd .next.ready.rd-wait .rd-guide img{filter:grayscale(1) brightness(1.15);opacity:.42;animation:none}
