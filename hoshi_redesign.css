@@ -642,15 +642,16 @@ body.rd[data-rd-chapter="2"] .next.opened .rd-steps{gap:5px}
 body.rd[data-rd-chapter="2"] .next.opened .rd-steps i{width:20px;height:20px;animation:rdStep 2.4s ease-in-out infinite;filter:drop-shadow(0 0 5px rgba(47,143,240,.5))}
 body.rd[data-rd-chapter="2"] .next.opened .rd-steps i{width:24px;height:24px;animation:rdStepOn 2.4s ease-in-out infinite}
 @keyframes rdStepOn{0%,100%{opacity:.5}25%,60%{opacity:1;filter:drop-shadow(0 0 8px rgba(47,143,240,.85))}}
-/* следы: сначала все белые, потом по очереди синеют 1, 2, 3, 4 — и снова */
-body.rd .rd-steps i,body.rd[data-rd-chapter="2"] .next.opened .rd-steps i{opacity:1;animation:rdPaw1 4s ease-in-out infinite}
-body.rd .rd-steps i:nth-child(2),body.rd[data-rd-chapter="2"] .next.opened .rd-steps i:nth-child(2){animation-name:rdPaw2;animation-delay:0s}
-body.rd .rd-steps i:nth-child(3),body.rd[data-rd-chapter="2"] .next.opened .rd-steps i:nth-child(3){animation-name:rdPaw3;animation-delay:0s}
-body.rd .rd-steps i:nth-child(4),body.rd[data-rd-chapter="2"] .next.opened .rd-steps i:nth-child(4){animation-name:rdPaw4;animation-delay:0s}
-@keyframes rdPaw1{0%,8%{filter:brightness(0) invert(1) drop-shadow(0 0 3px rgba(90,120,200,.7))}14%,86%{filter:drop-shadow(0 0 7px rgba(47,143,240,.8))}94%,100%{filter:brightness(0) invert(1) drop-shadow(0 0 3px rgba(90,120,200,.7))}}
-@keyframes rdPaw2{0%,24%{filter:brightness(0) invert(1) drop-shadow(0 0 3px rgba(90,120,200,.7))}30%,86%{filter:drop-shadow(0 0 7px rgba(47,143,240,.8))}94%,100%{filter:brightness(0) invert(1) drop-shadow(0 0 3px rgba(90,120,200,.7))}}
-@keyframes rdPaw3{0%,40%{filter:brightness(0) invert(1) drop-shadow(0 0 3px rgba(90,120,200,.7))}46%,86%{filter:drop-shadow(0 0 7px rgba(47,143,240,.8))}94%,100%{filter:brightness(0) invert(1) drop-shadow(0 0 3px rgba(90,120,200,.7))}}
-@keyframes rdPaw4{0%,56%{filter:brightness(0) invert(1) drop-shadow(0 0 3px rgba(90,120,200,.7))}62%,86%{filter:drop-shadow(0 0 7px rgba(47,143,240,.8))}94%,100%{filter:brightness(0) invert(1) drop-shadow(0 0 3px rgba(90,120,200,.7))}}
+/* следы: сначала все белые, потом по очереди синеют 1, 2, 3, 4 — и снова (через белый слой сверху — работает и в Safari) */
+body.rd .rd-steps i,body.rd[data-rd-chapter="2"] .next.opened .rd-steps i{position:relative;opacity:1;animation:none;filter:drop-shadow(0 0 6px rgba(47,143,240,.7))}
+body.rd .rd-steps i::after{content:"";position:absolute;inset:0;background:url(hoshi_paw_white_v1.svg) center/contain no-repeat;filter:drop-shadow(0 0 2px rgba(80,110,190,.8));animation:rdPawW1 4s linear infinite}
+body.rd .rd-steps i:nth-child(2)::after{animation-name:rdPawW2}
+body.rd .rd-steps i:nth-child(3)::after{animation-name:rdPawW3}
+body.rd .rd-steps i:nth-child(4)::after{animation-name:rdPawW4}
+@keyframes rdPawW1{0%,8%{opacity:1}14%,86%{opacity:0}94%,100%{opacity:1}}
+@keyframes rdPawW2{0%,24%{opacity:1}30%,86%{opacity:0}94%,100%{opacity:1}}
+@keyframes rdPawW3{0%,40%{opacity:1}46%,86%{opacity:0}94%,100%{opacity:1}}
+@keyframes rdPawW4{0%,56%{opacity:1}62%,86%{opacity:0}94%,100%{opacity:1}}
 body.rd .next:not(.ready) .rd-steps i,body.rd .next.ready.rd-wait .rd-steps i{animation:none!important;opacity:.4;filter:grayscale(1)}
 @media (prefers-reduced-motion:reduce){body.rd .rd-steps i{animation:none!important}}
 /* кнопки со следами (глава 2): надпись — следы — «коснись следов» */
@@ -660,3 +661,5 @@ body.rd .next:has(.rd-steps):not(.opened) .rd-guide img{display:none}
 body.rd .next:has(.rd-steps):not(.opened)::after{position:static!important;transform:none!important;order:2;margin-top:2px}
 body.rd[data-rd-chapter="2"] .next:not(.ready)::after{content:"выполни задание — и следы загорятся"}
 body.rd.rd-en[data-rd-chapter="2"] .next:not(.ready)::after{content:"finish the task to light the tracks"}
+body.rd .next:not(.ready) .rd-steps i::after,body.rd .next.ready.rd-wait .rd-steps i::after{animation:none;opacity:0}
+@media (prefers-reduced-motion:reduce){body.rd .rd-steps i::after{animation:none;opacity:0}}
