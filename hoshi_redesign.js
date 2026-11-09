@@ -351,3 +351,52 @@
     if (page) new MutationObserver(sync).observe(page, { attributes: true, attributeFilter: ['hidden'] });
   });
 })();
+
+/* ---------- Глава 1: ответ «огоньком» — верный летит и зажигает основной ---------- */
+(() => {
+  'use strict';
+  if (!document.body.classList.contains('rd')) return;
+  const FLAME = 'hoshi_flame_icon_v1.webp';
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.querySelectorAll('.answer').forEach(a => {
+    if (a.querySelector('.rd-afl')) return;
+    const f = document.createElement('span'); f.className = 'rd-afl'; f.setAttribute('aria-hidden', 'true');
+    f.innerHTML = '<img src="' + FLAME + '" alt="">';
+    a.prepend(f);
+  });
+  const ch1 = () => document.body.dataset.rdChapter === '1';
+  document.addEventListener('click', e => {
+    const a = e.target.closest('.answer');
+    if (!a || !ch1()) return;
+    // движок уже обработал клик (наш скрипт подключён после него)
+    requestAnimationFrame(() => {
+      if (!a.classList.contains('correct-choice')) return;
+      const q = a.closest('.question') || a.closest('.page');
+      const next = q?.querySelector('.next') || a.closest('.page')?.querySelector('.next');
+      const target = next?.querySelector('.rd-guide img');
+      if (!next || !target || reduce) return;
+      next.classList.add('rd-wait');
+      const from = a.querySelector('.rd-afl').getBoundingClientRect();
+      setTimeout(() => {
+        const to = target.getBoundingClientRect();
+        const fx = from.left + from.width / 2, fy = from.top + from.height / 2;
+        const tx = to.left + to.width / 2, ty = to.top + to.height / 2;
+        const fly = document.createElement('img'); fly.src = FLAME; fly.className = 'rd-flyer'; fly.alt = '';
+        fly.style.left = fx + 'px'; fly.style.top = fy + 'px';
+        document.body.appendChild(fly);
+        a.classList.add('rd-sent');
+        const mx = (fx + tx) / 2 + (tx > fx ? -60 : 60), my = Math.min(fy, ty) - 70;
+        const anim = fly.animate([
+          { transform: 'translate(0,0) scale(1)' },
+          { transform: `translate(${mx - fx}px,${my - fy}px) scale(1.15)`, offset: .45 },
+          { transform: `translate(${tx - fx}px,${ty - fy}px) scale(1.3)` }
+        ], { duration: 900, easing: 'cubic-bezier(.45,.05,.35,1)' });
+        anim.onfinish = () => {
+          fly.remove();
+          next.classList.remove('rd-wait'); next.classList.add('rd-ignite');
+          setTimeout(() => next.classList.remove('rd-ignite'), 1000);
+        };
+      }, 550);
+    });
+  });
+})();
