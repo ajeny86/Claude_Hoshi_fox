@@ -693,3 +693,12 @@ body.rd .next:not(.ready) .rd-steps i,body.rd .next.ready.rd-wait .rd-steps i{op
 body.rd .next:not(.ready) .rd-steps i{background-color:transparent}
 body.rd[data-rd-chapter="2"] .rd-afl img,body.rd[data-rd-chapter="2"] .rd-tfl img{content:url(hoshi_paw_trail_v1.svg);-webkit-filter:drop-shadow(0 0 4px #40ddfd) drop-shadow(0 0 10px rgba(21,164,253,.65))!important;filter:drop-shadow(0 0 4px #40ddfd) drop-shadow(0 0 10px rgba(21,164,253,.65))!important}
 body.rd[data-rd-chapter="2"] .next.opened::before{background-image:url(hoshi_paw_trail_v1.svg)!important}
+/* «Путь открыт»: следы всегда идут, даже если кнопка уже без класса ready */
+body.rd .next.opened:not(.ready) .rd-steps i{opacity:.15!important;transform:scale(.4)!important;filter:drop-shadow(0 0 4px #40ddfd) drop-shadow(0 0 10px rgba(21,164,253,.65))!important;-webkit-filter:drop-shadow(0 0 4px #40ddfd) drop-shadow(0 0 10px rgba(21,164,253,.65))!important}
+body.rd .next.opened .rd-steps i.on{opacity:1!important;transform:scale(1)!important}
+/* следы не исчезают: белые → по очереди голубые со свечением */
+body.rd .rd-steps i,body.rd .next.opened:not(.ready) .rd-steps i,body.rd[data-rd-chapter="2"] .next.opened .rd-steps i{opacity:1!important;transform:scale(.9)!important;
+  -webkit-filter:drop-shadow(0 0 1.5px rgba(70,90,160,.55)) drop-shadow(0 1px 2px rgba(70,90,160,.3))!important;filter:drop-shadow(0 0 1.5px rgba(70,90,160,.55)) drop-shadow(0 1px 2px rgba(70,90,160,.3))!important}
+body.rd .rd-steps i.on,body.rd .next.opened .rd-steps i.on{transform:scale(1.08)!important;background-image:url(hoshi_paw_trail_blue_v1.svg)!important;
+  -webkit-filter:drop-shadow(0 0 4px #40ddfd) drop-shadow(0 0 10px rgba(21,164,253,.7))!important;filter:drop-shadow(0 0 4px #40ddfd) drop-shadow(0 0 10px rgba(21,164,253,.7))!important}
+body.rd .next:not(.ready):not(.opened) .rd-steps i,body.rd .next.ready.rd-wait .rd-steps i{opacity:.35!important;transform:scale(.85)!important;background-image:url(hoshi_paw_trail_v1.svg)!important;-webkit-filter:grayscale(1) drop-shadow(0 0 1.5px rgba(90,100,140,.6))!important;filter:grayscale(1) drop-shadow(0 0 1.5px rgba(90,100,140,.6))!important}
