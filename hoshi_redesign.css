@@ -370,32 +370,33 @@ body.rd .word-card.rd-word.rd-joined .word-parts{animation:rdJoin .45s ease}
 @media (prefers-reduced-motion:reduce){body.rd .word-card.rd-word .word-parts .rd-dash{transition:none}body.rd .word-card.rd-word.rd-joined .word-parts{animation:none}}
 body.rd .next::after{left:50%;right:auto;transform:translateX(-50%);white-space:nowrap}
 
-/* ---------- Глава 1, экран 2: слова на облаках (по референсу) ---------- */
-body.rd .word-cards:has(.rd-word){gap:14px 18px;padding-top:10px}
+/* ---------- Глава 1, экран 2: стеклянные карточки слов (по референсу) ---------- */
+body.rd .word-cards:has(.rd-word){max-width:880px;gap:18px 22px;padding-top:10px}
 body.rd .word-card.rd-word{
-  isolation:isolate;aspect-ratio:772/380;min-height:0;gap:6px;padding:9% 9% 8%;border:0;border-radius:0;
-  background:url(hoshi_word_cloud_v1.webp) center/100% 100% no-repeat;box-shadow:none;
-  filter:drop-shadow(0 8px 16px rgba(80,100,170,.14));transition:transform .2s ease,filter .35s ease}
-body.rd .word-card.rd-word:hover{box-shadow:none;transform:translateY(-2px)}
+  isolation:isolate;container-type:inline-size;aspect-ratio:781/329;min-height:0;gap:4px;padding:6% 7% 5%;border:0;
+  border-radius:7.4%/17.6%;background:url(hoshi_word_card_v1.webp) center/100% 100% no-repeat;filter:none;
+  box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.9),0 0 14px rgba(255,226,196,.55),0 10px 24px rgba(80,90,160,.12);
+  transition:transform .2s ease,box-shadow .35s ease}
+body.rd .word-card.rd-word:hover{transform:translateY(-2px);box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.95),0 0 18px rgba(255,226,196,.7),0 12px 26px rgba(80,90,160,.14)}
 body.rd .word-card.rd-word:active{transform:scale(.98)}
-body.rd .word-card.rd-word .word-parts{font:italic 600 clamp(21px,2.5vw,28px)/1.25 var(--rd-serif-it);color:#2f3a72;letter-spacing:0}
-body.rd .word-card.rd-word .word-parts .rd-dash{vertical-align:top;height:1.25em;line-height:1.25;color:#6f86c8;font-style:normal}
-/* разделитель с узелком */
-body.rd .rd-knot{position:relative;display:block;width:62%;height:10px;flex:none;
-  background:linear-gradient(90deg,transparent,rgba(70,86,150,.55) 18%,rgba(70,86,150,.55) 42%,transparent 44% 56%,rgba(70,86,150,.55) 58%,rgba(70,86,150,.55) 82%,transparent) center/100% 1px no-repeat}
-body.rd .rd-knot::before{content:"";position:absolute;left:50%;top:50%;width:7px;height:7px;margin:-4.5px 0 0 -4.5px;border:1px solid rgba(70,86,150,.75);transform:rotate(45deg)}
-body.rd .rd-knot::after{content:"";position:absolute;left:50%;top:50%;width:2px;height:2px;margin:-1px 0 0 -1px;border-radius:50%;background:rgba(70,86,150,.8);box-shadow:-13px 0 0 rgba(70,86,150,.6),13px 0 0 rgba(70,86,150,.6)}
-body.rd .word-card.rd-word .rd-word-hint{gap:8px;font:italic 500 clamp(14px,1.5vw,16px)/1.2 var(--rd-serif-it);color:#56648f}
+body.rd .word-card.rd-word .word-parts{font:italic 600 clamp(20px,8.2cqw,38px)/1.2 var(--rd-serif-it);color:#2b3157;letter-spacing:0}
+body.rd .word-card.rd-word .word-parts .rd-dash{vertical-align:top;height:1.2em;line-height:1.2;color:#2b3157;font-style:normal}
+body.rd .word-card.rd-word .rd-word-hint{order:2;margin-top:6px;gap:10px;font:400 clamp(14px,4.6cqw,20px)/1.2 var(--rd-serif-it);color:#5d5868}
 body.rd .word-card.rd-word .rd-word-hint::before{display:none}
-body.rd .rd-sakura{display:inline-block;width:0;height:22px;flex:none;background:url(hoshi_flame_icon_v1.webp) center/contain no-repeat;opacity:0;transform:scale(.3) rotate(-40deg);transition:width .3s ease,opacity .3s ease,transform .45s cubic-bezier(.2,.8,.25,1.3)}
-/* собрано: тёплое свечение и цветок */
-body.rd .word-card.rd-word.rd-joined{background:url(hoshi_word_cloud_v1.webp) center/100% 100% no-repeat;box-shadow:none;
-  filter:drop-shadow(0 0 10px rgba(150,205,255,.9)) drop-shadow(0 0 24px rgba(90,170,250,.45)) drop-shadow(0 8px 16px rgba(80,100,170,.14))}
-body.rd .word-card.rd-word.rd-joined .rd-word-hint{color:#56648f}
+/* мазок кисти под подписью */
+body.rd .rd-knot{order:3;display:block;width:34%;height:9px;flex:none;margin-top:2px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 12' preserveAspectRatio='none'%3E%3Cdefs%3E%3ClinearGradient id='g'%3E%3Cstop offset='0' stop-color='%23b9b2c4' stop-opacity='0'/%3E%3Cstop offset='.25' stop-color='%23b9b2c4'/%3E%3Cstop offset='1' stop-color='%23b9b2c4' stop-opacity='.15'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M2 8C40 5 90 3 140 3.5S190 5 198 6.5C160 7.5 120 8 80 9.5S20 11 2 8Z' fill='url(%23g)'/%3E%3C/svg%3E") center/100% 100% no-repeat}
+body.rd .rd-knot::before,body.rd .rd-knot::after{content:none}
+/* галочка */
+body.rd .rd-sakura{display:inline-block;width:0;height:24px;flex:none;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 28'%3E%3Cpath d='M3 15c3 1 6 4 8 8 5-9 11-16 19-21-7 6-13 13-18 23-1 1-2 1-3 0-1-4-3-7-6-9z' fill='%23e06a3c'/%3E%3C/svg%3E") center/contain no-repeat;opacity:0;transform:scale(.3);transform-origin:20% 80%;transition:width .25s ease,opacity .25s ease,transform .4s cubic-bezier(.2,.8,.25,1.4)}
+/* собрано: тёплое свечение по краю, галочка и цветной мазок */
+body.rd .word-card.rd-word.rd-joined{background:url(hoshi_word_card_v1.webp) center/100% 100% no-repeat;filter:none;
+  box-shadow:inset 0 0 0 2px rgba(255,248,236,.95),inset 0 0 18px rgba(255,214,170,.45),0 0 22px rgba(255,210,160,.85),0 10px 24px rgba(80,90,160,.12)}
+body.rd .word-card.rd-word.rd-joined .rd-word-hint{color:#5d5868}
 body.rd .word-card.rd-word.rd-joined .rd-word-hint::before{content:none}
-body.rd .word-card.rd-word.rd-joined .rd-sakura{width:22px;opacity:1;transform:none}
+body.rd .word-card.rd-word.rd-joined .rd-sakura{width:28px;opacity:1;transform:none}
+body.rd .word-card.rd-word.rd-joined .rd-knot{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 12' preserveAspectRatio='none'%3E%3Cdefs%3E%3ClinearGradient id='g'%3E%3Cstop offset='0' stop-color='%23e98a6e' stop-opacity='0'/%3E%3Cstop offset='.25' stop-color='%23e98a6e'/%3E%3Cstop offset='1' stop-color='%23f2a3a8' stop-opacity='.15'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M2 8C40 5 90 3 140 3.5S190 5 198 6.5C160 7.5 120 8 80 9.5S20 11 2 8Z' fill='url(%23g)'/%3E%3C/svg%3E")}
 /* лепестки */
-body.rd .rd-petal{position:absolute;left:var(--x);top:var(--y);width:12px;height:12px;border-radius:50%;background:radial-gradient(circle,#fff 0 25%,#9fd3ff 55%,rgba(21,164,253,0) 72%);pointer-events:none;z-index:2;opacity:0;animation:rdPetal 1.6s ease-out forwards}
+body.rd .rd-petal{position:absolute;left:var(--x);top:var(--y);width:14px;height:8px;border-radius:80% 0 80% 0;background:linear-gradient(135deg,#ffd6de,#ee8fa6);pointer-events:none;z-index:2;opacity:0;animation:rdPetal 1.8s ease-out forwards}
 @keyframes rdPetal{0%{opacity:0;transform:translate(0,0) rotate(0)}15%{opacity:1}100%{opacity:0;transform:translate(var(--dx),var(--dy)) rotate(var(--rot))}}
 body.rd .word-card.rd-word.rd-joined .word-parts{animation:rdJoin .45s ease}
 @media (prefers-reduced-motion:reduce){body.rd .rd-petal{display:none}body.rd .rd-sakura{transition:none}}
