@@ -520,11 +520,12 @@ body.rd[data-rd-chapter="1"] .inari-fact:nth-child(3){--scene:url(hoshi_inari_fa
 body.rd[data-rd-chapter="1"] .inari-fact:nth-child(4){--scene:url(hoshi_inari_fact4_v1.webp)}
 body.rd[data-rd-chapter="1"] .inari-question{display:contents}
 body.rd[data-rd-chapter="1"] .inari-question h3{grid-column:2;grid-row:1;position:relative;z-index:1;margin:0;text-align:left;font-size:clamp(20px,2.3vw,25px)}
-body.rd[data-rd-chapter="1"] .inari-flame{grid-column:1;grid-row:1/3;align-self:center;position:relative;z-index:1;width:52px;height:60px;padding:2px;background:none!important;border:0;filter:drop-shadow(0 0 10px rgba(21,164,253,.7)) drop-shadow(0 0 3px #fff);transition:transform .2s ease,opacity .3s ease}
-body.rd[data-rd-chapter="1"] .inari-flame img{animation:rdHover 2.6s ease-in-out infinite}
+body.rd[data-rd-chapter="1"] .inari-flame{grid-column:1;grid-row:1/3;align-self:center;position:relative;z-index:1;width:52px;height:60px;padding:2px;background:none!important;border:0;cursor:pointer;filter:grayscale(1) brightness(1.15);opacity:.55;transition:transform .2s ease,opacity .4s ease,filter .4s ease}
+body.rd[data-rd-chapter="1"] .inari-flame img{animation:none}
 body.rd[data-rd-chapter="1"] .inari-flame:hover{transform:scale(1.15)}
-body.rd[data-rd-chapter="1"] .inari-flame.opened{opacity:.4;filter:grayscale(.4)}
-body.rd[data-rd-chapter="1"] .inari-flame.opened img{animation:none}
+body.rd[data-rd-chapter="1"] .inari-flame:hover:not(.opened){opacity:.8}
+body.rd[data-rd-chapter="1"] .inari-flame.opened{opacity:1;filter:drop-shadow(0 0 10px rgba(21,164,253,.75)) drop-shadow(0 0 3px #fff)}
+body.rd[data-rd-chapter="1"] .inari-flame.opened img{animation:rdAFlare .7s ease-out,rdHover 2.6s ease-in-out .7s infinite}
 body.rd[data-rd-chapter="1"] .inari-answer{grid-column:2;grid-row:2;position:relative;z-index:1;max-width:none;margin:4px 0 0;padding:0;border:0;background:none;text-align:left;font:400 clamp(16px,1.7vw,18px)/1.45 var(--rd-sans);color:#45507e}
 body.rd[data-rd-chapter="1"] .inari-answer strong{color:#2f3b8f}
 @media (max-width:600px){body.rd[data-rd-chapter="1"] .inari-fact{padding-right:18px}body.rd[data-rd-chapter="1"] .inari-fact::after{opacity:.35}}
@@ -532,7 +533,7 @@ body.rd[data-rd-chapter="1"] .inari-answer strong{color:#2f3b8f}
 body.rd[data-rd-chapter="1"] .inari-complete{max-width:none;margin:22px auto 0;padding:0;border:0;background:none!important;box-shadow:none!important;text-align:center;
   font:400 clamp(17px,1.9vw,19px)/1.5 var(--rd-sans);color:#45507e}
 body.rd[data-rd-chapter="1"] .inari-complete::after{content:none!important}
-body.rd[data-rd-chapter="1"] .inari-complete::before{content:""!important;display:block;width:34px;height:40px;margin:0 auto 6px;background:url(hoshi_flame_icon_v1.webp) center/contain no-repeat;filter:drop-shadow(0 0 9px rgba(21,164,253,.75));position:static;transform:none}
+body.rd[data-rd-chapter="1"] .inari-complete::before{content:none!important}
 body.rd[data-rd-chapter="1"] .inari-complete br{display:none}
 body.rd[data-rd-chapter="1"] .inari-complete strong{display:block;margin-bottom:6px;font:700 clamp(28px,3.2vw,36px)/1.15 var(--rd-tale);color:#2f3b8f;text-shadow:0 0 16px rgba(255,255,255,.95)}
 /* карточка шире и короче */
@@ -562,3 +563,13 @@ body.rd[data-rd-chapter="1"] .inari-kitsunebi--4{--t:8.5s;--d:-2.8s}
   100%{opacity:0;transform:translate(0,calc(var(--dy)*3.8)) scale(.5)}}
 @keyframes rdFlick{0%,100%{filter:drop-shadow(0 0 8px rgba(47,181,239,.75)) brightness(1)}35%{filter:drop-shadow(0 0 16px rgba(90,200,255,1)) brightness(1.25)}60%{filter:drop-shadow(0 0 6px rgba(47,181,239,.6)) brightness(.92)}}
 @media (prefers-reduced-motion:reduce){body.rd[data-rd-chapter="1"] .inari-kitsunebi{animation:none;opacity:.8}}
+
+/* ответ раздвигает карточку */
+body.rd[data-rd-chapter="1"] .inari-answer:not([hidden]){animation:rdExpand .55s cubic-bezier(.2,.8,.25,1) both;overflow:hidden}
+@keyframes rdExpand{from{max-height:0;opacity:0;margin-top:0}60%{opacity:.6}to{max-height:260px;opacity:1}}
+/* переход дальше: явно кликабельный, с лапкой */
+body.rd[data-rd-chapter="1"] .reward-continue{gap:10px;cursor:pointer;color:#1f5fc0;text-decoration:underline;text-decoration-thickness:1.5px;text-decoration-color:rgba(31,95,192,.35);text-underline-offset:6px;transition:color .2s ease,text-decoration-color .2s ease}
+body.rd[data-rd-chapter="1"] .reward-continue:hover{color:#2f3b8f;text-decoration-color:rgba(47,59,143,.8)}
+body.rd[data-rd-chapter="1"] .reward-continue::after{content:""!important;display:inline-block!important;width:26px;height:26px;margin-left:0;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%231f5fc0'%3E%3Cellipse cx='12' cy='15.5' rx='5' ry='4.3'/%3E%3Cellipse cx='5.6' cy='9.6' rx='2' ry='2.6' transform='rotate(-18 5.6 9.6)'/%3E%3Cellipse cx='9.6' cy='6' rx='2.1' ry='2.8' transform='rotate(-6 9.6 6)'/%3E%3Cellipse cx='14.4' cy='6' rx='2.1' ry='2.8' transform='rotate(6 14.4 6)'/%3E%3Cellipse cx='18.4' cy='9.6' rx='2' ry='2.6' transform='rotate(18 18.4 9.6)'/%3E%3C/svg%3E") center/contain no-repeat;transform:rotate(90deg)!important;animation:rdPawStep 1.8s ease-in-out infinite}
+@keyframes rdPawStep{0%,100%{translate:0 0}40%{translate:6px -3px}60%{translate:6px 0}}
+@media (prefers-reduced-motion:reduce){body.rd[data-rd-chapter="1"] .reward-continue::after,body.rd[data-rd-chapter="1"] .inari-answer:not([hidden]){animation:none}}
