@@ -635,3 +635,12 @@ body.rd .ponta-reward .inari-card-front .animated-reward-scene{width:100%!import
 body.rd[data-rd-chapter="2"] .next.opened::before{background-image:url(hoshi_paw_icon_v1.svg)!important;transform:rotate(90deg);filter:drop-shadow(0 0 6px rgba(47,143,240,.6))!important}
 body.rd[data-rd-chapter="2"] .dot{background-image:url(hoshi_paw_icon_v1.svg)!important;transform:rotate(90deg);animation:none!important}
 body.rd[data-rd-chapter="2"] .dot.on{filter:drop-shadow(0 0 4px rgba(47,143,240,.6))}
+/* глава 2: «Путь открыт» — четыре шагающих следа, как в награде главы 1 */
+body.rd[data-rd-chapter="2"] .next.opened::before{content:none!important;display:none!important}
+body.rd[data-rd-chapter="2"] .next.opened{flex-direction:column!important;gap:8px}
+body.rd[data-rd-chapter="2"] .next.opened .rd-guide{display:inline-flex!important;position:static!important;width:auto;height:auto;margin:0 auto!important;order:-1}
+body.rd[data-rd-chapter="2"] .next.opened .rd-glow{display:none}
+body.rd[data-rd-chapter="2"] .next.opened .rd-steps{gap:5px}
+body.rd[data-rd-chapter="2"] .next.opened .rd-steps i{width:20px;height:20px;animation:rdStep 2.4s ease-in-out infinite;filter:drop-shadow(0 0 5px rgba(47,143,240,.5))}
+body.rd[data-rd-chapter="2"] .next.opened .rd-steps i{width:24px;height:24px;animation:rdStepOn 2.4s ease-in-out infinite}
+@keyframes rdStepOn{0%,100%{opacity:.5}25%,60%{opacity:1;filter:drop-shadow(0 0 8px rgba(47,143,240,.85))}}

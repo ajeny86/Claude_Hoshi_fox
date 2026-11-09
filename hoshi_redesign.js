@@ -253,7 +253,7 @@
   // Огонёк-проводник: картинка и мягкое сияние внутри каждой кнопки «дальше»
   const FLAME = 'hoshi_flame_icon_v1.webp';
   const addGuide = btn => {
-    if (btn.classList.contains('opened') || btn.querySelector('.rd-guide')) return;
+    if (btn.querySelector('.rd-guide')) return;
     const g = document.createElement('span'); g.className = 'rd-guide'; g.setAttribute('aria-hidden', 'true');
     g.innerHTML = '<span class="rd-glow"></span><img src="' + FLAME + '" alt="">';
     btn.prepend(g);
@@ -519,5 +519,27 @@
     const ponta = done.closest('.ponta-reward');
     p.textContent = lang === 'en' ? (ponta ? 'Open all four tanuki secrets to continue the journey.' : 'Open all four secrets of Inari to continue the journey.') : (ponta ? 'Открой все четыре секрета тануки — и сможешь продолжить путь.' : 'Открой все четыре тайны Инари — и сможешь продолжить путь.');
     done.after(p);
+  });
+})();
+
+/* ---------- Глава 2: когда путь открыт, движок перерисовывает кнопку — возвращаем следы ---------- */
+(() => {
+  'use strict';
+  if (!document.body.classList.contains('rd')) return;
+  const ensure = btn => {
+    if (btn.querySelector('.rd-steps')) return;
+    let g = btn.querySelector('.rd-guide');
+    if (!g) {
+      g = document.createElement('span'); g.className = 'rd-guide'; g.setAttribute('aria-hidden', 'true');
+      g.innerHTML = '<span class="rd-glow"></span><img src="hoshi_flame_icon_v1.webp" alt="">';
+      btn.prepend(g);
+    }
+    const st = document.createElement('span'); st.className = 'rd-steps';
+    st.innerHTML = '<i></i><i></i><i></i><i></i>';
+    g.appendChild(st);
+  };
+  document.querySelectorAll('[data-chapter="2"] .next').forEach(btn => {
+    ensure(btn);
+    new MutationObserver(() => ensure(btn)).observe(btn, { childList: true });
   });
 })();
