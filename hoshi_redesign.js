@@ -507,3 +507,16 @@
   let lang = 'ru'; try { lang = localStorage.getItem('hoshi-language-choice') || 'ru'; } catch (e) {}
   if (lang === 'en') document.body.classList.add('rd-en');
 })();
+
+/* ---------- Награда главы 1: пока тайны не раскрыты — подсказка вместо перехода ---------- */
+(() => {
+  'use strict';
+  if (!document.body.classList.contains('rd')) return;
+  let lang = 'ru'; try { lang = localStorage.getItem('hoshi-language-choice') || 'ru'; } catch (e) {}
+  document.querySelectorAll('.inari-reward:not(.ponta-reward):not(.echo-reward) .inari-complete').forEach(done => {
+    if (done.parentElement.querySelector('.rd-locked')) return;
+    const p = document.createElement('p'); p.className = 'rd-locked';
+    p.textContent = lang === 'en' ? 'Open all four secrets of Inari to continue the journey.' : 'Открой все четыре тайны Инари — и сможешь продолжить путь.';
+    done.after(p);
+  });
+})();
