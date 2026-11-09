@@ -502,5 +502,9 @@
     const steps = document.createElement('span'); steps.className = 'rd-steps'; steps.setAttribute('aria-hidden', 'true');
     steps.innerHTML = '<i></i><i></i><i></i>';
     btn.appendChild(steps);
+    const hint = document.createElement('span'); hint.className = 'rd-cont-hint'; hint.setAttribute('aria-hidden', 'true');
+    let lang = 'ru'; try { lang = localStorage.getItem('hoshi-language-choice') || 'ru'; } catch (e) {}
+    hint.textContent = lang === 'en' ? 'tap the tracks' : 'коснись следов';
+    btn.appendChild(hint);
   });
 })();

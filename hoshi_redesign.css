@@ -577,7 +577,18 @@ body.rd .rd-steps i:nth-child(odd){transform:rotate(90deg) translateX(4px)}
 body.rd .rd-steps i:nth-child(even){transform:rotate(90deg) translateX(-4px)}
 body.rd .rd-steps i:nth-child(2){animation-delay:.3s}
 body.rd .rd-steps i:nth-child(3){animation-delay:.6s}
-@keyframes rdStep{0%,100%{opacity:.2}25%,60%{opacity:1}}
+@keyframes rdStep{0%,100%{opacity:.2}25%,60%{opacity:1;filter:drop-shadow(0 0 9px rgba(47,143,240,.9))}}
 body.rd .reward-continue:hover .rd-steps i{animation-duration:1.2s}
 @media (prefers-reduced-motion:reduce){body.rd .rd-steps i{animation:none;opacity:.85}}
 @media (prefers-reduced-motion:reduce){body.rd[data-rd-chapter="1"] .reward-continue::after,body.rd[data-rd-chapter="1"] .inari-answer:not([hidden]){animation:none}}
+body.rd[data-rd-chapter="1"] .reward-continue{flex-wrap:wrap;row-gap:6px}
+body.rd .rd-cont-hint{flex-basis:100%;text-align:center;font:600 13px/1.2 var(--rd-sans);letter-spacing:.02em;color:#7d82a8}
+/* реакция на наведение и касание */
+body.rd[data-rd-chapter="1"] .reward-continue{transition:color .25s ease,transform .25s ease}
+body.rd[data-rd-chapter="1"] .reward-continue:is(:hover,:focus-visible){color:#1f6fd1;transform:translateY(-2px)}
+body.rd[data-rd-chapter="1"] .reward-continue:active{transform:scale(.97)}
+body.rd .rd-steps{transition:transform .3s ease}
+body.rd .reward-continue:is(:hover,:focus-visible) .rd-steps{transform:translateX(8px)}
+body.rd .reward-continue:is(:hover,:focus-visible) .rd-steps i{animation-duration:.9s;filter:drop-shadow(0 0 9px rgba(47,143,240,.95))}
+body.rd .rd-cont-hint{transition:color .25s ease}
+body.rd .reward-continue:is(:hover,:focus-visible) .rd-cont-hint{color:#1f6fd1}
