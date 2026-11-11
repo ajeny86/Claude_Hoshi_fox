@@ -822,3 +822,7 @@ body.rd .rd-sign{height:124px}
 body.rd .rd-sign i:nth-child(1),body.rd .rd-sign i:nth-child(3){display:none}
 body.rd .rd-sign i:nth-child(2){width:116px;height:116px;animation-delay:0s,1.2s}
 body.rd .rd-sign::before{width:260px;height:190px}
+/* при открытии секрета разлетаются снежинки */
+body.rd .rd-tspark,body.rd .rd-tspark.star{width:var(--s,26px);height:var(--s,26px);margin:calc(var(--s,26px) / -2);border-radius:0;background:url(hoshi_snowflake_v1.svg) center/contain no-repeat;
+  -webkit-filter:drop-shadow(0 0 3px rgba(120,190,255,.95)) drop-shadow(0 0 8px rgba(64,170,253,.6));filter:drop-shadow(0 0 3px rgba(120,190,255,.95)) drop-shadow(0 0 8px rgba(64,170,253,.6));animation-duration:1.9s}
+body.rd .tracker-token.rd-noanim .tracker-card-inner{transition:none!important}

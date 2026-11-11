@@ -590,14 +590,29 @@
       const a = Math.random() * Math.PI * 2, d = 120 + Math.random() * 220;
       s.style.setProperty('--x', `${35 + Math.random() * 30}%`); s.style.setProperty('--y', `${35 + Math.random() * 30}%`);
       s.style.setProperty('--dx', `${Math.cos(a) * d}px`); s.style.setProperty('--dy', `${Math.sin(a) * d * .7 - 40}px`);
-      s.style.setProperty('--rot', `${(Math.random() - .5) * 120}deg`);
+      s.style.setProperty('--rot', `${(Math.random() - .5) * 360}deg`); s.style.setProperty('--s', `${14 + Math.random() * 24}px`);
       s.style.animationDelay = `${.25 + Math.random() * .3}s`;
       host.appendChild(s); setTimeout(() => s.remove(), 2400);
     }
   };
+  let quiet = false;
   document.addEventListener('click', e => {
     const card = e.target.closest('.tracker-token');
-    if (!card) return;
-    requestAnimationFrame(() => { if (card.classList.contains('lit') && !card.dataset.rdBurst) { card.dataset.rdBurst = '1'; burst(card, 22); } });
+    if (!card || quiet) return;
+    requestAnimationFrame(() => { if (card.classList.contains('lit')) burst(card, 24); });
+  });
+  // каждый раз, когда страница награды открывается, карточки лежат рубашками вверх
+  document.querySelectorAll('.tracker-reward').forEach(page => {
+    const close = () => {
+      if (page.hidden) return;
+      const lit = [...page.querySelectorAll('.tracker-token.lit')];
+      if (!lit.length) return;
+      quiet = true;
+      lit.forEach(c => { c.classList.add('rd-noanim'); c.click(); });
+      quiet = false;
+      setTimeout(() => lit.forEach(c => c.classList.remove('rd-noanim')), 80);
+    };
+    new MutationObserver(() => setTimeout(close, 30)).observe(page, { attributes: true, attributeFilter: ['hidden'] });
+    setTimeout(close, 300);
   });
 })();
