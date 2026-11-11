@@ -762,3 +762,28 @@ body.rd[data-rd-chapter="2"] .answers:has(.answer:nth-child(3)) .answer.wrong-ch
 body.rd[data-rd-chapter="2"] .question:has(.next.opened) .rd-afl img,body.rd[data-rd-chapter="2"] .answers:has(.answer:nth-child(3)) .answer:disabled .rd-afl img{opacity:0!important;animation:none!important}
 body.rd[data-rd-chapter="2"] .answers:has(.answer:nth-child(3)) .answer{position:relative}
 body.rd[data-rd-chapter="2"] .answers:has(.answer:nth-child(3)) .rd-afl{position:absolute;left:-42px;top:50%;margin:0;transform:translateY(-50%)}
+
+/* ---------- Глава 2, награда «Принципы следопыта»: три карточки в ряд, без рамки-контейнера ---------- */
+body.rd .tracker-intro{max-width:600px;margin:-8px auto 24px;font:400 clamp(19px,2.1vw,21px)/1.45 var(--rd-sans);color:#45507e}
+body.rd .tracker-path{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;max-width:none;width:auto;margin:0 calc(28px - var(--px));padding:0;border:0;border-radius:0;background:none!important;box-shadow:none!important}
+body.rd .tracker-path::before{content:none}
+body.rd .tracker-token{display:block;min-height:0;aspect-ratio:4/3;padding:0;border:0;border-radius:26px;background:none;box-shadow:none;perspective:1000px;transition:transform .25s ease}
+body.rd .tracker-token:hover,body.rd .tracker-token.lit:hover{transform:translateY(-4px)}
+body.rd .tracker-card-inner{min-height:0;height:100%}
+body.rd .tracker-face{border:0!important;border-radius:26px;overflow:hidden;box-shadow:0 14px 30px rgba(50,60,140,.22)}
+body.rd .tracker-front{background-size:cover;background-position:center}
+body.rd .tracker-front strong{font:700 clamp(19px,2vw,23px)/1.2 var(--rd-tale);color:#fff}
+body.rd .tracker-front small{font:400 15px/1.3 var(--rd-sans);color:#e6f1ff}
+body.rd .tracker-art{height:100%!important;inset:0!important}
+body.rd .tracker-caption{min-height:0;padding:34px 12px 14px;background:linear-gradient(180deg,rgba(8,30,70,0),rgba(8,30,70,.82) 55%)}
+body.rd .tracker-back .tracker-caption strong{font:700 clamp(19px,2vw,23px)/1.2 var(--rd-tale)}
+body.rd .tracker-back .tracker-caption small{font:400 15px/1.3 var(--rd-sans)}
+@media (max-width:760px){body.rd .tracker-path{grid-template-columns:1fr;margin:0}}
+/* знак следопыта — без плашки, с лапкой */
+body.rd .tracker-prize{max-width:none;margin:30px auto 0;padding:0;border:0;background:none!important;box-shadow:none!important;text-align:center}
+body.rd .tracker-prize img{content:url(hoshi_paw_up_blue_v1.svg);width:54px;height:54px;margin:0 auto 8px;animation:none;-webkit-filter:drop-shadow(0 0 5px #40ddfd) drop-shadow(0 0 14px rgba(21,164,253,.7));filter:drop-shadow(0 0 5px #40ddfd) drop-shadow(0 0 14px rgba(21,164,253,.7))}
+body.rd .tracker-prize strong{display:block;font:700 clamp(26px,3vw,32px)/1.2 var(--rd-sans);letter-spacing:.01em;color:#2f3b8f}
+body.rd .tracker-prize p{margin:6px 0 0;font:400 clamp(19px,2.1vw,21px)/1.5 var(--rd-sans);color:#45507e}
+/* переход дальше — только когда открыты все три секрета */
+body.rd .tracker-prize[hidden]~.reward-continue{display:none!important}
+body.rd .tracker-prize:not([hidden])~.rd-locked{display:none}

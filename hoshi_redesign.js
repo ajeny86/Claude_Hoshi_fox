@@ -558,3 +558,16 @@
     });
   }, 600);
 })();
+
+/* ---------- Награда главы 2: пока секреты не открыты — подсказка вместо перехода ---------- */
+(() => {
+  'use strict';
+  if (!document.body.classList.contains('rd')) return;
+  let lang = 'ru'; try { lang = localStorage.getItem('hoshi-language-choice') || 'ru'; } catch (e) {}
+  document.querySelectorAll('.tracker-reward [data-tracker-prize]').forEach(prize => {
+    if (prize.parentElement.querySelector('.rd-locked')) return;
+    const p = document.createElement('p'); p.className = 'rd-locked';
+    p.textContent = lang === 'en' ? 'Open all three secrets to continue the journey.' : 'Открой все три секрета — и сможешь продолжить путь.';
+    prize.after(p);
+  });
+})();
