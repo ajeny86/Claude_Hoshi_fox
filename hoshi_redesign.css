@@ -787,3 +787,33 @@ body.rd .tracker-prize p{margin:6px 0 0;font:400 clamp(19px,2.1vw,21px)/1.5 var(
 /* переход дальше — только когда открыты все три секрета */
 body.rd .tracker-prize[hidden]~.reward-continue{display:none!important}
 body.rd .tracker-prize:not([hidden])~.rd-locked{display:none}
+
+/* ---------- Награда главы 2, крупно: большие карточки во всю ширину, искры, знак из трёх лапок ---------- */
+body.rd .tracker-path{grid-template-columns:1fr;gap:26px;margin:0 calc(36px - var(--px))}
+body.rd .tracker-token{aspect-ratio:16/10;border-radius:34px;overflow:visible}
+body.rd .tracker-face{border-radius:34px;box-shadow:0 22px 50px rgba(50,60,140,.28),inset 0 0 0 1.5px rgba(255,255,255,.35)}
+body.rd .tracker-front strong{font-size:clamp(28px,3.4vw,38px);text-shadow:0 2px 10px rgba(0,16,50,.7)}
+body.rd .tracker-front small{font-size:clamp(17px,1.9vw,20px);margin-top:8px}
+body.rd .tracker-front{padding-top:6%;align-content:start}
+body.rd .tracker-caption{padding:70px 20px 24px}
+body.rd .tracker-back .tracker-caption strong{font-size:clamp(30px,3.6vw,42px)}
+body.rd .tracker-back .tracker-caption small{font-size:clamp(18px,2vw,22px);margin-top:6px}
+body.rd .tracker-token:not(.lit){animation:rdCardCall 3.2s ease-in-out infinite}
+body.rd .tracker-token:not(.lit):nth-child(2){animation-delay:.5s}
+body.rd .tracker-token:not(.lit):nth-child(3){animation-delay:1s}
+@keyframes rdCardCall{0%,100%{filter:drop-shadow(0 0 0 rgba(64,190,253,0))}50%{filter:drop-shadow(0 0 16px rgba(64,190,253,.55))}}
+/* искры при открытии */
+body.rd .rd-tspark{position:absolute;left:var(--x);top:var(--y);width:26px;height:26px;margin:-13px;background:url(hoshi_paw_up_blue_v1.svg) center/contain no-repeat;pointer-events:none;z-index:5;opacity:0;
+  -webkit-filter:drop-shadow(0 0 5px #40ddfd);filter:drop-shadow(0 0 5px #40ddfd);animation:rdTSpark 1.5s ease-out forwards}
+body.rd .rd-tspark.star{width:12px;height:12px;margin:-6px;border-radius:50%;background:radial-gradient(circle,#fff 0 30%,#9fe4ff 55%,rgba(64,190,253,0) 75%)}
+@keyframes rdTSpark{0%{opacity:0;transform:translate(0,0) scale(.3) rotate(0)}15%{opacity:1}100%{opacity:0;transform:translate(var(--dx),var(--dy)) scale(1.15) rotate(var(--rot))}}
+/* знак следопыта */
+body.rd .tracker-prize{margin-top:44px}
+body.rd .tracker-prize img{display:none}
+body.rd .rd-sign{position:relative;display:flex;justify-content:center;align-items:flex-end;gap:22px;height:120px;margin:0 auto 14px}
+body.rd .rd-sign::before{content:"";position:absolute;left:50%;top:50%;width:340px;height:170px;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(ellipse,rgba(160,215,255,.75),rgba(160,215,255,.25) 45%,rgba(160,215,255,0) 70%);-webkit-filter:blur(10px);filter:blur(10px);animation:rdBreathe 2.6s ease-in-out infinite}
+body.rd .rd-sign i{position:relative;display:block;width:78px;height:78px;background:url(hoshi_paw_up_blue_v1.svg) center/contain no-repeat;-webkit-filter:drop-shadow(0 0 6px #40ddfd) drop-shadow(0 0 16px rgba(21,164,253,.75));filter:drop-shadow(0 0 6px #40ddfd) drop-shadow(0 0 16px rgba(21,164,253,.75));opacity:0;animation:rdSignIn .7s cubic-bezier(.2,.8,.25,1.5) forwards,rdHover 2.8s ease-in-out 1.4s infinite}
+body.rd .rd-sign i:nth-child(2){width:104px;height:104px;animation-delay:.35s,1.75s}
+body.rd .rd-sign i:nth-child(3){animation-delay:.7s,2.1s}
+@keyframes rdSignIn{0%{opacity:0;transform:scale(.2) translateY(30px)}100%{opacity:1;transform:none}}
+body.rd .tracker-prize strong{font-size:clamp(32px,3.8vw,44px);text-shadow:0 0 18px rgba(255,255,255,.95)}

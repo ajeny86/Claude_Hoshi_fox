@@ -571,3 +571,33 @@
     prize.after(p);
   });
 })();
+
+/* ---------- Награда главы 2: искры при открытии секрета и знак из трёх лапок ---------- */
+(() => {
+  'use strict';
+  if (!document.body.classList.contains('rd')) return;
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.querySelectorAll('.tracker-reward [data-tracker-prize]').forEach(prize => {
+    if (prize.querySelector('.rd-sign')) return;
+    const sign = document.createElement('span'); sign.className = 'rd-sign'; sign.setAttribute('aria-hidden', 'true');
+    sign.innerHTML = '<i></i><i></i><i></i>';
+    prize.prepend(sign);
+  });
+  const burst = (host, n) => {
+    if (reduce) return;
+    for (let k = 0; k < n; k++) {
+      const s = document.createElement('i'); s.className = 'rd-tspark' + (k % 3 ? ' star' : '');
+      const a = Math.random() * Math.PI * 2, d = 120 + Math.random() * 220;
+      s.style.setProperty('--x', `${35 + Math.random() * 30}%`); s.style.setProperty('--y', `${35 + Math.random() * 30}%`);
+      s.style.setProperty('--dx', `${Math.cos(a) * d}px`); s.style.setProperty('--dy', `${Math.sin(a) * d * .7 - 40}px`);
+      s.style.setProperty('--rot', `${(Math.random() - .5) * 120}deg`);
+      s.style.animationDelay = `${.25 + Math.random() * .3}s`;
+      host.appendChild(s); setTimeout(() => s.remove(), 2400);
+    }
+  };
+  document.addEventListener('click', e => {
+    const card = e.target.closest('.tracker-token');
+    if (!card) return;
+    requestAnimationFrame(() => { if (card.classList.contains('lit') && !card.dataset.rdBurst) { card.dataset.rdBurst = '1'; burst(card, 22); } });
+  });
+})();
