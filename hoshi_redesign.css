@@ -826,3 +826,14 @@ body.rd .rd-sign::before{width:260px;height:190px}
 body.rd .rd-tspark,body.rd .rd-tspark.star{width:var(--s,26px);height:var(--s,26px);margin:calc(var(--s,26px) / -2);border-radius:0;background:url(hoshi_snowflake_v1.svg) center/contain no-repeat;
   -webkit-filter:drop-shadow(0 0 3px rgba(120,190,255,.95)) drop-shadow(0 0 8px rgba(64,170,253,.6));filter:drop-shadow(0 0 3px rgba(120,190,255,.95)) drop-shadow(0 0 8px rgba(64,170,253,.6));animation-duration:1.9s}
 body.rd .tracker-token.rd-noanim .tracker-card-inner{transition:none!important}
+/* рубашка целиком: карточка 4:3, как рисунок; тёмная кайма рисунка уходит за край */
+body.rd .tracker-token{aspect-ratio:4/3}
+body.rd .tracker-reward .tracker-token .tracker-front{background:linear-gradient(180deg,rgba(4,20,45,.4) 0,rgba(5,23,50,0) 24%),url("hoshi_chapter2_reward_card_back_v1.webp") center/104.5% 105.5% no-repeat!important}
+/* мерцание закрытых карточек — лёгкое, без тяжёлых фильтров (Safari не хватало памяти) */
+body.rd .tracker-token:not(.lit){animation:none!important;filter:none!important}
+body.rd .tracker-token::after{content:"";position:absolute;inset:0;border-radius:34px;box-shadow:0 0 26px 4px rgba(64,190,253,.6);opacity:0;pointer-events:none;z-index:-1}
+body.rd .tracker-token:not(.lit)::after{animation:rdGlowPulse 3.2s ease-in-out infinite}
+body.rd .tracker-token:not(.lit):nth-child(2)::after{animation-delay:.5s}
+body.rd .tracker-token:not(.lit):nth-child(3)::after{animation-delay:1s}
+@keyframes rdGlowPulse{0%,100%{opacity:0}50%{opacity:1}}
+body.rd .tracker-front{padding-top:10%}
