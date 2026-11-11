@@ -738,3 +738,19 @@ body.rd[data-rd-chapter="2"] .answers:has(.answer:nth-child(3)) .answer.wrong-ch
 body.rd[data-rd-chapter="2"] .page:not(:has(> .scene-image)):has(> .story + .question) > .question{max-width:640px}
 /* глава 2, экраны с картинкой: стекло прозрачнее — фон проглядывает, как в главе 1 */
 body.rd[data-rd-chapter="2"] .page:has(> .scene-image){background:rgba(232,232,255,.36);-webkit-backdrop-filter:blur(6px) saturate(1.1);backdrop-filter:blur(6px) saturate(1.1)}
+
+/* ---------- Глава 2, экран 6: без плашек, один левый край ---------- */
+body.rd[data-rd-chapter="2"] .page:has(.sequence-quiz) > .task-panel{max-width:640px;margin:4px auto 18px;padding:0;border:0;background:none!important;box-shadow:none!important;text-align:left}
+body.rd[data-rd-chapter="2"] .page:has(.sequence-quiz) > .task-panel h3{margin:0 0 4px;text-align:left}
+body.rd[data-rd-chapter="2"] .page:has(.sequence-quiz) > .task-panel p{margin:0;text-align:left;font:400 clamp(16px,1.8vw,18px)/1.45 var(--rd-sans);color:var(--rd-muted)}
+body.rd[data-rd-chapter="2"] .page:has(.sequence-quiz) > .story{text-align:left}
+body.rd[data-rd-chapter="2"] .sequence-quiz{max-width:640px;margin:30px auto 0;padding:0;border:0;background:none!important;box-shadow:none!important}
+body.rd[data-rd-chapter="2"] .sequence-panel{position:relative;padding:0;border:0;background:none!important;box-shadow:none!important}
+body.rd[data-rd-chapter="2"] .sequence-step{position:static;display:inline-block;margin:0 0 6px;padding:0;border:0;background:none;font:700 13px/1.2 var(--rd-sans);letter-spacing:.12em;text-transform:uppercase;color:var(--rd-muted)}
+body.rd[data-rd-chapter="2"] .sequence-panel .question{max-width:none;margin:0;padding:0;background:none;box-shadow:none;text-align:left}
+body.rd[data-rd-chapter="2"] .sequence-panel .question h3{text-align:left;margin:0 0 4px}
+body.rd[data-rd-chapter="2"] .sequence-panel .answers:has(.answer:nth-child(3)){margin:14px 0 6px;max-width:none}
+body.rd[data-rd-chapter="2"] .sequence-panel .question{margin-top:0!important;padding-top:0!important}
+body.rd[data-rd-chapter="2"] .sequence-panel .question::before{content:none!important}
+body.rd[data-rd-chapter="2"] .sequence-step{margin-bottom:2px}
+body.rd[data-rd-chapter="2"] .page:has(.sequence-quiz) > .task-panel{margin-bottom:24px}
