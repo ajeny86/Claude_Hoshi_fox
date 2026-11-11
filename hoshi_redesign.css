@@ -754,3 +754,11 @@ body.rd[data-rd-chapter="2"] .sequence-panel .question{margin-top:0!important;pa
 body.rd[data-rd-chapter="2"] .sequence-panel .question::before{content:none!important}
 body.rd[data-rd-chapter="2"] .sequence-step{margin-bottom:2px}
 body.rd[data-rd-chapter="2"] .page:has(.sequence-quiz) > .task-panel{margin-bottom:24px}
+/* глава 2: лапка у ответа только при наведении; после ответа лапок нет */
+body.rd[data-rd-chapter="2"] .answers:has(.answer:nth-child(3)) .rd-afl img{opacity:0!important;transform:scale(.6)!important;transition:opacity .2s ease,transform .25s ease}
+body.rd[data-rd-chapter="2"] .answers:has(.answer:nth-child(3)) .answer:is(:hover,:focus-visible):not(:disabled) .rd-afl img,
+body.rd[data-rd-chapter="2"] .answers:has(.answer:nth-child(3)) .answer.correct-choice:not(.rd-sent) .rd-afl img{opacity:1!important;transform:scale(1.1)!important}
+body.rd[data-rd-chapter="2"] .answers:has(.answer:nth-child(3)) .answer.wrong-choice .rd-afl img{opacity:1!important;animation:rdAOut 1.3s ease-out forwards!important}
+body.rd[data-rd-chapter="2"] .question:has(.next.opened) .rd-afl img,body.rd[data-rd-chapter="2"] .answers:has(.answer:nth-child(3)) .answer:disabled .rd-afl img{opacity:0!important;animation:none!important}
+body.rd[data-rd-chapter="2"] .answers:has(.answer:nth-child(3)) .answer{position:relative}
+body.rd[data-rd-chapter="2"] .answers:has(.answer:nth-child(3)) .rd-afl{position:absolute;left:-42px;top:50%;margin:0;transform:translateY(-50%)}
