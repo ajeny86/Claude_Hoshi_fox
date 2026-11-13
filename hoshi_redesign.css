@@ -1,0 +1,908 @@
+/*
+  iHoshi — редизайн (ноябрь 2026).
+  Подключается последним в <head>. Все правила начинаются с body.rd, поэтому
+  перекрывают старые стили, не трогая их. Чтобы откатить: убрать class="rd" у <body>.
+*/
+
+/* ---------- Токены ---------- */
+body.rd{--rd-serif-it:'PT Sans',system-ui,-apple-system,Arial,sans-serif;
+  --rd-ink:#44509a;          /* заголовки: сиренево-синий */
+  --rd-text:#33415f;         /* основной текст */
+  --rd-muted:#6f7fa6;        /* подписи */
+  --rd-flame:#15a4fd;        /* огонёк */
+  --rd-flame-glow:rgba(21,164,253,.6);
+  --rd-glass:linear-gradient(180deg,rgba(255,255,255,.78) 0%,rgba(255,255,255,.52) 100%);
+  --rd-glass-soft:linear-gradient(180deg,rgba(255,255,255,.72) 0%,rgba(255,255,255,.45) 100%);
+  --rd-edge:inset 0 1px 0 rgba(255,255,255,.95),inset 0 -1px 0 rgba(255,255,255,.3),inset 0 0 0 1px rgba(255,255,255,.5);
+  --rd-shadow:0 10px 34px rgba(30,100,160,.16),0 2px 6px rgba(30,100,160,.07);
+  --rd-blur:blur(26px) saturate(1.8);
+  --rd-sans:'PT Sans',system-ui,-apple-system,'Segoe UI',Arial,sans-serif;
+  --rd-tale:'PT Serif',Georgia,'Times New Roman',serif;
+  --rd-btn:linear-gradient(180deg,rgba(138,158,236,.9) 0%,rgba(100,122,218,.9) 100%);
+}
+
+/* ---------- Экран карты: фон и каркас ---------- */
+body.rd.map-view-open{background:#e6e6f3 url("hoshi_bg_map_v1.webp") center/cover fixed no-repeat}
+body.rd main.map-mode{width:100%;max-width:none;margin:0;padding:16px max(16px,env(safe-area-inset-right,0px)) 20px max(16px,env(safe-area-inset-left,0px));box-sizing:border-box}
+body.rd .map-home{min-height:0;background:none;display:flex;flex-direction:column;align-items:center;gap:14px;font-family:var(--rd-sans)}
+body.rd .map-home>*{width:min(100%,calc((100svh - 220px) * 16 / 9));max-width:1240px;box-sizing:border-box}
+
+/* ---------- Меню над картой ---------- */
+body.rd .rd-topline{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+body.rd .rd-logo{display:flex;align-items:center;gap:8px;margin-right:auto;font-weight:700;font-size:17px;color:#0b5bb5}
+body.rd .rd-logo img{width:24px;height:24px;object-fit:contain;filter:drop-shadow(0 0 6px var(--rd-flame-glow))}
+body.rd .rd-part-pick{position:relative}
+body.rd .rd-part-btn,body.rd .rd-seg,body.rd .rd-round{background:var(--rd-glass);backdrop-filter:var(--rd-blur);-webkit-backdrop-filter:var(--rd-blur);box-shadow:var(--rd-edge),var(--rd-shadow);border:0}
+body.rd .rd-part-btn{display:inline-flex;align-items:center;gap:10px;min-height:48px;padding:0 14px 0 18px;border-radius:999px;color:#0b5bb5;font:700 15px/1 var(--rd-sans);cursor:pointer}
+body.rd .rd-part-btn .rd-pn{color:var(--rd-muted);font-weight:600}
+body.rd .rd-part-btn svg{width:18px;height:18px;transition:transform .2s}
+body.rd .rd-part-btn[aria-expanded="true"] svg{transform:rotate(180deg)}
+body.rd .rd-part-pop{position:absolute;z-index:30;top:calc(100% + 8px);right:0;width:min(340px,calc(100vw - 32px));display:grid;gap:4px;padding:10px;border-radius:22px;background:rgba(255,255,255,.94);backdrop-filter:var(--rd-blur);-webkit-backdrop-filter:var(--rd-blur);box-shadow:var(--rd-edge),0 24px 60px rgba(20,50,80,.22)}
+body.rd .rd-part-pop[hidden]{display:none}
+body.rd .rd-pop-h{margin:6px 10px;font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--rd-muted)}
+body.rd .rd-part-item{display:grid;grid-template-columns:40px minmax(0,1fr);align-items:center;gap:12px;min-height:60px;padding:8px 12px 8px 8px;border-radius:16px;text-decoration:none;color:inherit}
+body.rd a.rd-part-item:hover{background:rgba(234,248,254,.9)}
+body.rd .rd-pi-n{display:grid;place-items:center;width:40px;height:40px;border-radius:14px;background:#eaf8fe;color:#0b5bb5;font-weight:800}
+body.rd .rd-part-item strong{display:block;font-size:16px;font-weight:700;color:#0b5bb5}
+body.rd .rd-part-item small{display:block;font-size:13px;font-weight:500;color:var(--rd-muted)}
+body.rd .rd-part-item.current{background:rgba(230,251,254,.75);box-shadow:inset 0 1px 0 #fff,inset 0 0 0 1px #9fe6fb}
+body.rd .rd-part-item.current .rd-pi-n{background:#fff}
+/* RU / EN — кнопки движка, только новая одежда */
+body.rd .rd-seg{position:static;display:flex;gap:4px;width:auto;padding:4px;border-radius:999px;transform:none;top:auto;left:auto}
+body.rd .rd-seg[hidden]{display:none}
+body.rd .rd-seg .map-progress-language{min-width:48px;min-height:40px;padding:0 14px;border:0;border-radius:999px;background:transparent;color:var(--rd-muted);font:700 14px/1 var(--rd-sans);box-shadow:none;cursor:pointer}
+body.rd .rd-seg .map-progress-language.active{background:rgba(255,255,255,.9);color:#0b5bb5;box-shadow:inset 0 1px 0 #fff,0 2px 10px rgba(30,100,160,.14)}
+body.rd .rd-round{display:inline-grid;place-items:center;width:48px;height:48px;border-radius:999px;color:#0b5bb5;font:700 18px/1 var(--rd-sans);cursor:pointer}
+body.rd .rd-part-btn:active,body.rd .rd-round:active{transform:scale(.96)}
+
+/* ---------- Карта ---------- */
+body.rd main.map-mode .map-canvas,body.rd .map-canvas{position:relative;aspect-ratio:1672/941;overflow:hidden;border:0;border-radius:28px;background:#dfe3f2;box-shadow:0 24px 70px rgba(110,110,170,.20)}
+body.rd .map-canvas>img.rd-map-img{display:block;width:100%;height:100%;object-fit:cover;-webkit-mask-image:none;mask-image:none}
+body.rd .rd-map-name{position:absolute;z-index:3;left:40%;top:7%;transform:translateX(-50%);display:grid;justify-items:center;gap:10px;text-align:center;pointer-events:none}
+body.rd .rd-map-name .map-title{position:static;transform:none;margin:0;font:700 clamp(40px,5.4vw,72px)/1 var(--rd-tale);letter-spacing:.015em;color:var(--rd-ink);text-shadow:0 0 12px rgba(255,255,255,.95),0 0 30px rgba(255,255,255,.85),0 0 60px rgba(255,255,255,.5);white-space:nowrap}
+body.rd .rd-map-name .map-map-hint{position:static;transform:none;margin:0;padding:0;background:none;border:0;box-shadow:none;font:700 clamp(14px,1.6vw,19px)/1.3 var(--rd-sans);letter-spacing:.03em;color:#fff;text-shadow:0 1px 2px rgba(6,40,85,.55),0 0 10px rgba(6,40,85,.45),0 0 22px rgba(6,40,85,.25);white-space:nowrap}
+
+/* Таблички глав */
+body.rd .map-home .map-stop{position:absolute;z-index:4;display:flex;align-items:center;gap:2px;width:auto;height:auto;padding:0;border:0;background:none;transform:translate(-50%,-50%);cursor:pointer}
+body.rd .map-home .map-stop--1{left:16%;top:51%}
+body.rd .map-home .map-stop--2{left:37%;top:93%}
+body.rd .map-home .map-stop--3{left:64%;top:44%}
+body.rd .map-home .map-stop--4{left:80%;top:93%}
+body.rd .rd-lab{display:block;padding:8px 20px 9px;border-radius:999px;background:linear-gradient(180deg,rgba(255,255,255,.72),rgba(255,255,255,.45));backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:var(--rd-edge),0 8px 20px rgba(20,50,80,.16);font:700 clamp(12px,1.3vw,15px)/1.2 var(--rd-sans);color:#0b5bb5;white-space:nowrap;transition:transform .18s}
+body.rd .map-stop:hover .rd-lab{transform:translateY(-2px)}
+body.rd .map-stop:active .rd-lab{transform:scale(.97)}
+body.rd .map-stop.rd-current .rd-lab{background:linear-gradient(180deg,rgba(236,252,255,.72),rgba(190,238,253,.42));box-shadow:var(--rd-edge),0 0 18px rgba(64,221,253,.35),0 8px 22px rgba(21,164,253,.18)}
+body.rd .map-stop.rd-beckon .rd-lab{animation:rdBeckon 1.6s ease-in-out 2}
+@keyframes rdBeckon{50%{transform:translateY(-4px);box-shadow:var(--rd-edge),0 0 26px rgba(64,221,253,.75)}}
+
+/* Огонёк: только у пройденной главы */
+body.rd .rd-fx{position:relative;display:grid;place-items:center}
+body.rd .map-stop:not(.completed) .rd-fx{display:none}
+body.rd .rd-fl{width:46px;height:46px;object-fit:contain;filter:drop-shadow(0 0 8px var(--rd-flame-glow)) drop-shadow(0 0 2px #fff);transform-origin:50% 85%;animation:rdFlick 2.6s ease-in-out infinite}
+body.rd .map-stop--2 .rd-fl{animation-delay:-.7s}body.rd .map-stop--3 .rd-fl{animation-delay:-1.3s}body.rd .map-stop--4 .rd-fl{animation-delay:-1.9s}
+@keyframes rdFlick{50%{transform:scale(1.06) rotate(2deg)}}
+body.rd .map-stop.rd-igniting .rd-fl{animation:rdIgnite 1.5s cubic-bezier(.2,.8,.25,1) both,rdFlick 2.6s ease-in-out 1.5s infinite}
+@keyframes rdIgnite{0%{opacity:0;transform:scale(.4)}35%{opacity:1;filter:brightness(2.1) drop-shadow(0 0 26px rgba(21,164,253,.95)) drop-shadow(0 0 6px #fff);transform:scale(1.5)}100%{opacity:1;transform:scale(1)}}
+body.rd .rd-burst{position:absolute;left:50%;top:58%;width:22px;height:22px;margin:-11px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.95),rgba(117,237,253,.7) 40%,transparent 70%);animation:rdBurst 1s ease-out forwards;pointer-events:none}
+@keyframes rdBurst{from{transform:scale(.2);opacity:1}to{transform:scale(7);opacity:0}}
+body.rd .rd-spark{position:absolute;left:50%;top:58%;width:6px;height:6px;margin:-3px;border-radius:50%;background:#d9fbfd;box-shadow:0 0 8px #40ddfd,0 0 2px #fff;animation:rdSpark 1.1s ease-out forwards;pointer-events:none}
+@keyframes rdSpark{from{transform:rotate(var(--a)) translateY(0) scale(1);opacity:1}to{transform:rotate(var(--a)) translateY(var(--d,-50px)) scale(.3);opacity:0}}
+
+/* Следы между главами */
+body.rd .rd-trail{position:absolute;inset:0;z-index:2;pointer-events:none}
+body.rd .rd-paw{position:absolute;width:20px;height:20px;margin:-10px 0 0 -10px;color:#e9fdff;filter:drop-shadow(0 0 4px #40ddfd) drop-shadow(0 0 10px rgba(21,164,253,.65));opacity:0;transform:rotate(var(--r)) scale(.3)}
+body.rd .rd-paw svg{display:block;width:100%;height:100%}
+body.rd .rd-paw.lit{opacity:.85;transform:rotate(var(--r)) scale(1)}
+body.rd .rd-paw.walk{animation:rdPaw .55s cubic-bezier(.2,.8,.25,1.3) forwards}
+@keyframes rdPaw{0%{opacity:0;transform:rotate(var(--r)) scale(.3)}60%{opacity:1;transform:rotate(var(--r)) scale(1.25)}100%{opacity:.85;transform:rotate(var(--r)) scale(1)}}
+
+/* Первый выбор языка — по центру карты */
+body.rd .map-canvas .language-gate{top:50%;transform:translate(-50%,-50%);background:var(--rd-glass);backdrop-filter:var(--rd-blur);-webkit-backdrop-filter:var(--rd-blur);box-shadow:var(--rd-edge),var(--rd-shadow);font-family:var(--rd-sans);z-index:12}
+body.rd .map-canvas .language-gate strong{font-family:var(--rd-tale);font-weight:400;color:var(--rd-ink)}
+
+/* ---------- Полоска «Ты здесь» ---------- */
+body.rd .rd-strip{display:flex;align-items:center;gap:16px;padding:12px 12px 12px 24px;border-radius:28px;background:var(--rd-glass);backdrop-filter:var(--rd-blur);-webkit-backdrop-filter:var(--rd-blur);box-shadow:var(--rd-edge),var(--rd-shadow)}
+body.rd .rd-here{display:grid;min-width:0;margin-right:auto}
+body.rd .rd-here small{font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--rd-muted)}
+body.rd .rd-here strong{font:700 21px/1.25 var(--rd-tale);color:var(--rd-ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+body.rd .rd-go{flex:none;min-height:56px;padding:0 32px;border:0;border-radius:999px;-webkit-appearance:none;appearance:none;background:linear-gradient(180deg,#8a9eec 0%,#647ada 100%);color:#fff;font:700 18px/1 var(--rd-sans);letter-spacing:.01em;text-shadow:0 1px 2px rgba(50,60,140,.28);box-shadow:inset 0 1px 0 rgba(255,255,255,.75),inset 0 0 0 1px rgba(255,255,255,.4),0 8px 26px rgba(110,130,210,.26);cursor:pointer;transition:transform .12s,filter .2s}
+body.rd .rd-go:hover,body.rd .rd-go:focus,body.rd .rd-go:focus-visible{background:linear-gradient(180deg,#8a9eec 0%,#647ada 100%);color:#fff;filter:none}
+body.rd .rd-go:active{background:linear-gradient(180deg,#7088e2 0%,#4f66cc 100%);color:#fff;transform:scale(.98)}
+body.rd .rd-credit{margin:-4px 0 0;text-align:center;font:600 12px/1.4 var(--rd-sans);letter-spacing:.02em;color:rgba(70,80,140,.6)}
+body.rd .rd-credit a{color:inherit}
+
+/* Фокус с клавиатуры */
+body.rd .rd-part-btn:focus-visible,body.rd .rd-round:focus-visible,body.rd .rd-go:focus-visible,body.rd .rd-seg button:focus-visible,body.rd .map-stop:focus-visible{outline:3px solid #8fb6f0;outline-offset:3px}
+
+/* ---------- Узкие экраны: телефон и вертикальный планшет ---------- */
+@media (orientation:portrait),(max-width:899px){
+  body.rd .map-home>*{width:100%}
+  body.rd .rd-strip{flex-wrap:wrap}
+  body.rd .rd-go{width:100%}
+}
+@media (max-width:620px){
+  body.rd .rd-part-btn .rd-pt{display:none}
+  body.rd .rd-map-name{top:5%}
+  body.rd .rd-map-name .map-map-hint{display:none}
+  body.rd .rd-lab{padding:5px 10px;font-size:11px}
+  body.rd .rd-fl{width:30px;height:30px}
+  body.rd .map-canvas{border-radius:20px}
+}
+
+@media (prefers-reduced-motion:reduce){
+  body.rd .rd-fl,body.rd .rd-paw,body.rd .map-stop .rd-lab{animation:none!important}
+  body.rd .rd-burst,body.rd .rd-spark{display:none}
+}
+
+/* ---------- Окно первого выбора языка ---------- */
+body.rd .map-canvas .language-gate{width:min(420px,calc(100% - 40px));padding:22px 22px 20px;gap:0;border:0;border-radius:28px;text-align:center}
+body.rd .map-canvas .language-gate [data-language-select]>strong,
+body.rd .map-canvas .language-gate [data-language-select]>small,
+body.rd .map-canvas .language-gate [data-language-confirm]>strong,
+body.rd .map-canvas .language-gate [data-language-confirm]>small{position:static;width:auto;height:auto;overflow:visible;clip:auto;white-space:normal;display:block}
+body.rd .map-canvas .language-gate strong{font-size:26px;line-height:1.15;margin:0 0 6px}
+body.rd .map-canvas .language-gate small{font:500 14px/1.4 var(--rd-sans);color:var(--rd-muted);margin:0 0 16px}
+body.rd .map-canvas .language-gate .language-options{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0}
+body.rd .map-canvas .language-gate .language-option{min-height:54px;padding:0 12px;border:0;border-radius:999px;background:rgba(255,255,255,.85);color:#0b5bb5;font:700 17px/1 var(--rd-sans);box-shadow:inset 0 1px 0 #fff,inset 0 0 0 1px rgba(170,195,240,.6),0 4px 14px rgba(30,100,160,.12)}
+body.rd .map-canvas .language-gate .language-option:hover{background:#fff}
+body.rd .map-canvas .language-gate [data-language-confirm-button]{background:var(--rd-btn);color:#fff;text-shadow:0 1px 2px rgba(50,60,140,.28);box-shadow:inset 0 1px 0 rgba(255,255,255,.75),0 8px 22px rgba(110,130,210,.3)}
+body.rd .map-canvas.language-pending .rd-map-name,body.rd .map-canvas.language-pending .map-stop{opacity:.35;filter:blur(1px)}
+body.rd .map-canvas.language-pending::after{content:"";position:absolute;inset:0;z-index:5;background:rgba(235,240,252,.35);pointer-events:none}
+
+/* ---------- Список глав (только на вертикальном экране) ---------- */
+body.rd .rd-rows{display:none;list-style:none;margin:0;padding:0;gap:10px}
+body.rd .rd-row{width:100%;display:grid;grid-template-columns:44px minmax(0,1fr);align-items:center;gap:14px;min-height:76px;padding:12px 16px 12px 12px;border:0;border-radius:22px;background:var(--rd-glass-soft);backdrop-filter:var(--rd-blur);-webkit-backdrop-filter:var(--rd-blur);box-shadow:var(--rd-edge),0 6px 20px rgba(30,100,160,.10);text-align:left;font-family:var(--rd-sans);cursor:pointer}
+body.rd .rd-row-n{display:grid;place-items:center;width:44px;height:44px;border-radius:15px;background:rgba(234,248,254,.9);color:#0b5bb5;font-weight:800;font-size:17px}
+body.rd .rd-row strong{display:block;font:700 21px/1.2 var(--rd-tale);color:var(--rd-ink)}
+body.rd .rd-row small{display:block;margin-top:2px;font-size:14px;font-weight:600;color:var(--rd-muted)}
+body.rd .rd-row.rd-current{box-shadow:var(--rd-edge),0 0 0 2px rgba(159,230,251,.9),0 8px 22px rgba(21,164,253,.18)}
+body.rd .rd-row.rd-current .rd-row-n{background:linear-gradient(180deg,#e6fbfe,#b6effc);box-shadow:0 0 14px rgba(21,164,253,.45)}
+body.rd .rd-row.rd-current small,body.rd .rd-row.rd-done small{color:#0482fc}
+@media (orientation:portrait),(max-width:899px){
+  body.rd .rd-rows{display:grid}
+}
+@media (max-width:620px){
+  body.rd .rd-topline{flex-wrap:nowrap;gap:6px}
+  body.rd .rd-logo{font-size:0;gap:0}
+  body.rd .rd-part-btn{min-height:44px;padding:0 10px 0 14px}
+  body.rd .rd-round{width:44px;height:44px}
+  body.rd .rd-seg .map-progress-language{min-width:40px;padding:0 10px}
+  body.rd .map-canvas .language-gate{padding:16px}
+  body.rd .map-canvas .language-gate strong{font-size:20px}
+  body.rd .rd-row strong{font-size:18px}
+}
+
+/* Safari: кнопка держит сплошной цвет во всех состояниях, без смены слоёв при наведении */
+body.rd .rd-go,body.rd .rd-go:hover,body.rd .rd-go:focus,body.rd .rd-go:focus-visible,body.rd .rd-go:active{
+  background-color:#7489e3!important;
+  background-image:linear-gradient(180deg,#8a9eec 0%,#647ada 100%)!important;
+  color:#fff!important;-webkit-text-fill-color:#fff;
+  filter:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;
+  transition:none!important;transform:translateZ(0);will-change:transform;
+  -webkit-tap-highlight-color:transparent}
+body.rd .rd-go:active{transform:translateZ(0) scale(.98)}
+
+/* =====================================================================
+   ШАГ 2 — экраны глав части 1
+   ===================================================================== */
+body.rd:not(.map-view-open){background:#e9eef9 url("hoshi_bg_map_v1.webp") center/cover fixed no-repeat;font-family:var(--rd-sans);color:var(--rd-text)}
+body.rd[data-rd-chapter="1"]:not(.map-view-open){background-image:url("hoshi_bg_chapter1_v5.webp")}
+body.rd[data-rd-chapter="2"]:not(.map-view-open){background-image:url("hoshi_bg_chapter2_v2.webp")}
+
+/* ---------- Верхняя панель главы ---------- */
+body.rd .top{position:sticky;top:calc(10px + env(safe-area-inset-top,0px));z-index:100;width:min(1080px,calc(100% - 32px));max-width:none;margin:10px auto 0;padding:8px;border:0;border-radius:24px;background:linear-gradient(180deg,rgba(255,255,255,.84),rgba(246,248,252,.66));backdrop-filter:var(--rd-blur);-webkit-backdrop-filter:var(--rd-blur);box-shadow:var(--rd-edge),var(--rd-shadow)}
+body.rd .top .progress-wrap::before{display:none}
+body.rd .top-inner{position:static;width:auto;margin:0;display:grid;grid-template-columns:auto minmax(0,1fr) auto;grid-template-areas:"left mid right";align-items:center;column-gap:12px;row-gap:0}
+body.rd .rd-top-left{grid-area:left;display:flex;gap:8px}
+body.rd .top .meta{grid-area:mid;padding:0;align-self:end}
+body.rd .top .meta b{display:none}
+body.rd .top .meta small{margin:0;font:700 20px/1.2 var(--rd-tale);letter-spacing:.01em;color:var(--rd-ink);text-transform:none}
+body.rd .top .progress-wrap{grid-area:mid;align-self:start;margin-top:30px;min-height:0;padding:0;border:0;gap:6px}
+body.rd .top .progress-title{display:none}
+body.rd .top .progress-readable{font:700 13px/1 var(--rd-sans);color:var(--rd-muted);font-variant-numeric:tabular-nums}
+body.rd .top .dot{width:18px;height:18px;background-size:contain;background-image:url("hoshi_flame_icon_v1.webp")}
+body.rd .top .chapter-list-button,body.rd .top .restart,body.rd .rd-map-btn{position:static;display:inline-flex;align-items:center;gap:8px;width:auto;min-width:0;height:auto;min-height:48px;padding:0 18px 0 14px;border:0;border-radius:18px;background:rgba(255,255,255,.62);box-shadow:inset 0 1px 0 #fff,inset 0 0 0 1px rgba(200,205,240,.6);color:var(--rd-ink);font:700 15px/1 var(--rd-sans);cursor:pointer}
+body.rd .top .restart{grid-area:right}
+body.rd .top .chapter-list-icon,body.rd .top .restart-icon{display:inline-block;font-size:18px;line-height:1}
+body.rd .top .restart-label{display:none}body.rd .top .restart-label-short{display:inline}
+body.rd .rd-map-btn svg{width:20px;height:20px}
+body.rd .top .chapter-list-button:active,body.rd .top .restart:active,body.rd .rd-map-btn:active{transform:scale(.97)}
+
+/* ---------- Лента страниц ---------- */
+body.rd main:not(.map-mode){width:min(1080px,calc(100% - 32px));max-width:none;margin:22px auto 0;padding:0 0 60px}
+body.rd .page,body.rd .reward-page{
+  --px:clamp(22px,7vw,96px);
+  position:relative;display:flex;flex-direction:column;align-items:stretch;gap:0;overflow:hidden;
+  margin:0 0 28px;padding:clamp(30px,4.5vw,52px) var(--px) clamp(30px,4vw,48px);
+  border:0;border-radius:34px;background:#f2f7fd;
+  box-shadow:0 1px 0 rgba(255,255,255,.9) inset,0 24px 70px rgba(70,90,140,.16),0 4px 14px rgba(70,90,140,.08);
+  scroll-margin-top:110px;font-family:var(--rd-sans)}
+body.rd .page::before,body.rd .page::after,body.rd .reward-page::before{display:none}
+body.rd .page>*,body.rd .reward-page>*{max-width:760px;width:100%;margin-left:auto;margin-right:auto;box-sizing:border-box}
+
+/* картинка сверху, растворяется в бумаге */
+body.rd .page:has(> .scene-image:not(.portrait-image)){padding-top:0}
+body.rd .page>.scene-image:not(.portrait-image){
+  order:-1;display:block;width:calc(100% + 2 * var(--px));max-width:none;height:auto;max-height:none;aspect-ratio:16/9;object-fit:cover;
+  margin:0 calc(-1 * var(--px)) -64px;border:0;border-radius:0;box-shadow:none;
+  -webkit-mask-image:linear-gradient(180deg,#000 66%,rgba(0,0,0,.55) 82%,transparent 100%);mask-image:linear-gradient(180deg,#000 66%,rgba(0,0,0,.55) 82%,transparent 100%)}
+body.rd .page .kicker,body.rd .reward-page .kicker{position:relative;margin:0 auto 6px;text-align:center;font:700 12px/1.3 var(--rd-sans);letter-spacing:.2em;text-transform:uppercase;color:var(--rd-muted)}
+body.rd .page h1,body.rd .page h2,body.rd .reward-page h2{position:relative;margin:0 auto 22px;text-align:center;font:700 clamp(34px,4.6vw,52px)/1.08 var(--rd-tale);letter-spacing:.01em;color:var(--rd-ink);text-wrap:balance}
+body.rd .story{max-width:640px;font:500 clamp(20px,2.4vw,23px)/1.7 var(--rd-sans);color:var(--rd-text)}
+body.rd .story p{margin:0 0 14px}
+body.rd .story strong,body.rd .story b{color:var(--rd-ink)}
+
+/* ---------- Огонёк-проводник вместо кнопки «дальше» ---------- */
+body.rd .next{
+  position:relative;flex-direction:column;align-items:center;justify-content:flex-start;gap:4px;
+  width:auto;max-width:none;min-height:0;margin:26px auto 4px;padding:96px 24px 30px;
+  border:0;border-radius:28px;background:none;box-shadow:none;text-shadow:none;
+  font:700 22px/1.2 var(--rd-tale);color:var(--rd-ink);cursor:pointer;-webkit-tap-highlight-color:transparent}
+body.rd .next:hover,body.rd .next:focus{background:none;box-shadow:none}
+body.rd .next:active{transform:none}
+body.rd .next::before{content:"";position:absolute;left:50%;top:0;width:92px;height:92px;margin-left:-46px;border-radius:50%;opacity:1;font-size:0;
+  background:url("hoshi_flame_icon_v1.webp") center 48%/56px 56px no-repeat,radial-gradient(circle,rgba(185,228,255,.7) 0%,rgba(185,228,255,.25) 40%,rgba(185,228,255,0) 70%);
+  filter:drop-shadow(0 0 10px rgba(21,164,253,.6));transform:none;animation:rdHover 2.6s ease-in-out infinite}
+@keyframes rdHover{50%{transform:translateY(-5px) scale(1.04)}}
+body.rd .next::after{content:"коснись огонька";position:absolute;left:0;right:0;bottom:6px;top:auto;transform:none;opacity:1;font:600 13px/1 var(--rd-sans);letter-spacing:.02em;color:#7d8bb0;filter:none}
+body.rd[data-rd-lang="en"] .next::after{content:"tap the flame"}
+body.rd .next:hover::before{filter:drop-shadow(0 0 16px rgba(21,164,253,.95))}
+body.rd .next.rd-going::before{animation:rdFlare .65s cubic-bezier(.2,.8,.25,1) forwards}
+@keyframes rdFlare{40%{transform:scale(1.4);filter:brightness(1.5) drop-shadow(0 0 26px rgba(21,164,253,1))}100%{transform:translateY(-12px) scale(.9);opacity:.8}}
+body.rd .next:focus-visible{outline:3px solid #8fb6f0;outline-offset:2px}
+/* пройденный переход */
+body.rd .next.opened{flex-direction:row;gap:8px;min-height:0;margin:14px auto 0;padding:6px 14px;border:0;background:none;box-shadow:none;color:#6f7fa6;font:600 15px/1.2 var(--rd-sans);cursor:default}
+body.rd .next.opened::before{position:static;width:22px;height:22px;margin:0;background:url("hoshi_flame_icon_v1.webp") center/contain no-repeat;animation:none;filter:drop-shadow(0 0 5px rgba(21,164,253,.6))}
+body.rd .next.opened::after{display:none}
+body.rd .rd-spark{z-index:3}
+
+/* ---------- Задания ---------- */
+body.rd .question{border-top:0;margin-top:22px;padding-top:0}
+body.rd .question h3,body.rd .task-panel h3,body.rd .inari-question h3{font:700 clamp(24px,3vw,30px)/1.2 var(--rd-tale);color:var(--rd-ink);text-align:center}
+body.rd .hint,body.rd .task-panel p,body.rd .tracker-intro{font-family:var(--rd-sans);color:#6b7896;text-align:center}
+body.rd .answers{gap:12px}
+body.rd .answer{min-height:64px;padding:16px 22px;border:0;border-radius:22px;background:rgba(255,255,255,.75);box-shadow:inset 0 1px 0 #fff,inset 0 0 0 1px #dfe5f0,0 6px 16px rgba(70,95,160,.08);font:600 clamp(19px,2.2vw,21px)/1.4 var(--rd-sans);color:var(--rd-text);transition:transform .12s,box-shadow .2s}
+body.rd .answer:hover{box-shadow:inset 0 1px 0 #fff,inset 0 0 0 1.5px #9fb3e6,0 8px 20px rgba(70,95,160,.12)}
+body.rd .answer:active{transform:scale(.99)}
+body.rd .feedback{border:0;border-radius:18px;font:600 17px/1.45 var(--rd-sans)}
+body.rd .task-panel,body.rd .word-search-text,body.rd .source-excerpt,body.rd .final-note,body.rd .meaning-note,body.rd .observation-task,body.rd .syllable-support,body.rd .sequence-quiz{border:0;border-radius:24px;background:rgba(255,255,255,.6);box-shadow:inset 0 1px 0 #fff,inset 0 0 0 1px rgba(210,222,242,.8);font-family:var(--rd-sans)}
+body.rd .search-target{border-radius:999px;font-family:var(--rd-sans)}
+body.rd .hunt-status{border-radius:16px;background:rgba(255,255,255,.6);font-family:var(--rd-sans)}
+
+/* ---------- Карточки слов ---------- */
+body.rd .word-cards{gap:16px}
+body.rd .word-card,body.rd .syllable-button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;min-height:130px;padding:20px 16px;border:0;border-radius:28px;background:rgba(255,255,255,.55);box-shadow:inset 0 0 0 1px rgba(255,255,255,.95),0 4px 16px rgba(70,95,160,.06);font-family:var(--rd-sans)}
+body.rd .word-card .word-parts,body.rd .syllable-parts{padding:0;border:0;background:none;box-shadow:none;font:600 clamp(22px,2.6vw,27px)/1.3 var(--rd-sans);color:#33418a;letter-spacing:.01em}
+body.rd .word-card strong,body.rd .word-whole{font:600 18px/1.3 var(--rd-sans);color:#6f7fa6}
+body.rd .rd-dash{display:inline-block;margin:0 2px;color:#7fb4ee}
+
+/* ---------- Награды ---------- */
+body.rd .reward-page .scene-image,body.rd .reward-page .animated-reward-scene{border-radius:24px}
+body.rd .reward-copy{border:0;border-radius:22px;background:rgba(255,255,255,.6);box-shadow:inset 0 0 0 1px rgba(210,222,242,.8);font-family:var(--rd-sans);color:var(--rd-text)}
+
+/* ---------- Окна: список глав, памятка, «заново» ---------- */
+body.rd .chapter-panel,body.rd .parent-guide-panel,body.rd .restart-panel{border:0;border-radius:28px;background:rgba(255,255,255,.94);backdrop-filter:var(--rd-blur);-webkit-backdrop-filter:var(--rd-blur);box-shadow:var(--rd-edge),0 30px 80px rgba(30,60,120,.28);font-family:var(--rd-sans)}
+body.rd .chapter-panel h2,body.rd .parent-guide-panel h2,body.rd .restart-panel h2{font:700 30px/1.15 var(--rd-tale);color:var(--rd-ink)}
+body.rd .chapter-card{border:0;border-radius:18px;background:rgba(240,245,253,.8);box-shadow:inset 0 0 0 1px rgba(210,222,242,.8);font-family:var(--rd-sans)}
+body.rd .chapter-card strong{font:700 18px/1.2 var(--rd-tale);color:var(--rd-ink)}
+body.rd .chapter-card.current{box-shadow:inset 0 0 0 2px #9fe6fb,0 0 16px rgba(21,164,253,.2)}
+
+@media (max-width:620px){
+  body.rd .top{width:calc(100% - 16px)}
+  body.rd .top .chapter-list-button span:last-child,body.rd .rd-map-btn span{display:none}
+  body.rd .top .chapter-list-button,body.rd .top .restart,body.rd .rd-map-btn{padding:0 12px;min-height:44px}
+  body.rd .top .restart-label-short{display:none}
+  body.rd .top .meta small{font-size:16px}
+  body.rd main:not(.map-mode){width:calc(100% - 16px)}
+  body.rd .page>.scene-image:not(.portrait-image){margin-bottom:-36px}
+}
+@media (prefers-reduced-motion:reduce){body.rd .next::before{animation:none}}
+
+/* ---------- Правки 09.11 ---------- */
+/* «К карте путешествия» убрана из списка глав: для этого есть кнопка «Карта» в панели */
+body.rd .chapter-map-link{display:none!important}
+
+/* Огонёк крупнее при наведении */
+body.rd .next.ready:not(.opened)::before{transition:scale .25s ease}
+body.rd .next.ready:not(.opened):hover::before,body.rd .next.ready:not(.opened):focus-visible::before{scale:1.28;filter:drop-shadow(0 0 18px rgba(21,164,253,.95))}
+
+/* Пока задание не выполнено — огонёк погашен; загорается, когда задание сделано */
+body.rd .next:not(.ready){display:flex;pointer-events:none;cursor:default;color:#9aa5c0}
+body.rd .next:not(.ready)::before{animation:none;background:url("hoshi_flame_icon_v1.webp") center 48%/56px 56px no-repeat;filter:grayscale(1) brightness(1.15);opacity:.45}
+body.rd .next:not(.ready)::after{content:"выполни задание — и огонёк загорится"}
+body.rd[data-rd-lang="en"] .next:not(.ready)::after{content:"finish the task to light the flame"}
+body.rd .next.ready:not(.opened)::before{animation:rdLightUp .9s ease-out both,rdHover 2.6s ease-in-out .9s infinite}
+@keyframes rdLightUp{0%{filter:grayscale(1) brightness(1.15);opacity:.45;transform:scale(.9)}45%{filter:brightness(1.6) drop-shadow(0 0 24px rgba(21,164,253,1));opacity:1;transform:scale(1.25)}100%{filter:drop-shadow(0 0 10px rgba(21,164,253,.6));opacity:1;transform:scale(1)}}
+body.rd .next.rd-going::before{animation:rdFlare .65s cubic-bezier(.2,.8,.25,1) forwards}
+@media (prefers-reduced-motion:reduce){body.rd .next.ready:not(.opened)::before{animation:none}}
+
+/* Страница-карточка: полупрозрачная, сквозь неё проступает подложка — без резкого контраста */
+body.rd .page,body.rd .reward-page{
+  background:linear-gradient(180deg,rgba(255,255,255,.66) 0%,rgba(255,255,255,.56) 100%);
+  backdrop-filter:blur(22px) saturate(1.15);-webkit-backdrop-filter:blur(22px) saturate(1.15);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.85),inset 0 0 0 1px rgba(255,255,255,.45),0 18px 50px rgba(120,100,140,.12)}
+body.rd .answer,body.rd .word-card,body.rd .syllable-button,body.rd .task-panel,body.rd .word-search-text,body.rd .final-note,body.rd .meaning-note,body.rd .observation-task,body.rd .reward-copy,body.rd .hunt-status{background:rgba(255,255,255,.55)}
+
+/* =====================================================================
+   Огонёк-проводник: состояния (как в прототипе)
+   1 погашен — задание не выполнено      2 загорается — момент выполнения
+   3 горит — ждёт касания                4 наведение — крупнее и ярче
+   5 касание — вспышка и искры           6 пройдено — маленький огонёк «Путь открыт»
+   ===================================================================== */
+body.rd .next:not(.opened)::before{content:none!important}
+body.rd .next{padding-top:108px}
+body.rd .rd-guide{position:absolute;left:50%;top:0;width:100px;height:100px;margin-left:-50px;display:grid;place-items:center;pointer-events:none;transition:scale .25s ease}
+body.rd .rd-glow{position:absolute;inset:-6px;border-radius:50%;background:radial-gradient(circle,rgba(175,225,255,.8) 0%,rgba(175,225,255,.32) 36%,rgba(175,225,255,0) 66%);filter:blur(9px);animation:rdBreathe 2.6s ease-in-out infinite}
+body.rd .rd-guide img{position:relative;width:62px;height:62px;object-fit:contain;filter:drop-shadow(0 0 10px rgba(21,164,253,.75)) drop-shadow(0 0 3px #fff);transform-origin:50% 85%;animation:rdHover 2.6s ease-in-out infinite}
+@keyframes rdBreathe{50%{transform:scale(1.15);opacity:.75}}
+/* 1 погашен */
+body.rd .next:not(.ready) .rd-glow{opacity:0;animation:none}
+body.rd .next:not(.ready) .rd-guide img{filter:grayscale(1) brightness(1.15);opacity:.42;animation:none}
+/* 2 загорается — один раз, когда появляется класс ready */
+body.rd .next.ready:not(.opened) .rd-guide img{animation:rdLightUp2 .9s ease-out both,rdHover 2.6s ease-in-out .9s infinite}
+@keyframes rdLightUp2{0%{filter:grayscale(1) brightness(1.15);opacity:.42;transform:scale(.9)}45%{filter:brightness(1.6) drop-shadow(0 0 26px rgba(21,164,253,1)) drop-shadow(0 0 4px #fff);opacity:1;transform:scale(1.3)}100%{filter:drop-shadow(0 0 10px rgba(21,164,253,.75)) drop-shadow(0 0 3px #fff);opacity:1;transform:scale(1)}}
+/* 4 наведение */
+body.rd .next.ready:not(.opened):hover .rd-guide,body.rd .next.ready:not(.opened):focus-visible .rd-guide{scale:1.25}
+body.rd .next.ready:not(.opened):hover .rd-guide img{filter:drop-shadow(0 0 18px rgba(21,164,253,.95)) drop-shadow(0 0 4px #fff)}
+/* 5 касание */
+body.rd .next.rd-going .rd-guide img{animation:rdFlare2 .65s cubic-bezier(.2,.8,.25,1) forwards}
+@keyframes rdFlare2{40%{transform:scale(1.45);filter:brightness(1.6) drop-shadow(0 0 28px rgba(21,164,253,1)) drop-shadow(0 0 6px #fff)}100%{transform:translateY(-14px) scale(.9);opacity:.85}}
+/* 6 пройдено */
+body.rd .next.opened .rd-guide{display:none}
+@media (prefers-reduced-motion:reduce){body.rd .rd-glow,body.rd .rd-guide img{animation:none!important}}
+/* Без вспышки «загорается»: когда задание выполнено, огонёк сразу просто горит */
+body.rd .next.ready:not(.opened) .rd-guide img{animation:rdHover 2.6s ease-in-out infinite}
+
+/* ---------- Глава 1, экран 2: слова собираются из слогов ---------- */
+body.rd .word-card.rd-word{position:relative;cursor:pointer;user-select:none;-webkit-user-select:none;transition:transform .15s,box-shadow .2s,background-color .2s;-webkit-tap-highlight-color:transparent}
+body.rd .word-card.rd-word:hover{box-shadow:inset 0 0 0 1.5px rgba(159,179,230,.9),0 8px 20px rgba(70,95,160,.10)}
+body.rd .word-card.rd-word:active{transform:scale(.98)}
+body.rd .word-card.rd-word:focus-visible{outline:3px solid #8fb6f0;outline-offset:3px}
+body.rd .word-card.rd-word strong{display:none}
+body.rd .word-card.rd-word .rd-word-hint{display:flex;align-items:center;gap:6px;font:600 14px/1.2 var(--rd-sans);color:#7d8bb0}
+body.rd .word-card.rd-word .rd-word-hint::before{content:"";width:6px;height:6px;border-radius:50%;background:#5aaef5;box-shadow:0 0 8px rgba(21,164,253,.7)}
+body.rd .word-card.rd-word .word-parts .rd-dash{display:inline-block;max-width:1em;overflow:hidden;vertical-align:baseline;transition:max-width .35s ease,opacity .3s ease,margin .35s ease}
+body.rd .word-card.rd-word.rd-joined .word-parts .rd-dash{max-width:0;opacity:0;margin:0}
+body.rd .word-card.rd-word.rd-joined{background:rgba(236,246,255,.7);box-shadow:inset 0 0 0 1.5px rgba(140,190,240,.6),0 6px 18px rgba(21,164,253,.10)}
+body.rd .word-card.rd-word.rd-joined .rd-word-hint{color:#0482fc}
+body.rd .word-card.rd-word.rd-joined .rd-word-hint::before{content:"✓";width:auto;height:auto;border-radius:0;background:none;box-shadow:none;font-weight:800}
+body.rd .word-card.rd-word.rd-joined .word-parts{animation:rdJoin .45s ease}
+@keyframes rdJoin{50%{transform:scale(1.06)}}
+@media (prefers-reduced-motion:reduce){body.rd .word-card.rd-word .word-parts .rd-dash{transition:none}body.rd .word-card.rd-word.rd-joined .word-parts{animation:none}}
+body.rd .next::after{left:50%;right:auto;transform:translateX(-50%);white-space:nowrap}
+
+/* ---------- Глава 1: сиреневое стекло страницы ---------- */
+body.rd .page{background:rgba(232,232,255,.6);-webkit-backdrop-filter:blur(14px) saturate(1.1);backdrop-filter:blur(14px) saturate(1.1);
+  box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.75),0 24px 70px rgba(70,80,160,.16)}
+
+/* ---------- Глава 1, экран 2: стеклянные карточки-«таблетки» (по референсу) ---------- */
+body.rd .word-cards:has(.rd-word){max-width:880px;gap:18px 22px;padding-top:10px}
+body.rd .word-card.rd-word{
+  isolation:isolate;container-type:inline-size;aspect-ratio:557/199;min-height:0;gap:0;padding:4% 7%;border:0;
+  border-radius:9.7%/27%;background:url(hoshi_word_card_torii_v1.webp) center/100% 100% no-repeat;filter:none;
+  box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.85),0 0 16px rgba(255,255,255,.55),0 12px 26px rgba(80,80,170,.14);
+  transition:transform .2s ease,box-shadow .35s ease}
+body.rd .word-card.rd-word:nth-child(even){background-image:url(hoshi_word_card_sakura_v1.webp)}
+body.rd .word-card.rd-word:hover{transform:translateY(-2px)}
+body.rd .word-card.rd-word:active{transform:scale(.98)}
+body.rd .word-card.rd-word .word-parts{font:500 clamp(22px,8.4cqw,40px)/1.2 var(--rd-serif-it);color:#2f3b8f;letter-spacing:0;
+  text-shadow:0 0 10px rgba(255,255,255,.9),0 0 2px rgba(255,255,255,.9)}
+body.rd .word-card.rd-word .word-parts .rd-dash{vertical-align:top;height:1.2em;line-height:1.2;color:#2f3b8f;font-style:normal}
+body.rd .word-card.rd-word .rd-word-hint,body.rd .word-card.rd-word .rd-knot{display:none}
+/* собрано: тёплое свечение по краю */
+body.rd .word-card.rd-word.rd-joined{filter:none;
+  box-shadow:inset 0 0 0 2px rgba(196,232,255,.95),inset 0 0 22px rgba(120,196,255,.35),0 0 22px rgba(90,176,250,.55),0 12px 26px rgba(80,80,170,.14)}
+body.rd .word-card.rd-word.rd-joined{background-image:linear-gradient(180deg,rgba(214,234,255,.4),rgba(190,220,255,.34)),url(hoshi_word_card_sakura_v1.webp)}
+body.rd .word-card.rd-word:nth-child(odd).rd-joined{background-image:linear-gradient(180deg,rgba(214,234,255,.4),rgba(190,220,255,.34)),url(hoshi_word_card_torii_v1.webp)}
+/* лепестки */
+body.rd .rd-petal{position:absolute;left:var(--x);top:var(--y);width:14px;height:8px;border-radius:80% 0 80% 0;background:linear-gradient(135deg,#ffd6de,#ee8fa6);pointer-events:none;z-index:2;opacity:0;animation:rdPetal 1.8s ease-out forwards}
+@keyframes rdPetal{0%{opacity:0;transform:translate(0,0) rotate(0)}15%{opacity:1}100%{opacity:0;transform:translate(var(--dx),var(--dy)) rotate(var(--rot))}}
+body.rd .word-card.rd-word.rd-joined .word-parts{animation:rdJoin .45s ease}
+@media (prefers-reduced-motion:reduce){body.rd .rd-petal{display:none}}
+
+/* ---------- Глава 1: ответы без плашек — над каждым маленький огонёк ---------- */
+body.rd .rd-afl{display:none}
+body.rd .question:has(.answers) .feedback,body.rd .page:has([data-word-hunt]) .feedback[data-hunt-good]{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;margin:0;padding:0;border:0}
+body.rd .answers{display:flex;justify-content:center;gap:clamp(36px,6vw,64px);max-width:none;margin:22px auto 4px}
+body.rd .answer{position:relative;display:flex;flex-direction:row;align-items:center;gap:10px;flex:0 0 auto;width:auto;min-width:110px;min-height:0;padding:6px 14px 10px;border:0;border-radius:24px;
+  background:none!important;box-shadow:none!important;font:500 clamp(30px,3.6vw,40px)/1.1 var(--rd-serif-it);color:#2f3b8f;text-shadow:0 0 10px rgba(255,255,255,.95);
+  transition:transform .2s ease,opacity .35s ease,color .35s ease;-webkit-tap-highlight-color:transparent}
+body.rd .answer:hover:not(:disabled){transform:translateY(-3px)}
+body.rd .answer:active:not(:disabled){transform:scale(.96)}
+body.rd .answer:focus-visible{outline:3px solid #8fb6f0;outline-offset:4px}
+body.rd .rd-afl{position:relative;display:block;flex:none;width:58px;height:58px;margin-left:-14px}
+body.rd .rd-afl img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 0 10px rgba(21,164,253,.8)) drop-shadow(0 0 3px #fff);opacity:0;transform:scale(.6);transform-origin:50% 85%;transition:opacity .25s ease,transform .3s cubic-bezier(.2,.8,.25,1.3)}
+body.rd .answer:is(:hover,:focus-visible):not(:disabled) .rd-afl img{opacity:1;transform:none}
+/* верный: огонёк вспыхивает */
+body.rd .answer.correct-choice{opacity:1}
+body.rd .answer.correct-choice .rd-afl img{transform:none;filter:drop-shadow(0 0 10px rgba(21,164,253,.85)) drop-shadow(0 0 3px #fff);opacity:1;animation:rdAFlare .6s ease-out}
+body.rd .answer.correct-choice.rd-sent .rd-afl img{opacity:0;transition:opacity .15s}
+@keyframes rdAFlare{0%{transform:scale(.8);opacity:1}50%{transform:scale(1.35);filter:brightness(1.6) drop-shadow(0 0 22px rgba(21,164,253,1)) drop-shadow(0 0 4px #fff);opacity:1}100%{transform:scale(1)}}
+/* неверный: вспыхивает и тухнет, идёт дымок */
+body.rd .answer.wrong-choice{color:#7d82a8}
+body.rd .answer.wrong-choice .rd-afl img{animation:rdAOut 1.3s ease-out forwards}
+@keyframes rdAOut{0%{filter:drop-shadow(0 0 10px rgba(21,164,253,.8));opacity:1}25%{filter:drop-shadow(0 0 8px rgba(21,164,253,.7));opacity:.9;transform:scale(1.1)}55%{transform:scale(.85) skewX(-6deg)}100%{filter:grayscale(1) brightness(.85);opacity:0;transform:scale(.4) translateY(8px)}}
+body.rd .answer.wrong-choice .rd-afl::after{content:"";position:absolute;left:50%;top:6px;width:14px;height:22px;margin-left:-7px;border-radius:50%;background:radial-gradient(circle,rgba(150,155,185,.55),rgba(150,155,185,0) 70%);filter:blur(3px);opacity:0;animation:rdSmoke 1.4s ease-out .45s forwards}
+@keyframes rdSmoke{0%{opacity:0;transform:translateY(0) scale(.6)}30%{opacity:.9}100%{opacity:0;transform:translate(6px,-34px) scale(1.6)}}
+body.rd .answer:disabled:not(.correct-choice){opacity:.4}
+/* летящий огонёк */
+body.rd .rd-flyer{position:fixed;z-index:400;width:54px;height:54px;margin:-27px 0 0 -27px;pointer-events:none;filter:drop-shadow(0 0 12px rgba(21,164,253,.95)) drop-shadow(0 0 3px #fff)}
+/* основной огонёк ждёт, пока прилетит маленький, потом вспыхивает */
+body.rd .next.ready.rd-wait .rd-glow{opacity:0;animation:none}
+body.rd .next.ready.rd-wait .rd-guide img{filter:grayscale(1) brightness(1.15);opacity:.42;animation:none}
+body.rd .next.ready.rd-ignite .rd-guide img{animation:rdLightUp2 .9s ease-out both,rdHover 2.6s ease-in-out .9s infinite}
+body.rd .next.ready.rd-wait{color:inherit}
+@media (prefers-reduced-motion:reduce){body.rd .rd-afl img,body.rd .rd-afl::after{animation:none!important}}
+
+/* ---------- Глава 1, экран 5: охота за словами без плашек ---------- */
+body.rd .rd-tfl{display:none}
+body.rd .task-panel:has(.search-targets){background:none!important;box-shadow:none!important;border:0;padding:0;margin:4px auto 10px}
+body.rd .task-panel:has(.search-targets) h3{margin:0 0 6px;text-align:center}
+body.rd .task-panel:has(.search-targets)>p{margin:0 auto;text-align:center;font:400 clamp(15px,1.7vw,17px)/1.4 var(--rd-sans);color:var(--rd-muted)}
+body.rd .search-targets{display:flex;flex-wrap:wrap;justify-content:center;gap:10px clamp(22px,4vw,44px);max-width:none;width:auto;margin:22px auto 6px}
+body.rd .search-target{display:inline-flex;align-items:center;gap:2px;flex:0 0 auto;min-width:0;padding:0;border:0!important;border-radius:0;background:none!important;box-shadow:none!important;
+  font:500 clamp(24px,2.8vw,30px)/1.2 var(--rd-serif-it);color:#6f77a8;text-shadow:0 0 10px rgba(255,255,255,.95);transition:color .4s ease}
+body.rd .rd-tfl{display:block;flex:none;width:40px;height:40px;margin-left:-8px}
+body.rd .rd-tfl img{width:100%;height:100%;object-fit:contain;filter:grayscale(1) brightness(1.1);opacity:0;transform-origin:50% 85%;transition:filter .4s ease,opacity .4s ease}
+body.rd .search-target.found{color:#2f3b8f}
+body.rd .search-target.found .rd-tfl img{filter:drop-shadow(0 0 9px rgba(21,164,253,.85)) drop-shadow(0 0 3px #fff);opacity:1;animation:rdAFlare .7s ease-out}
+/* текст без рамки */
+body.rd .word-search-text{background:none!important;box-shadow:none!important;border:0;padding:0;margin-top:10px}
+body.rd .search-word{padding:2px 3px;margin:0 -1px;border-radius:10px;background:none!important;box-shadow:none!important;transition:color .3s ease,text-shadow .3s ease}
+body.rd .search-word:hover{color:#3d4aa6}
+body.rd .search-word.found{padding-inline:3px;color:#1f6fd1;text-shadow:0 0 12px rgba(90,176,250,.75),0 0 2px rgba(255,255,255,.9)}
+body.rd .search-word.miss{animation:rdShake .4s ease}
+/* счётчик — только для чтения с экрана, видно по огонькам */
+body.rd .hunt-status{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;margin:0;padding:0;border:0}
+body.rd .search-target::before,body.rd .search-target::after{content:none!important;display:none!important}
+body.rd .search-targets{gap:8px clamp(14px,2.4vw,26px)}
+body.rd .search-target{font-size:clamp(21px,2.4vw,26px)}
+body.rd .rd-tfl.rd-gone img{opacity:0!important;transition:opacity .2s;animation:none}
+
+/* ---------- «Путь открыт» крупнее ---------- */
+body.rd .next.opened{gap:12px;margin:22px auto 4px;padding:8px 18px;font:500 clamp(20px,2.2vw,24px)/1.2 var(--rd-serif-it);color:#45507e;text-shadow:0 0 10px rgba(255,255,255,.9)}
+body.rd .next.opened::before{content:""!important;width:40px;height:40px;opacity:1!important;color:transparent!important;filter:drop-shadow(0 0 10px rgba(21,164,253,.75)) drop-shadow(0 0 3px #fff)!important}
+/* огонёк у верного ответа не остаётся: только вспышка перед полётом */
+body.rd .question:has(.next.opened) .rd-afl img,body.rd .page:has(.next.opened) .answer .rd-afl img{opacity:0!important;animation:none!important}
+
+/* ---------- Глава 1, финал (по референсу) ---------- */
+/* предложение для чтения — стеклянная карточка, как у слов */
+body.rd .story .breath{max-width:none;width:auto;margin:22px -60px 30px;padding:clamp(18px,2.4vw,26px) clamp(22px,3.4vw,40px);border-radius:32px;text-align:center;
+  background:linear-gradient(160deg,rgba(250,248,255,.8),rgba(232,230,255,.6));box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.9),0 0 16px rgba(255,255,255,.5),0 12px 26px rgba(80,80,170,.12);
+  font:500 clamp(22px,2.6vw,28px)/1.45 var(--rd-serif-it);color:#2f3b8f;text-shadow:0 0 8px rgba(255,255,255,.9)}
+/* что означают предметы — список с ключом и свитком */
+body.rd .meaning-note{position:relative;max-width:640px;margin:0 auto 26px;padding:0 0 26px;border:0;background:none!important;box-shadow:none!important}
+body.rd .meaning-note::after{content:"";position:absolute;left:50%;bottom:0;width:min(260px,60%);height:1px;transform:translateX(-50%);background:linear-gradient(90deg,transparent,rgba(70,86,160,.5),transparent)}
+body.rd .meaning-note>strong{display:block;margin:0 0 16px;text-align:center;font:700 clamp(24px,2.8vw,30px)/1.2 var(--rd-tale);color:var(--rd-ink)}
+body.rd .meaning-note p{position:relative;display:flex;align-items:center;min-height:56px;margin:0 0 8px;padding:0 0 0 82px;text-align:left;
+  font:400 clamp(17px,1.9vw,19px)/1.45 var(--rd-sans);color:#45507e}
+body.rd .meaning-note p>span{display:block}
+body.rd .meaning-note p::before{content:"";position:absolute;left:0;top:50%;width:66px;height:52px;transform:translateY(-50%);background:url(hoshi_icon_key_v1.webp) center/contain no-repeat;filter:drop-shadow(0 4px 6px rgba(80,60,40,.18))}
+body.rd .meaning-note p:last-of-type::before{background-image:url(hoshi_icon_scroll_v1.webp)}
+body.rd .meaning-note b{font:600 clamp(22px,2.5vw,27px)/1.2 var(--rd-serif-it);color:#2f3b8f}
+body.rd .meaning-note b::after{content:" —";font:400 clamp(17px,1.9vw,19px)/1 var(--rd-sans);color:#45507e}
+body.rd[data-rd-chapter="1"] .page[data-screen="6"] .story>p:last-child{text-align:center}
+/* история прочитана */
+body.rd .final-note{max-width:none;margin:26px auto 0;padding:0;border:0;background:none!important;box-shadow:none!important;overflow:visible;animation:none;
+  font:400 clamp(17px,1.9vw,19px)/1.5 var(--rd-sans);color:#45507e;text-align:center}
+body.rd .final-note::before,body.rd .final-note::after{content:none!important;display:none}
+body.rd .final-note br{display:none}
+body.rd .final-note strong{display:block;margin-bottom:6px;font:600 clamp(32px,3.8vw,42px)/1.15 var(--rd-serif-it);color:#2f3b8f;text-shadow:0 0 16px rgba(255,255,255,.95)}
+/* подпись огонька — просто текст, без плашки */
+/* спящая лисичка на камне в углу */
+body.rd[data-rd-chapter="1"] .page[data-screen="6"]{padding-bottom:clamp(30px,4vw,48px)}
+body.rd[data-rd-chapter="1"] .page[data-screen="6"]::after{content:"";display:block!important;position:absolute;right:-6px;bottom:-4px;width:clamp(200px,28vw,340px);aspect-ratio:766/438;
+  background:url(hoshi_final1_fox_v1.webp) right bottom/contain no-repeat;pointer-events:none}
+@media (max-width:700px){body.rd[data-rd-chapter="1"] .page[data-screen="6"]::after{opacity:.5}}
+@media (max-width:900px){body.rd .story .breath{margin-left:0;margin-right:0}}
+@media (max-width:760px){body.rd[data-rd-chapter="1"] .page[data-screen="6"]{padding-bottom:clamp(110px,30vw,180px)}}
+
+/* ---------- Глава 1, награда «Четыре тайны Инари»: без плашек ---------- */
+body.rd .reward-page{background:rgba(232,232,255,.6);-webkit-backdrop-filter:blur(14px) saturate(1.1);backdrop-filter:blur(14px) saturate(1.1);
+  box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.75),0 24px 70px rgba(70,80,160,.16)}
+body.rd[data-rd-chapter="1"] .inari-reward-card{width:min(440px,100%)}
+body.rd[data-rd-chapter="1"] .inari-card-face{border-radius:30px;box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.8),0 16px 34px rgba(70,80,160,.2)}
+body.rd[data-rd-chapter="1"] .inari-reward-hint{margin:12px auto 8px;font:400 15px/1.4 var(--rd-sans);color:var(--rd-muted)}
+/* подсказка — просто текст */
+body.rd .reward-copy{max-width:560px;margin:18px auto 6px;padding:0;border:0;background:none!important;box-shadow:none!important;text-align:center;
+  font:400 clamp(17px,1.9vw,19px)/1.45 var(--rd-sans);color:#45507e}
+body.rd .reward-copy br{display:none}
+body.rd .reward-copy strong{display:block;margin-bottom:4px;font:700 clamp(24px,2.8vw,30px)/1.2 var(--rd-tale);color:var(--rd-ink)}
+/* тайны — стеклянные карточки: огонёк слева, вопрос и ответ, справа дымчатая сценка */
+body.rd .inari-reward .inari-facts{display:grid;gap:14px;max-width:760px;margin:18px auto 0}
+body.rd .inari-reward .inari-fact{position:relative;overflow:hidden;display:grid;grid-template-columns:62px 1fr;column-gap:12px;align-items:center;min-height:92px;
+  padding:16px 22px 16px 18px;border:0;border-radius:30px;text-align:left;
+  background:linear-gradient(160deg,rgba(250,248,255,.82),rgba(232,230,255,.6))!important;
+  box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.9),0 10px 24px rgba(80,80,170,.11)!important}
+body.rd[data-rd-chapter="1"] .inari-fact::after{content:"";position:absolute;right:0;top:0;bottom:0;width:34%;background:var(--scene) right center/cover no-repeat;pointer-events:none;z-index:0;opacity:.62;filter:saturate(.75);-webkit-mask-image:linear-gradient(90deg,transparent,#000 70%);mask-image:linear-gradient(90deg,transparent,#000 70%)}
+body.rd[data-rd-chapter="1"] .inari-fact:nth-child(1){--scene:url(hoshi_inari_fact1_v1.webp)}
+body.rd[data-rd-chapter="1"] .inari-fact:nth-child(2){--scene:url(hoshi_inari_fact2_v1.webp)}
+body.rd[data-rd-chapter="1"] .inari-fact:nth-child(3){--scene:url(hoshi_inari_fact3_v1.webp)}
+body.rd[data-rd-chapter="1"] .inari-fact:nth-child(4){--scene:url(hoshi_inari_fact4_v1.webp)}
+body.rd .inari-reward .inari-question{display:contents}
+body.rd .inari-reward .inari-question h3{grid-column:2;grid-row:1;position:relative;z-index:1;margin:0;text-align:left;font-size:clamp(20px,2.3vw,25px)}
+body.rd .inari-reward .inari-flame{grid-column:1;grid-row:1/3;align-self:center;position:relative;z-index:1;width:52px;height:60px;padding:2px;background:none!important;border:0;cursor:pointer;filter:grayscale(1) brightness(1.15);opacity:.55;transition:transform .2s ease,opacity .4s ease,filter .4s ease}
+body.rd .inari-reward .inari-flame img{animation:none}
+body.rd .inari-reward .inari-flame:hover{transform:scale(1.15)}
+body.rd .inari-reward .inari-flame:hover:not(.opened){opacity:.8}
+body.rd .inari-reward .inari-flame.opened{opacity:1;filter:drop-shadow(0 0 10px rgba(21,164,253,.75)) drop-shadow(0 0 3px #fff)}
+body.rd .inari-reward .inari-flame.opened img{animation:rdAFlare .7s ease-out,rdHover 2.6s ease-in-out .7s infinite}
+body.rd .inari-reward .inari-answer{grid-column:2;grid-row:2;position:relative;z-index:1;max-width:none;margin:4px 0 0;padding:0;border:0;background:none;text-align:left;font:400 clamp(16px,1.7vw,18px)/1.45 var(--rd-sans);color:#45507e}
+body.rd .inari-reward .inari-answer strong{color:#2f3b8f}
+@media (max-width:600px){body.rd .inari-reward .inari-fact{padding-right:18px}body.rd .inari-reward .inari-fact::after{opacity:.35}}
+/* все тайны раскрыты — светящаяся надпись */
+body.rd .inari-reward .inari-complete{max-width:none;margin:22px auto 0;padding:0;border:0;background:none!important;box-shadow:none!important;text-align:center;
+  font:400 clamp(17px,1.9vw,19px)/1.5 var(--rd-sans);color:#45507e}
+body.rd .inari-reward .inari-complete::after{content:none!important}
+body.rd .inari-reward .inari-complete::before{content:none!important}
+body.rd .inari-reward .inari-complete br{display:none}
+body.rd .inari-reward .inari-complete strong{display:block;margin-bottom:6px;font:700 clamp(28px,3.2vw,36px)/1.15 var(--rd-tale);color:#2f3b8f;text-shadow:0 0 16px rgba(255,255,255,.95)}
+/* карточка шире и короче */
+body.rd[data-rd-chapter="1"] .inari-reward-card{width:min(760px,100%);aspect-ratio:1672/941}
+body.rd .inari-card-front .animated-reward-scene{width:100%;height:100%;max-height:none;aspect-ratio:auto;margin:0;border-radius:0}
+body.rd .inari-card-front .scene-image{width:100%;height:100%;object-fit:cover;object-position:50% 50%}
+body.rd[data-rd-chapter="1"] .inari-card-back img{width:100%;height:100%;object-fit:cover;object-position:50% 40%}
+/* внизу огонька нет — просто переход дальше */
+/* огоньки на картинке: блуждают, мерцают, тают и появляются снова */
+body.rd[data-rd-chapter="1"] .inari-kitsunebi{opacity:0;animation:rdKitsu var(--t,8s) ease-in-out infinite,rdFlick 1.6s ease-in-out infinite;animation-delay:var(--d,0s),calc(var(--d,0s)*.5)}
+body.rd[data-rd-chapter="1"] .inari-kitsunebi--1{--t:9s;--d:-1s}
+body.rd[data-rd-chapter="1"] .inari-kitsunebi--2{--t:7.5s;--d:-4s}
+body.rd[data-rd-chapter="1"] .inari-kitsunebi--3{--t:10s;--d:-6.5s}
+body.rd[data-rd-chapter="1"] .inari-kitsunebi--4{--t:8.5s;--d:-2.8s}
+@keyframes rdKitsu{
+  0%{transform:translate(0,0) scale(.6);opacity:0}
+  12%{opacity:.95;transform:translate(calc(var(--dx)*.5),calc(var(--dy)*.4)) scale(1)}
+  32%{transform:translate(calc(var(--dx)*1.6),calc(var(--dy)*1.2)) scale(1.08) rotate(6deg)}
+  52%{transform:translate(calc(var(--dx)*-.4),calc(var(--dy)*2)) scale(.96) rotate(-5deg)}
+  72%{opacity:.9;transform:translate(calc(var(--dx)*1.1),calc(var(--dy)*2.8)) scale(1.04) rotate(4deg)}
+  90%{opacity:.25;transform:translate(calc(var(--dx)*.4),calc(var(--dy)*3.4)) scale(.75)}
+  100%{opacity:0;transform:translate(0,calc(var(--dy)*3.8)) scale(.5)}}
+@keyframes rdFlick{0%,100%{filter:drop-shadow(0 0 8px rgba(47,181,239,.75)) brightness(1)}35%{filter:drop-shadow(0 0 16px rgba(90,200,255,1)) brightness(1.25)}60%{filter:drop-shadow(0 0 6px rgba(47,181,239,.6)) brightness(.92)}}
+@media (prefers-reduced-motion:reduce){body.rd[data-rd-chapter="1"] .inari-kitsunebi{animation:none;opacity:.8}}
+
+/* ответ раздвигает карточку */
+body.rd .inari-reward .inari-answer:not([hidden]){animation:rdExpand .55s cubic-bezier(.2,.8,.25,1) both;overflow:hidden}
+@keyframes rdExpand{from{max-height:0;opacity:0;margin-top:0}60%{opacity:.6}to{max-height:260px;opacity:1}}
+/* переход дальше: текст и цепочка синих следов */
+body.rd .rd-steps{display:inline-flex;align-items:center;gap:8px}
+body.rd .rd-steps i{display:block;width:24px;height:24px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%232f8ff0'%3E%3Cellipse cx='12' cy='15.5' rx='5' ry='4.3'/%3E%3Cellipse cx='5.6' cy='9.6' rx='2' ry='2.6' transform='rotate(-18 5.6 9.6)'/%3E%3Cellipse cx='9.6' cy='6' rx='2.1' ry='2.8' transform='rotate(-6 9.6 6)'/%3E%3Cellipse cx='14.4' cy='6' rx='2.1' ry='2.8' transform='rotate(6 14.4 6)'/%3E%3Cellipse cx='18.4' cy='9.6' rx='2' ry='2.6' transform='rotate(18 18.4 9.6)'/%3E%3C/svg%3E") center/contain no-repeat;filter:drop-shadow(0 0 5px rgba(47,143,240,.45));opacity:.2;animation:rdStep 2.4s ease-in-out infinite}
+body.rd .rd-steps i:nth-child(odd){transform:rotate(90deg) translateX(4px)}
+body.rd .rd-steps i:nth-child(even){transform:rotate(90deg) translateX(-4px)}
+body.rd .rd-steps i:nth-child(2){animation-delay:.3s}
+body.rd .rd-steps i:nth-child(3){animation-delay:.6s}
+@keyframes rdStep{0%,100%{opacity:.2}25%,60%{opacity:1;filter:drop-shadow(0 0 9px rgba(47,143,240,.9))}}
+
+@media (prefers-reduced-motion:reduce){body.rd .inari-reward .inari-answer:not([hidden]){animation:none}}
+/* реакция на наведение и касание */
+
+/* переход дальше — как кнопка с огоньком, только вместо огонька синие следы */
+body.rd .reward-continue:has(.rd-steps) .rd-guide img{display:none}
+body.rd .reward-continue .rd-glow{background:radial-gradient(circle,rgba(150,200,255,.7) 0%,rgba(150,200,255,.28) 38%,rgba(150,200,255,0) 66%)}
+body.rd .reward-continue .rd-steps{position:relative;gap:6px}
+body.rd .reward-continue .rd-steps i{width:26px;height:26px}
+body.rd .reward-continue.ready:not(.opened):hover .rd-steps i{animation-duration:.9s}
+body.rd .reward-continue:has(.rd-steps)::after{content:"коснись следов"}
+body.rd.rd-en .reward-continue:has(.rd-steps)::after{content:"tap the tracks"}
+/* «Все четыре тайны раскрыты!» — другой шрифт */
+body.rd .inari-reward .inari-complete strong{font:700 clamp(26px,3vw,32px)/1.2 var(--rd-sans)!important;letter-spacing:.01em;color:#2f3b8f}
+body.rd .inari-reward .inari-complete{font:400 clamp(16px,1.8vw,18px)/1.5 var(--rd-sans);color:#6b6f98}
+/* переход: надпись — ниже следы — ниже подпись */
+body.rd .reward-continue:has(.rd-steps){display:flex!important;flex-direction:column;align-items:center;padding-top:8px!important}
+body.rd .reward-continue:has(.rd-steps) .rd-guide{position:relative!important;left:auto!important;top:auto!important;margin:8px auto 0!important;order:1;width:110px;height:54px}
+body.rd .reward-continue:has(.rd-steps)::after{position:static!important;transform:none!important;order:2;margin-top:2px}
+/* четыре следа */
+body.rd .reward-continue .rd-guide{width:150px}
+body.rd .rd-steps i:nth-child(4){animation-delay:.9s}
+/* пояснения крупнее — их читает ребёнок */
+body.rd .inari-reward .inari-answer{font-size:clamp(19px,2.1vw,21px);line-height:1.5}
+body.rd .reward-copy{font-size:clamp(19px,2.1vw,21px)}
+body.rd .inari-reward .inari-complete{font-size:clamp(19px,2.1vw,21px);color:#45507e}
+body.rd[data-rd-chapter="1"] .inari-reward-hint{font-size:17px}
+body.rd .next::after{font-size:15px}
+body.rd[data-rd-chapter="1"] .inari-fact{padding-right:30%}
+/* обратная сторона карточки: картинка целиком, по бокам — её же размытый фон */
+body.rd[data-rd-chapter="1"] .inari-card-back{overflow:hidden;background:#d9dcf5}
+body.rd[data-rd-chapter="1"] .inari-card-back::before{content:"";position:absolute;inset:-30px;background:url(hoshi_chapter1_kitsune_traditional_wide_v1.webp) center/cover no-repeat;filter:blur(22px) saturate(.9) brightness(1.05);opacity:.85}
+body.rd[data-rd-chapter="1"] .inari-card-back img{position:relative;z-index:1;width:100%;height:100%;object-fit:contain!important;object-position:center}
+/* переход дальше появляется только когда раскрыты все четыре тайны */
+body.rd .inari-reward .inari-complete[hidden]~.reward-continue{display:none!important}
+body.rd .rd-locked{max-width:560px;margin:26px auto 8px;text-align:center;font:400 clamp(19px,2.1vw,21px)/1.45 var(--rd-sans);color:#6b6f98}
+body.rd .rd-locked::before{content:"";display:block;width:110px;height:30px;margin:0 auto 8px;opacity:.35;filter:grayscale(1);
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 110 30' fill='%232f8ff0'%3E%3Cg transform='translate(4 3) scale(.9)'%3E%3Cellipse cx='12' cy='15.5' rx='5' ry='4.3'/%3E%3Cellipse cx='5.6' cy='9.6' rx='2' ry='2.6'/%3E%3Cellipse cx='9.6' cy='6' rx='2.1' ry='2.8'/%3E%3Cellipse cx='14.4' cy='6' rx='2.1' ry='2.8'/%3E%3Cellipse cx='18.4' cy='9.6' rx='2' ry='2.6'/%3E%3C/g%3E%3Cg transform='translate(32 7) scale(.9)'%3E%3Cellipse cx='12' cy='15.5' rx='5' ry='4.3'/%3E%3Cellipse cx='5.6' cy='9.6' rx='2' ry='2.6'/%3E%3Cellipse cx='9.6' cy='6' rx='2.1' ry='2.8'/%3E%3Cellipse cx='14.4' cy='6' rx='2.1' ry='2.8'/%3E%3Cellipse cx='18.4' cy='9.6' rx='2' ry='2.6'/%3E%3C/g%3E%3Cg transform='translate(60 3) scale(.9)'%3E%3Cellipse cx='12' cy='15.5' rx='5' ry='4.3'/%3E%3Cellipse cx='5.6' cy='9.6' rx='2' ry='2.6'/%3E%3Cellipse cx='9.6' cy='6' rx='2.1' ry='2.8'/%3E%3Cellipse cx='14.4' cy='6' rx='2.1' ry='2.8'/%3E%3Cellipse cx='18.4' cy='9.6' rx='2' ry='2.6'/%3E%3C/g%3E%3Cg transform='translate(88 7) scale(.9)'%3E%3Cellipse cx='12' cy='15.5' rx='5' ry='4.3'/%3E%3Cellipse cx='5.6' cy='9.6' rx='2' ry='2.6'/%3E%3Cellipse cx='9.6' cy='6' rx='2.1' ry='2.8'/%3E%3Cellipse cx='14.4' cy='6' rx='2.1' ry='2.8'/%3E%3Cellipse cx='18.4' cy='9.6' rx='2' ry='2.6'/%3E%3C/g%3E%3C/svg%3E") center/contain no-repeat}
+body.rd .inari-complete:not([hidden])~.rd-locked{display:none}
+body.rd[data-rd-chapter="1"] .inari-card-back::before{content:none}
+body.rd[data-rd-chapter="1"] .inari-card-back img{object-fit:cover!important}
+body.rd .rd-locked::before{content:none!important;display:none!important}
+
+/* ---------- Главы 2–4: длинные варианты ответов — столбиком ---------- */
+body.rd .answers:has(.answer:nth-child(3)){flex-direction:column;align-items:center;gap:14px}
+body.rd .answers:has(.answer:nth-child(3)) .answer{font-size:clamp(22px,2.6vw,28px);text-align:left;max-width:100%}
+/* ---------- Глава 2: вместо огоньков — лапки ---------- */
+body.rd[data-rd-chapter="2"] .rd-afl img,body.rd[data-rd-chapter="2"] .rd-tfl img,body.rd[data-rd-chapter="2"] .next .rd-guide img{content:url(hoshi_paw_glow_blue_v2.webp)}
+body.rd[data-rd-chapter="2"] .rd-afl{width:44px;height:44px;margin-left:-6px}
+body.rd[data-rd-chapter="2"] .rd-tfl{width:30px;height:30px;margin-right:4px;margin-left:0}
+body.rd[data-rd-chapter="2"] .next:not(.reward-continue) .rd-guide img{display:none}
+body.rd[data-rd-chapter="2"] .next .rd-glow{background:radial-gradient(circle,rgba(150,200,255,.7) 0%,rgba(150,200,255,.28) 38%,rgba(150,200,255,0) 66%)}
+body.rd[data-rd-chapter="2"] .next:not(.ready) .rd-steps i{animation:none;opacity:.35;filter:grayscale(1)}
+body.rd[data-rd-chapter="2"] .next::after{content:"коснись следов"}
+body.rd.rd-en[data-rd-chapter="2"] .next::after{content:"tap the tracks"}
+body.rd .next.ready.rd-wait .rd-steps i{animation:none;opacity:.35;filter:grayscale(1)}
+body.rd .next.ready.rd-ignite .rd-steps i{animation:rdAFlare .7s ease-out,rdStep 2.4s ease-in-out .7s infinite}
+/* глава 3: карточка тануки — картинка на всю карточку, без синей полосы */
+body.rd .ponta-reward :has(>.inari-card-inner){width:min(560px,100%);margin-left:auto;margin-right:auto}
+body.rd .ponta-reward .inari-card-front .animated-reward-scene{width:100%!important;max-width:none!important}
+/* глава 2: следы и в «Путь открыт», и в полоске прогресса */
+body.rd[data-rd-chapter="2"] .next.opened::before{background-image:url(hoshi_paw_glow_blue_v2.webp)!important;transform:rotate(90deg);filter:drop-shadow(0 0 6px rgba(47,143,240,.6))!important}
+/* глава 2: «Путь открыт» — четыре шагающих следа, как в награде главы 1 */
+body.rd[data-rd-chapter="2"] .next.opened::before{content:none!important;display:none!important}
+body.rd[data-rd-chapter="2"] .next.opened{flex-direction:column!important;gap:8px}
+body.rd[data-rd-chapter="2"] .next.opened .rd-guide{display:inline-flex!important;position:static!important;width:auto;height:auto;margin:0 auto!important;order:-1}
+body.rd[data-rd-chapter="2"] .next.opened .rd-glow{display:none}
+body.rd[data-rd-chapter="2"] .next.opened .rd-steps{gap:5px}
+body.rd[data-rd-chapter="2"] .next.opened .rd-steps i{width:20px;height:20px;animation:rdStep 2.4s ease-in-out infinite;filter:drop-shadow(0 0 5px rgba(47,143,240,.5))}
+body.rd[data-rd-chapter="2"] .next.opened .rd-steps i{width:24px;height:24px;animation:rdStepOn 2.4s ease-in-out infinite}
+@keyframes rdStepOn{0%,100%{opacity:.5}25%,60%{opacity:1;filter:drop-shadow(0 0 8px rgba(47,143,240,.85))}}
+/* следы: сначала все белые, потом по очереди синеют 1, 2, 3, 4 — и снова (через белый слой сверху — работает и в Safari) */
+body.rd .rd-steps i,body.rd[data-rd-chapter="2"] .next.opened .rd-steps i{position:relative;opacity:1;animation:none;filter:drop-shadow(0 0 6px rgba(47,143,240,.7))}
+body.rd .rd-steps i::after{content:"";position:absolute;inset:0;background:url(hoshi_paw_glow_white_v2.webp) center/contain no-repeat;filter:drop-shadow(0 0 2px rgba(80,110,190,.8));animation:rdPawW1 4s linear infinite}
+body.rd .rd-steps i:nth-child(2)::after{animation-name:rdPawW2}
+body.rd .rd-steps i:nth-child(3)::after{animation-name:rdPawW3}
+body.rd .rd-steps i:nth-child(4)::after{animation-name:rdPawW4}
+@keyframes rdPawW1{0%,8%{opacity:1}14%,86%{opacity:0}94%,100%{opacity:1}}
+@keyframes rdPawW2{0%,24%{opacity:1}30%,86%{opacity:0}94%,100%{opacity:1}}
+@keyframes rdPawW3{0%,40%{opacity:1}46%,86%{opacity:0}94%,100%{opacity:1}}
+@keyframes rdPawW4{0%,56%{opacity:1}62%,86%{opacity:0}94%,100%{opacity:1}}
+body.rd .next:not(.ready) .rd-steps i,body.rd .next.ready.rd-wait .rd-steps i{animation:none!important;opacity:.4;filter:grayscale(1)}
+
+/* кнопки со следами (глава 2): надпись — следы — «коснись следов» */
+body.rd .next:has(.rd-steps):not(.opened){display:flex!important;flex-direction:column;align-items:center;padding-top:8px!important}
+body.rd .next:has(.rd-steps):not(.opened) .rd-guide{position:relative!important;left:auto!important;top:auto!important;margin:8px auto 0!important;order:1;width:150px;height:54px}
+body.rd .next:has(.rd-steps):not(.opened) .rd-guide img{display:none}
+body.rd .next:has(.rd-steps):not(.opened)::after{position:static!important;transform:none!important;order:2;margin-top:2px}
+body.rd[data-rd-chapter="2"] .next:not(.ready)::after{content:"выполни задание — и следы загорятся"}
+body.rd.rd-en[data-rd-chapter="2"] .next:not(.ready)::after{content:"finish the task to light the tracks"}
+body.rd .next:not(.ready) .rd-steps i::after,body.rd .next.ready.rd-wait .rd-steps i::after{animation:none;opacity:0}
+
+/* светящиеся лапки Марины */
+body.rd .rd-steps{gap:4px}
+body.rd .rd-steps i,body.rd[data-rd-chapter="2"] .next.opened .rd-steps i{width:34px;height:34px;background:url(hoshi_paw_glow_blue_v2.webp) center/contain no-repeat!important;filter:none!important;transform:none!important}
+body.rd .rd-steps i:nth-child(odd){translate:0 5px}
+body.rd .rd-steps i::after{filter:none}
+body.rd[data-rd-chapter="2"] .next.opened .rd-steps i{width:28px;height:28px}
+body.rd .next:has(.rd-steps):not(.opened) .rd-guide{width:170px}
+body.rd[data-rd-chapter="2"] .rd-afl img,body.rd[data-rd-chapter="2"] .rd-tfl img{filter:none!important}
+body.rd[data-rd-chapter="2"] .next.opened::before{transform:none}
+body.rd .rd-steps i{width:44px!important;height:44px!important}
+body.rd[data-rd-chapter="2"] .next.opened .rd-steps i{width:34px!important;height:34px!important}
+body.rd .next:has(.rd-steps):not(.opened) .rd-guide{width:200px;height:60px}
+/* следы: цвет переключает скрипт (надёжно в Safari). Белая лапка — отдельный слой внутри */
+body.rd .rd-steps i::after{content:none!important;animation:none!important}
+body.rd .rd-steps i b{position:absolute;top:0;left:0;width:100%;height:100%;background:url(hoshi_paw_glow_white_v2.webp) center/contain no-repeat;opacity:1;-webkit-transition:opacity .45s ease;transition:opacity .45s ease}
+body.rd .rd-steps i.on b{opacity:0}
+body.rd .next:not(.ready) .rd-steps i b,body.rd .next.ready.rd-wait .rd-steps i b{opacity:0}
+body.rd .rd-steps i b{background-image:url(hoshi_paw_glow_blue_v2.webp);-webkit-filter:brightness(0) invert(1) drop-shadow(0 0 3px rgba(120,150,220,.9));filter:brightness(0) invert(1) drop-shadow(0 0 3px rgba(120,150,220,.9))}
+/* следы как на карте: светлые лапки с голубым свечением, появляются по очереди */
+body.rd .rd-steps{gap:10px}
+body.rd .rd-steps i,body.rd[data-rd-chapter="2"] .next.opened .rd-steps i{width:28px!important;height:28px!important;background:url(hoshi_paw_trail_v1.svg) center/contain no-repeat!important;
+  -webkit-filter:drop-shadow(0 0 4px #40ddfd) drop-shadow(0 0 10px rgba(21,164,253,.65))!important;filter:drop-shadow(0 0 4px #40ddfd) drop-shadow(0 0 10px rgba(21,164,253,.65))!important;
+  opacity:.15;transform:scale(.4)!important;-webkit-transition:opacity .35s ease,transform .45s cubic-bezier(.2,.8,.25,1.4);transition:opacity .35s ease,transform .45s cubic-bezier(.2,.8,.25,1.4)}
+body.rd .rd-steps i.on{opacity:1;transform:scale(1)!important}
+body.rd .rd-steps i:nth-child(odd){translate:0 7px}
+body.rd .rd-steps i b{display:none}
+body.rd .next:not(.ready) .rd-steps i,body.rd .next.ready.rd-wait .rd-steps i{opacity:.35!important;transform:scale(.85)!important;-webkit-filter:grayscale(1)!important;filter:grayscale(1) drop-shadow(0 0 2px rgba(120,130,170,.6))!important;background-image:url(hoshi_paw_trail_v1.svg)!important}
+body.rd .next:not(.ready) .rd-steps i{background-color:transparent}
+body.rd[data-rd-chapter="2"] .rd-afl img,body.rd[data-rd-chapter="2"] .rd-tfl img{content:url(hoshi_paw_trail_v1.svg);-webkit-filter:drop-shadow(0 0 4px #40ddfd) drop-shadow(0 0 10px rgba(21,164,253,.65))!important;filter:drop-shadow(0 0 4px #40ddfd) drop-shadow(0 0 10px rgba(21,164,253,.65))!important}
+body.rd[data-rd-chapter="2"] .next.opened::before{background-image:url(hoshi_paw_trail_v1.svg)!important}
+/* «Путь открыт»: следы всегда идут, даже если кнопка уже без класса ready */
+body.rd .next.opened:not(.ready) .rd-steps i{opacity:.15!important;transform:scale(.4)!important;filter:drop-shadow(0 0 4px #40ddfd) drop-shadow(0 0 10px rgba(21,164,253,.65))!important;-webkit-filter:drop-shadow(0 0 4px #40ddfd) drop-shadow(0 0 10px rgba(21,164,253,.65))!important}
+body.rd .next.opened .rd-steps i.on{opacity:1!important;transform:scale(1)!important}
+/* следы не исчезают: белые → по очереди голубые со свечением */
+body.rd .rd-steps i,body.rd .next.opened:not(.ready) .rd-steps i,body.rd[data-rd-chapter="2"] .next.opened .rd-steps i{opacity:1!important;transform:scale(.9)!important;
+  -webkit-filter:drop-shadow(0 0 1.5px rgba(70,90,160,.55)) drop-shadow(0 1px 2px rgba(70,90,160,.3))!important;filter:drop-shadow(0 0 1.5px rgba(70,90,160,.55)) drop-shadow(0 1px 2px rgba(70,90,160,.3))!important}
+body.rd .rd-steps i.on,body.rd .next.opened .rd-steps i.on{transform:scale(1.08)!important;background-image:url(hoshi_paw_trail_blue_v1.svg)!important;
+  -webkit-filter:drop-shadow(0 0 4px #40ddfd) drop-shadow(0 0 10px rgba(21,164,253,.7))!important;filter:drop-shadow(0 0 4px #40ddfd) drop-shadow(0 0 10px rgba(21,164,253,.7))!important}
+body.rd .next:not(.ready):not(.opened) .rd-steps i,body.rd .next.ready.rd-wait .rd-steps i{opacity:.35!important;transform:scale(.85)!important;background-image:url(hoshi_paw_trail_v1.svg)!important;-webkit-filter:grayscale(1) drop-shadow(0 0 1.5px rgba(90,100,140,.6))!important;filter:grayscale(1) drop-shadow(0 0 1.5px rgba(90,100,140,.6))!important}
+
+/* ---------- Глава 2, экраны без картинки: снежная подложка внутри страницы, текст и ответы списком ---------- */
+body.rd[data-rd-chapter="2"] .page:not(:has(> .scene-image)){background:#e9e8fb url(hoshi_page_snow_v1.webp) center/cover no-repeat;-webkit-backdrop-filter:none;backdrop-filter:none}
+body.rd[data-rd-chapter="2"] .page:not(:has(> .scene-image)) > h2::after{content:"";display:block;width:120px;height:2px;margin:22px auto 0;background:linear-gradient(90deg,transparent,rgba(70,86,160,.55),transparent)}
+body.rd[data-rd-chapter="2"] .page:not(:has(> .scene-image)) .question{margin-top:34px}
+/* ответы — список с кружками */
+body.rd[data-rd-chapter="2"] .answers:has(.answer:nth-child(3)){align-items:stretch;gap:0;max-width:600px;margin:20px auto 6px}
+body.rd[data-rd-chapter="2"] .answers:has(.answer:nth-child(3)) .answer{justify-content:flex-start;gap:18px;width:100%;padding:16px 8px;border-radius:0;text-align:left;font:400 clamp(21px,2.3vw,25px)/1.3 var(--rd-sans);color:#2b3157}
+body.rd[data-rd-chapter="2"] .answers:has(.answer:nth-child(3)) .answer+.answer{box-shadow:inset 0 1px 0 rgba(70,86,160,.22)!important}
+body.rd[data-rd-chapter="2"] .answers:has(.answer:nth-child(3)) .answer:hover:not(:disabled){transform:none;color:#1f5fc0}
+body.rd[data-rd-chapter="2"] .answers:has(.answer:nth-child(3)) .rd-afl{width:34px;height:34px;margin:0;border-radius:50%;box-shadow:inset 0 0 0 2px rgba(110,115,160,.55)}
+body.rd[data-rd-chapter="2"] .answers:has(.answer:nth-child(3)) .rd-afl img{width:26px;height:26px;margin:4px}
+body.rd[data-rd-chapter="2"] .answers:has(.answer:nth-child(3)) .answer:is(:hover,.correct-choice) .rd-afl{box-shadow:inset 0 0 0 2px rgba(64,160,240,.8)}
+body.rd[data-rd-chapter="2"] .answers:has(.answer:nth-child(3)) .answer.wrong-choice{color:#8a8eb0}
+/* без кружков: лапка появляется слева при наведении, как в других экранах */
+body.rd[data-rd-chapter="2"] .answers:has(.answer:nth-child(3)) .rd-afl,body.rd[data-rd-chapter="2"] .answers:has(.answer:nth-child(3)) .answer:is(:hover,.correct-choice) .rd-afl{box-shadow:none;border-radius:0}
+body.rd[data-rd-chapter="2"] .answers:has(.answer:nth-child(3)) .rd-afl img{width:30px;height:30px;margin:2px}
+/* у ответов и найденных слов — лапка пальчиками вверх */
+body.rd[data-rd-chapter="2"] .rd-afl img,body.rd[data-rd-chapter="2"] .rd-tfl img{content:url(hoshi_paw_up_v1.svg)}
+/* один левый край для текста, вопроса и ответов; у ответов — белая лапка-маркер */
+body.rd[data-rd-chapter="2"] .page:not(:has(> .scene-image)):has(> .story + .question) > .story{text-align:left}
+body.rd[data-rd-chapter="2"] .page:not(:has(> .scene-image)):has(> .story + .question) > .question{text-align:left}
+body.rd[data-rd-chapter="2"] .page:not(:has(> .scene-image)):has(> .story + .question) > .question :is(h3,.hint){text-align:left}
+body.rd[data-rd-chapter="2"] .answers:has(.answer:nth-child(3)){align-items:flex-start;gap:4px;max-width:none;margin:18px 0 6px}
+body.rd[data-rd-chapter="2"] .answers:has(.answer:nth-child(3)) .answer{width:auto;justify-content:flex-start;text-align:left;padding:10px 0;gap:14px}
+body.rd[data-rd-chapter="2"] .answers:has(.answer:nth-child(3)) .answer+.answer{box-shadow:none!important}
+body.rd[data-rd-chapter="2"] .answers:has(.answer:nth-child(3)) .rd-afl{margin:0;width:32px;height:32px}
+body.rd[data-rd-chapter="2"] .answers:has(.answer:nth-child(3)) .rd-afl img{width:28px;height:28px;margin:2px;opacity:1!important;transform:none!important;
+  -webkit-filter:drop-shadow(0 0 1.5px rgba(70,90,160,.6)) drop-shadow(0 1px 2px rgba(70,90,160,.3))!important;filter:drop-shadow(0 0 1.5px rgba(70,90,160,.6)) drop-shadow(0 1px 2px rgba(70,90,160,.3))!important;transition:transform .25s ease}
+body.rd[data-rd-chapter="2"] .answers:has(.answer:nth-child(3)) .answer:is(:hover,:focus-visible):not(:disabled) .rd-afl img,body.rd[data-rd-chapter="2"] .answers:has(.answer:nth-child(3)) .answer.correct-choice .rd-afl img{content:url(hoshi_paw_up_blue_v1.svg);transform:scale(1.15)!important;
+  -webkit-filter:drop-shadow(0 0 4px #40ddfd) drop-shadow(0 0 10px rgba(21,164,253,.7))!important;filter:drop-shadow(0 0 4px #40ddfd) drop-shadow(0 0 10px rgba(21,164,253,.7))!important}
+body.rd[data-rd-chapter="2"] .answers:has(.answer:nth-child(3)) .answer.correct-choice.rd-sent .rd-afl img{opacity:0!important}
+body.rd[data-rd-chapter="2"] .answers:has(.answer:nth-child(3)) .answer.wrong-choice .rd-afl img{animation:rdAOut 1.3s ease-out forwards!important}
+body.rd[data-rd-chapter="2"] .page:not(:has(> .scene-image)):has(> .story + .question) > .question{max-width:640px}
+/* глава 2, экраны с картинкой: стекло прозрачнее — фон проглядывает, как в главе 1 */
+body.rd[data-rd-chapter="2"] .page:has(> .scene-image){background:rgba(232,232,255,.36);-webkit-backdrop-filter:blur(6px) saturate(1.1);backdrop-filter:blur(6px) saturate(1.1)}
+
+/* ---------- Глава 2, экран 6: без плашек, один левый край ---------- */
+body.rd[data-rd-chapter="2"] .page:has(.sequence-quiz) > .task-panel{max-width:640px;margin:4px auto 18px;padding:0;border:0;background:none!important;box-shadow:none!important;text-align:left}
+body.rd[data-rd-chapter="2"] .page:has(.sequence-quiz) > .task-panel h3{margin:0 0 4px;text-align:left}
+body.rd[data-rd-chapter="2"] .page:has(.sequence-quiz) > .task-panel p{margin:0;text-align:left;font:400 clamp(16px,1.8vw,18px)/1.45 var(--rd-sans);color:var(--rd-muted)}
+body.rd[data-rd-chapter="2"] .page:has(.sequence-quiz) > .story{text-align:left}
+body.rd[data-rd-chapter="2"] .sequence-quiz{max-width:640px;margin:30px auto 0;padding:0;border:0;background:none!important;box-shadow:none!important}
+body.rd[data-rd-chapter="2"] .sequence-panel{position:relative;padding:0;border:0;background:none!important;box-shadow:none!important}
+body.rd[data-rd-chapter="2"] .sequence-step{position:static;display:inline-block;margin:0 0 6px;padding:0;border:0;background:none;font:700 13px/1.2 var(--rd-sans);letter-spacing:.12em;text-transform:uppercase;color:var(--rd-muted)}
+body.rd[data-rd-chapter="2"] .sequence-panel .question{max-width:none;margin:0;padding:0;background:none;box-shadow:none;text-align:left}
+body.rd[data-rd-chapter="2"] .sequence-panel .question h3{text-align:left;margin:0 0 4px}
+body.rd[data-rd-chapter="2"] .sequence-panel .answers:has(.answer:nth-child(3)){margin:14px 0 6px;max-width:none}
+body.rd[data-rd-chapter="2"] .sequence-panel .question{margin-top:0!important;padding-top:0!important}
+body.rd[data-rd-chapter="2"] .sequence-panel .question::before{content:none!important}
+body.rd[data-rd-chapter="2"] .sequence-step{margin-bottom:2px}
+body.rd[data-rd-chapter="2"] .page:has(.sequence-quiz) > .task-panel{margin-bottom:24px}
+/* глава 2: лапка у ответа только при наведении; после ответа лапок нет */
+body.rd[data-rd-chapter="2"] .answers:has(.answer:nth-child(3)) .rd-afl img{opacity:0!important;transform:scale(.6)!important;transition:opacity .2s ease,transform .25s ease}
+body.rd[data-rd-chapter="2"] .answers:has(.answer:nth-child(3)) .answer:is(:hover,:focus-visible):not(:disabled) .rd-afl img,
+body.rd[data-rd-chapter="2"] .answers:has(.answer:nth-child(3)) .answer.correct-choice:not(.rd-sent) .rd-afl img{opacity:1!important;transform:scale(1.1)!important}
+body.rd[data-rd-chapter="2"] .answers:has(.answer:nth-child(3)) .answer.wrong-choice .rd-afl img{opacity:1!important;animation:rdAOut 1.3s ease-out forwards!important}
+body.rd[data-rd-chapter="2"] .question:has(.next.opened) .rd-afl img,body.rd[data-rd-chapter="2"] .answers:has(.answer:nth-child(3)) .answer:disabled .rd-afl img{opacity:0!important;animation:none!important}
+body.rd[data-rd-chapter="2"] .answers:has(.answer:nth-child(3)) .answer{position:relative}
+body.rd[data-rd-chapter="2"] .answers:has(.answer:nth-child(3)) .rd-afl{position:absolute;left:-42px;top:50%;margin:0;transform:translateY(-50%)}
+
+/* ---------- Глава 2, награда «Принципы следопыта»: три карточки в ряд, без рамки-контейнера ---------- */
+body.rd .tracker-intro{max-width:600px;margin:-8px auto 24px;font:400 clamp(19px,2.1vw,21px)/1.45 var(--rd-sans);color:#45507e}
+body.rd .tracker-path{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;max-width:none;width:auto;margin:0 calc(28px - var(--px));padding:0;border:0;border-radius:0;background:none!important;box-shadow:none!important}
+body.rd .tracker-path::before{content:none}
+body.rd .tracker-token{display:block;min-height:0;aspect-ratio:4/3;padding:0;border:0;border-radius:26px;background:none;box-shadow:none;perspective:1000px;transition:transform .25s ease}
+body.rd .tracker-token:hover,body.rd .tracker-token.lit:hover{transform:translateY(-4px)}
+body.rd .tracker-card-inner{min-height:0;height:100%}
+body.rd .tracker-face{border:0!important;border-radius:26px;overflow:hidden;box-shadow:0 14px 30px rgba(50,60,140,.22)}
+body.rd .tracker-front{background-size:cover;background-position:center}
+body.rd .tracker-front strong{font:700 clamp(19px,2vw,23px)/1.2 var(--rd-tale);color:#fff}
+body.rd .tracker-front small{font:400 15px/1.3 var(--rd-sans);color:#e6f1ff}
+body.rd .tracker-art{height:100%!important;inset:0!important}
+body.rd .tracker-caption{min-height:0;padding:34px 12px 14px;background:linear-gradient(180deg,rgba(8,30,70,0),rgba(8,30,70,.82) 55%)}
+body.rd .tracker-back .tracker-caption strong{font:700 clamp(19px,2vw,23px)/1.2 var(--rd-tale)}
+body.rd .tracker-back .tracker-caption small{font:400 15px/1.3 var(--rd-sans)}
+@media (max-width:760px){body.rd .tracker-path{grid-template-columns:1fr;margin:0}}
+/* знак следопыта — без плашки, с лапкой */
+body.rd .tracker-prize{max-width:none;margin:30px auto 0;padding:0;border:0;background:none!important;box-shadow:none!important;text-align:center}
+body.rd .tracker-prize img{content:url(hoshi_paw_up_blue_v1.svg);width:54px;height:54px;margin:0 auto 8px;animation:none;-webkit-filter:drop-shadow(0 0 5px #40ddfd) drop-shadow(0 0 14px rgba(21,164,253,.7));filter:drop-shadow(0 0 5px #40ddfd) drop-shadow(0 0 14px rgba(21,164,253,.7))}
+body.rd .tracker-prize strong{display:block;font:700 clamp(26px,3vw,32px)/1.2 var(--rd-sans);letter-spacing:.01em;color:#2f3b8f}
+body.rd .tracker-prize p{margin:6px 0 0;font:400 clamp(19px,2.1vw,21px)/1.5 var(--rd-sans);color:#45507e}
+/* переход дальше — только когда открыты все три секрета */
+body.rd .tracker-prize[hidden]~.reward-continue{display:none!important}
+body.rd .tracker-prize:not([hidden])~.rd-locked{display:none}
+
+/* ---------- Награда главы 2, крупно: большие карточки во всю ширину, искры, знак из трёх лапок ---------- */
+body.rd .tracker-path{grid-template-columns:1fr;gap:26px;margin:0 calc(36px - var(--px))}
+body.rd .tracker-token{aspect-ratio:16/10;border-radius:34px;overflow:visible}
+body.rd .tracker-face{border-radius:34px;box-shadow:0 22px 50px rgba(50,60,140,.28),inset 0 0 0 1.5px rgba(255,255,255,.35)}
+body.rd .tracker-front strong{font-size:clamp(28px,3.4vw,38px);text-shadow:0 2px 10px rgba(0,16,50,.7)}
+body.rd .tracker-front small{font-size:clamp(17px,1.9vw,20px);margin-top:8px}
+body.rd .tracker-front{padding-top:6%;align-content:start}
+body.rd .tracker-caption{padding:70px 20px 24px}
+body.rd .tracker-back .tracker-caption strong{font-size:clamp(30px,3.6vw,42px)}
+body.rd .tracker-back .tracker-caption small{font-size:clamp(18px,2vw,22px);margin-top:6px}
+body.rd .tracker-token:not(.lit){animation:rdCardCall 3.2s ease-in-out infinite}
+body.rd .tracker-token:not(.lit):nth-child(2){animation-delay:.5s}
+body.rd .tracker-token:not(.lit):nth-child(3){animation-delay:1s}
+@keyframes rdCardCall{0%,100%{filter:drop-shadow(0 0 0 rgba(64,190,253,0))}50%{filter:drop-shadow(0 0 16px rgba(64,190,253,.55))}}
+/* искры при открытии */
+body.rd .rd-tspark{position:absolute;left:var(--x);top:var(--y);width:26px;height:26px;margin:-13px;background:url(hoshi_paw_up_blue_v1.svg) center/contain no-repeat;pointer-events:none;z-index:5;opacity:0;
+  -webkit-filter:drop-shadow(0 0 5px #40ddfd);filter:drop-shadow(0 0 5px #40ddfd);animation:rdTSpark 1.5s ease-out forwards}
+body.rd .rd-tspark.star{width:12px;height:12px;margin:-6px;border-radius:50%;background:radial-gradient(circle,#fff 0 30%,#9fe4ff 55%,rgba(64,190,253,0) 75%)}
+@keyframes rdTSpark{0%{opacity:0;transform:translate(0,0) scale(.3) rotate(0)}15%{opacity:1}100%{opacity:0;transform:translate(var(--dx),var(--dy)) scale(1.15) rotate(var(--rot))}}
+/* знак следопыта */
+body.rd .tracker-prize{margin-top:44px}
+body.rd .tracker-prize img{display:none}
+body.rd .rd-sign{position:relative;display:flex;justify-content:center;align-items:flex-end;gap:22px;height:120px;margin:0 auto 14px}
+body.rd .rd-sign::before{content:"";position:absolute;left:50%;top:50%;width:340px;height:170px;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(ellipse,rgba(160,215,255,.75),rgba(160,215,255,.25) 45%,rgba(160,215,255,0) 70%);-webkit-filter:blur(10px);filter:blur(10px);animation:rdBreathe 2.6s ease-in-out infinite}
+body.rd .rd-sign i{position:relative;display:block;width:78px;height:78px;background:url(hoshi_paw_up_blue_v1.svg) center/contain no-repeat;-webkit-filter:drop-shadow(0 0 6px #40ddfd) drop-shadow(0 0 16px rgba(21,164,253,.75));filter:drop-shadow(0 0 6px #40ddfd) drop-shadow(0 0 16px rgba(21,164,253,.75));opacity:0;animation:rdSignIn .7s cubic-bezier(.2,.8,.25,1.5) forwards,rdHover 2.8s ease-in-out 1.4s infinite}
+body.rd .rd-sign i:nth-child(2){width:104px;height:104px;animation-delay:.35s,1.75s}
+body.rd .rd-sign i:nth-child(3){animation-delay:.7s,2.1s}
+@keyframes rdSignIn{0%{opacity:0;transform:scale(.2) translateY(30px)}100%{opacity:1;transform:none}}
+body.rd .tracker-prize strong{font-size:clamp(32px,3.8vw,44px);text-shadow:0 0 18px rgba(255,255,255,.95)}
+/* знак следопыта — одна большая лапка */
+body.rd .rd-sign{height:124px}
+body.rd .rd-sign i:nth-child(1),body.rd .rd-sign i:nth-child(3){display:none}
+body.rd .rd-sign i:nth-child(2){width:116px;height:116px;animation-delay:0s,1.2s}
+body.rd .rd-sign::before{width:260px;height:190px}
+/* при открытии секрета разлетаются снежинки */
+body.rd .rd-tspark,body.rd .rd-tspark.star{width:var(--s,26px);height:var(--s,26px);margin:calc(var(--s,26px) / -2);border-radius:0;background:url(hoshi_snowflake_v1.svg) center/contain no-repeat;
+  -webkit-filter:drop-shadow(0 0 3px rgba(120,190,255,.95)) drop-shadow(0 0 8px rgba(64,170,253,.6));filter:drop-shadow(0 0 3px rgba(120,190,255,.95)) drop-shadow(0 0 8px rgba(64,170,253,.6));animation-duration:1.9s}
+body.rd .tracker-token.rd-noanim .tracker-card-inner{transition:none!important}
+/* рубашка целиком: карточка 4:3, как рисунок; тёмная кайма рисунка уходит за край */
+body.rd .tracker-token{aspect-ratio:4/3}
+body.rd .tracker-reward .tracker-token .tracker-front{background:linear-gradient(180deg,rgba(4,20,45,.4) 0,rgba(5,23,50,0) 24%),url("hoshi_chapter2_reward_card_back_v1.webp") center/104.5% 105.5% no-repeat!important}
+/* мерцание закрытых карточек — лёгкое, без тяжёлых фильтров (Safari не хватало памяти) */
+body.rd .tracker-token:not(.lit){animation:none!important;filter:none!important}
+body.rd .tracker-token::after{content:"";position:absolute;inset:0;border-radius:34px;box-shadow:0 0 26px 4px rgba(64,190,253,.6);opacity:0;pointer-events:none;z-index:-1}
+body.rd .tracker-token:not(.lit)::after{animation:rdGlowPulse 3.2s ease-in-out infinite}
+body.rd .tracker-token:not(.lit):nth-child(2)::after{animation-delay:.5s}
+body.rd .tracker-token:not(.lit):nth-child(3)::after{animation-delay:1s}
+@keyframes rdGlowPulse{0%,100%{opacity:0}50%{opacity:1}}
+body.rd .tracker-front{padding-top:10%}
+
+/* ---------- Глава 3, экран 5: найденные предложения светятся, как найденные слова ---------- */
+body.rd .selectable{border-radius:10px;background:none!important;box-shadow:none!important;transition:color .3s ease,text-shadow .3s ease}
+body.rd .selectable:hover{color:#3d4aa6}
+body.rd .selectable.chosen{color:#1f6fd1;text-shadow:0 0 12px rgba(90,176,250,.75),0 0 2px rgba(255,255,255,.9)}
+body.rd .selectable.wrong-proof{color:#8a8eb0;animation:rdShake .4s ease}
+body.rd .selectable:focus-visible{outline:3px solid #8fb6f0;outline-offset:2px}
+body.rd .page:has([data-proof-story]) .question .feedback{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;margin:0;padding:0;border:0}
+
+/* ---------- Глава 3, экран 5: задание сверху, один левый край, огоньки-доказательства ---------- */
+body.rd .page:has([data-proof-story]) > .question{display:contents}
+body.rd .page:has([data-proof-story]) > .question > h3{order:1;max-width:640px;width:100%;margin:10px auto 4px;text-align:left}
+body.rd .page:has([data-proof-story]) > .question > .hint{order:2;max-width:640px;width:100%;margin:0 auto;text-align:left;font:400 clamp(16px,1.8vw,18px)/1.45 var(--rd-sans);color:var(--rd-muted)}
+body.rd .page:has([data-proof-story]) > .question > .rd-proofs{order:3;display:flex;gap:6px;max-width:640px;width:100%;margin:12px auto 0}
+body.rd .page:has([data-proof-story]) > .story{order:4;max-width:640px;margin-top:18px}
+body.rd .page:has([data-proof-story]) > .question > .next{order:6;margin-left:auto;margin-right:auto}
+body.rd .page:has([data-proof-story]) > .scene-image{order:-1}
+body.rd .page:has([data-proof-story]) > h2{order:0}
+body.rd .selectable{width:100%;margin:0 0 10px;padding:4px 0}
+body.rd .rd-proofs i{display:block;width:40px;height:46px;background:url(hoshi_flame_icon_v1.webp) center/contain no-repeat;-webkit-filter:grayscale(1) brightness(1.15);filter:grayscale(1) brightness(1.15);opacity:.45;transform-origin:50% 85%;transition:opacity .4s ease}
+body.rd .rd-proofs i.on{-webkit-filter:drop-shadow(0 0 9px rgba(21,164,253,.85)) drop-shadow(0 0 3px #fff);filter:drop-shadow(0 0 9px rgba(21,164,253,.85)) drop-shadow(0 0 3px #fff);opacity:1;animation:rdAFlare .7s ease-out}
+body.rd .rd-proofs i.gone{opacity:0!important;animation:none}
+/* огоньки улетели — строка плавно сжимается, текст поднимается к подсказке */
+body.rd .page:has([data-proof-story]) > .question > .rd-proofs{max-height:46px;overflow:hidden;transition:max-height .6s ease,margin-top .6s ease}
+body.rd .page:has([data-proof-story]) > .question > .rd-proofs.done{max-height:0;margin-top:0}
+
+/* ================= ГЛАВА 4 ================= */
+/* экран 1: картинка во всю ширину сверху, как на других экранах; задание без плашки */
+body.rd .page > .echo-picture-task{order:-1;position:relative;width:calc(100% + 2 * var(--px));max-width:none;margin:0 calc(-1 * var(--px)) -64px}
+body.rd .page:has(> .echo-picture-task){padding-top:0}
+body.rd .page > .echo-picture-task .scene-image{display:block;width:100%;height:auto;max-height:none;margin:0;border-radius:0;box-shadow:none;
+  -webkit-mask-image:linear-gradient(180deg,#000 0,#000 72%,transparent 100%);mask-image:linear-gradient(180deg,#000 0,#000 72%,transparent 100%)}
+body.rd .page:has(> .echo-picture-task) > .kicker{margin-top:0}
+body.rd .echo-wave-target::after{content:"";position:absolute;inset:18%;border-radius:50%;box-shadow:0 0 0 2px rgba(190,235,255,.75),0 0 22px rgba(120,200,255,.7);opacity:0;animation:rdGlowPulse 2.8s ease-in-out infinite}
+body.rd .echo-picture-task.found .echo-wave-target::after{animation:none;opacity:0}
+body.rd .observation-task{max-width:640px;margin:26px auto 0;padding:0;border:0;background:none!important;box-shadow:none!important;text-align:left}
+body.rd .observation-task h3{margin:0 0 4px;text-align:left;font:700 clamp(24px,3vw,30px)/1.2 var(--rd-tale);color:var(--rd-ink)}
+body.rd .observation-task p{margin:0;text-align:left;font:400 clamp(16px,1.8vw,18px)/1.45 var(--rd-sans);color:var(--rd-muted)}
+body.rd .observation-task .echo-found-feedback{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+body.rd .page:has(> .echo-picture-task) > .story{max-width:640px}
+/* экран 2: слова по частям — стеклянные карточки, как в главе 1 */
+body.rd .syllable-support{max-width:760px;margin:10px auto 6px;padding:0;border:0;background:none!important;box-shadow:none!important;text-align:center}
+body.rd .syllable-support h3{margin:0 0 4px;text-align:center;font:700 clamp(24px,3vw,30px)/1.2 var(--rd-tale);color:var(--rd-ink)}
+body.rd .syllable-support .hint{margin:0 auto 18px;font:400 clamp(16px,1.8vw,18px)/1.45 var(--rd-sans);color:var(--rd-muted)}
+body.rd .syllable-buttons{gap:18px 22px}
+body.rd .syllable-button{position:relative;min-height:0;aspect-ratio:557/199;padding:4% 6%;border:0;border-radius:30px;cursor:pointer;
+  background:linear-gradient(160deg,rgba(250,248,255,.85),rgba(228,230,255,.62))!important;
+  box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.9),0 0 16px rgba(255,255,255,.5),0 12px 26px rgba(80,80,170,.14);transition:transform .2s ease,box-shadow .35s ease;-webkit-tap-highlight-color:transparent}
+body.rd .syllable-button:hover{transform:translateY(-2px)}
+body.rd .syllable-button:active{transform:scale(.98)}
+body.rd .syllable-button .syllable-parts,body.rd .syllable-button .word-whole{font:700 clamp(22px,3vw,34px)/1.2 var(--rd-sans);color:#2f3b8f;letter-spacing:.01em;text-shadow:0 0 10px rgba(255,255,255,.9)}
+body.rd .syllable-button[aria-pressed="true"]{background:linear-gradient(160deg,rgba(232,244,255,.92),rgba(205,228,255,.72))!important;
+  box-shadow:inset 0 0 0 2px rgba(196,232,255,.95),inset 0 0 22px rgba(120,196,255,.35),0 0 22px rgba(90,176,250,.55),0 12px 26px rgba(80,80,170,.14)}
+body.rd .syllable-button[aria-pressed="true"] .word-whole{animation:rdJoin .45s ease}
+@media (max-width:600px){body.rd .syllable-buttons{grid-template-columns:1fr}}
+/* награда «Три эха Бико»: карточки, как у тайн Инари; кнопка-эхо серая, после нажатия оживает */
+body.rd .echo-reward .inari-fact[hidden]{display:grid!important}
+body.rd .echo-reward .inari-flame{width:58px;height:58px;padding:0;-webkit-filter:none;filter:none;opacity:1}
+body.rd .echo-reward .echo-wave-icon{width:54px;height:54px;background:radial-gradient(circle,#fff,rgba(214,222,240,.85) 62%,rgba(190,198,222,.4));box-shadow:0 0 0 4px rgba(190,198,222,.18);transition:background .4s ease,box-shadow .4s ease}
+body.rd .echo-reward .echo-wave-icon i{background:#a9b0c8;box-shadow:none;animation-play-state:paused;opacity:1}
+body.rd .echo-reward .inari-flame.opened{opacity:1;-webkit-filter:none;filter:none}
+body.rd .echo-reward .inari-flame.opened .echo-wave-icon{background:radial-gradient(circle,rgba(221,247,255,.98),rgba(137,211,246,.8) 62%,rgba(80,174,226,.35));box-shadow:0 0 0 5px rgba(112,207,247,.16),0 0 18px rgba(64,190,253,.6)}
+body.rd .echo-reward .inari-flame.opened .echo-wave-icon i{background:linear-gradient(180deg,#68c8f2,#237cc5);box-shadow:0 0 7px rgba(48,175,233,.48);animation-play-state:running;opacity:1}
+body.rd .echo-reward .inari-fact{padding-right:22px}
+body.rd .page > .echo-picture-task{width:calc(100% + 2 * var(--px))!important;max-width:none!important;margin:0 calc(-1 * var(--px)) -64px!important}
+body.rd .page > .observation-task{max-width:640px!important;width:100%}
+body.rd .inari-reward .inari-fact{align-content:center}
+body.rd .page > .echo-picture-task .scene-image{width:100%!important;max-width:none!important}
+body.rd .echo-wave-target::after{content:none!important}
