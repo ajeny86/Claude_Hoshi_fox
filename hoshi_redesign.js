@@ -616,3 +616,52 @@
     setTimeout(close, 300);
   });
 })();
+
+/* ---------- Глава 3, экран 5: два огонька-доказательства; оба найдены — летят зажигать главный ---------- */
+(() => {
+  'use strict';
+  if (!document.body.classList.contains('rd')) return;
+  const FLAME = 'hoshi_flame_icon_v1.webp';
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.querySelectorAll('[data-proof-story]').forEach(story => {
+    const page = story.closest('.page'), q = page?.querySelector('.question'), next = q?.querySelector('.next'), hint = q?.querySelector('.hint');
+    if (!q || !next || q.querySelector('.rd-proofs')) return;
+    const total = story.querySelectorAll('.selectable[data-correct="true"]').length;
+    const row = document.createElement('span'); row.className = 'rd-proofs'; row.setAttribute('aria-hidden', 'true');
+    row.innerHTML = '<i></i>'.repeat(total);
+    (hint || q.querySelector('h3')).after(row);
+    const slots = [...row.children];
+    let live = false, flown = false;
+    const fly = (from, to, delay, done) => setTimeout(() => {
+      const a = from.getBoundingClientRect(), b = to.getBoundingClientRect();
+      const fx = a.left + a.width / 2, fy = a.top + a.height / 2, tx = b.left + b.width / 2, ty = b.top + b.height / 2;
+      const el = document.createElement('img'); el.src = FLAME; el.className = 'rd-flyer'; el.alt = '';
+      el.style.left = fx + 'px'; el.style.top = fy + 'px'; document.body.appendChild(el);
+      from.classList.add('gone');
+      const cx = fx + (tx - fx) * 0.15, cy = fy + (ty - fy) * 0.55, frames = [];
+      for (let i = 0; i <= 30; i++) {
+        const t = i / 30, u = 1 - t;
+        frames.push({ transform: `translate(${u * u * fx + 2 * u * t * cx + t * t * tx - fx}px,${u * u * fy + 2 * u * t * cy + t * t * ty - fy}px) scale(${(1 + 0.12 * t).toFixed(3)})`, opacity: t > .9 ? (1 - t) * 10 : 1 });
+      }
+      el.animate(frames, { duration: 1400, easing: 'cubic-bezier(.45,.05,.3,1)' }).onfinish = () => { el.remove(); done && done(); };
+    }, delay);
+    const sync = () => {
+      const n = story.querySelectorAll('.selectable[data-correct="true"].chosen').length;
+      if (n >= total && !live) { slots.forEach(s => s.classList.add('gone')); return; }   // экран уже пройден
+      slots.forEach((s, k) => s.classList.toggle('on', k < n));
+      if (n >= total && live && !flown) {
+        flown = true;
+        const goal = next.querySelector('.rd-guide');
+        if (reduce || !goal) { slots.forEach(s => s.classList.add('gone')); return; }
+        next.classList.add('rd-wait');
+        slots.forEach((s, k) => fly(s, goal, 700 + k * 180, k === slots.length - 1 ? () => {
+          next.classList.remove('rd-wait'); next.classList.add('rd-ignite');
+          setTimeout(() => next.classList.remove('rd-ignite'), 1000);
+        } : null));
+      }
+    };
+    story.addEventListener('click', () => { live = true; requestAnimationFrame(sync); });
+    new MutationObserver(() => { if (!live) sync(); }).observe(story, { subtree: true, attributes: true, attributeFilter: ['class'] });
+    sync();
+  });
+})();

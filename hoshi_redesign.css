@@ -845,3 +845,17 @@ body.rd .selectable.chosen{color:#1f6fd1;text-shadow:0 0 12px rgba(90,176,250,.7
 body.rd .selectable.wrong-proof{color:#8a8eb0;animation:rdShake .4s ease}
 body.rd .selectable:focus-visible{outline:3px solid #8fb6f0;outline-offset:2px}
 body.rd .page:has([data-proof-story]) .question .feedback{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;margin:0;padding:0;border:0}
+
+/* ---------- Глава 3, экран 5: задание сверху, один левый край, огоньки-доказательства ---------- */
+body.rd .page:has([data-proof-story]) > .question{display:contents}
+body.rd .page:has([data-proof-story]) > .question > h3{order:1;max-width:640px;width:100%;margin:10px auto 4px;text-align:left}
+body.rd .page:has([data-proof-story]) > .question > .hint{order:2;max-width:640px;width:100%;margin:0 auto;text-align:left;font:400 clamp(16px,1.8vw,18px)/1.45 var(--rd-sans);color:var(--rd-muted)}
+body.rd .page:has([data-proof-story]) > .question > .rd-proofs{order:3;display:flex;gap:6px;max-width:640px;width:100%;margin:12px auto 0}
+body.rd .page:has([data-proof-story]) > .story{order:4;max-width:640px;margin-top:18px}
+body.rd .page:has([data-proof-story]) > .question > .next{order:6;margin-left:auto;margin-right:auto}
+body.rd .page:has([data-proof-story]) > .scene-image{order:-1}
+body.rd .page:has([data-proof-story]) > h2{order:0}
+body.rd .selectable{width:100%;margin:0 0 10px;padding:4px 0}
+body.rd .rd-proofs i{display:block;width:40px;height:46px;background:url(hoshi_flame_icon_v1.webp) center/contain no-repeat;-webkit-filter:grayscale(1) brightness(1.15);filter:grayscale(1) brightness(1.15);opacity:.45;transform-origin:50% 85%;transition:opacity .4s ease}
+body.rd .rd-proofs i.on{-webkit-filter:drop-shadow(0 0 9px rgba(21,164,253,.85)) drop-shadow(0 0 3px #fff);filter:drop-shadow(0 0 9px rgba(21,164,253,.85)) drop-shadow(0 0 3px #fff);opacity:1;animation:rdAFlare .7s ease-out}
+body.rd .rd-proofs i.gone{opacity:0!important;animation:none}
