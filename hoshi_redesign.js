@@ -647,14 +647,15 @@
     }, delay);
     const sync = () => {
       const n = story.querySelectorAll('.selectable[data-correct="true"].chosen').length;
-      if (n >= total && !live) { slots.forEach(s => s.classList.add('gone')); return; }   // экран уже пройден
+      if (n >= total && !live) { slots.forEach(s => s.classList.add('gone')); row.classList.add('done'); return; }   // экран уже пройден
       slots.forEach((s, k) => s.classList.toggle('on', k < n));
       if (n >= total && live && !flown) {
         flown = true;
         const goal = next.querySelector('.rd-guide');
-        if (reduce || !goal) { slots.forEach(s => s.classList.add('gone')); return; }
+        if (reduce || !goal) { slots.forEach(s => s.classList.add('gone')); row.classList.add('done'); return; }
         next.classList.add('rd-wait');
         slots.forEach((s, k) => fly(s, goal, 700 + k * 180, k === slots.length - 1 ? () => {
+          row.classList.add('done');
           next.classList.remove('rd-wait'); next.classList.add('rd-ignite');
           setTimeout(() => next.classList.remove('rd-ignite'), 1000);
         } : null));

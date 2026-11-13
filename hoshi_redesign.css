@@ -859,6 +859,9 @@ body.rd .selectable{width:100%;margin:0 0 10px;padding:4px 0}
 body.rd .rd-proofs i{display:block;width:40px;height:46px;background:url(hoshi_flame_icon_v1.webp) center/contain no-repeat;-webkit-filter:grayscale(1) brightness(1.15);filter:grayscale(1) brightness(1.15);opacity:.45;transform-origin:50% 85%;transition:opacity .4s ease}
 body.rd .rd-proofs i.on{-webkit-filter:drop-shadow(0 0 9px rgba(21,164,253,.85)) drop-shadow(0 0 3px #fff);filter:drop-shadow(0 0 9px rgba(21,164,253,.85)) drop-shadow(0 0 3px #fff);opacity:1;animation:rdAFlare .7s ease-out}
 body.rd .rd-proofs i.gone{opacity:0!important;animation:none}
+/* огоньки улетели — строка плавно сжимается, текст поднимается к подсказке */
+body.rd .page:has([data-proof-story]) > .question > .rd-proofs{max-height:46px;overflow:hidden;transition:max-height .6s ease,margin-top .6s ease}
+body.rd .page:has([data-proof-story]) > .question > .rd-proofs.done{max-height:0;margin-top:0}
 
 /* ================= ГЛАВА 4 ================= */
 /* экран 1: картинка во всю ширину сверху, как на других экранах; задание без плашки */
