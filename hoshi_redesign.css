@@ -837,3 +837,11 @@ body.rd .tracker-token:not(.lit):nth-child(2)::after{animation-delay:.5s}
 body.rd .tracker-token:not(.lit):nth-child(3)::after{animation-delay:1s}
 @keyframes rdGlowPulse{0%,100%{opacity:0}50%{opacity:1}}
 body.rd .tracker-front{padding-top:10%}
+
+/* ---------- Глава 3, экран 5: найденные предложения светятся, как найденные слова ---------- */
+body.rd .selectable{border-radius:10px;background:none!important;box-shadow:none!important;transition:color .3s ease,text-shadow .3s ease}
+body.rd .selectable:hover{color:#3d4aa6}
+body.rd .selectable.chosen{color:#1f6fd1;text-shadow:0 0 12px rgba(90,176,250,.75),0 0 2px rgba(255,255,255,.9)}
+body.rd .selectable.wrong-proof{color:#8a8eb0;animation:rdShake .4s ease}
+body.rd .selectable:focus-visible{outline:3px solid #8fb6f0;outline-offset:2px}
+body.rd .page:has([data-proof-story]) .question .feedback{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;margin:0;padding:0;border:0}
