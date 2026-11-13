@@ -665,3 +665,35 @@
     sync();
   });
 })();
+
+/* ---------- Глава 4, экран 1: эхо найдено — огонёк летит от волн и зажигает главный ---------- */
+(() => {
+  'use strict';
+  if (!document.body.classList.contains('rd')) return;
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.querySelectorAll('[data-echo-wave-target]').forEach(target => {
+    target.addEventListener('click', () => {
+      const next = target.closest('.page')?.querySelector('.next');
+      const goal = next?.querySelector('.rd-guide');
+      if (!next || !goal || reduce || next.classList.contains('opened') || target.dataset.rdFlown) return;
+      target.dataset.rdFlown = '1';
+      requestAnimationFrame(() => {
+        if (!next.classList.contains('ready')) return;
+        next.classList.add('rd-wait');
+        const a = target.getBoundingClientRect();
+        const fx = a.left + a.width / 2, fy = a.top + a.height / 2;
+        const el = document.createElement('img'); el.src = 'hoshi_flame_icon_v1.webp'; el.className = 'rd-flyer'; el.alt = '';
+        el.style.left = fx + 'px'; el.style.top = fy + 'px'; document.body.appendChild(el);
+        const run = () => {
+          const b = goal.getBoundingClientRect(), tx = b.left + b.width / 2, ty = b.top + b.height / 2;
+          const cx = fx + (tx - fx) * 0.15, cy = fy + (ty - fy) * 0.55, frames = [];
+          for (let i = 0; i <= 30; i++) { const t = i / 30, u = 1 - t;
+            frames.push({ transform: `translate(${u * u * fx + 2 * u * t * cx + t * t * tx - fx}px,${u * u * fy + 2 * u * t * cy + t * t * ty - fy}px) scale(${(1 + 0.12 * t).toFixed(3)})` }); }
+          el.animate(frames, { duration: 1500, easing: 'cubic-bezier(.45,.05,.3,1)' }).onfinish = () => {
+            el.remove(); next.classList.remove('rd-wait'); next.classList.add('rd-ignite'); setTimeout(() => next.classList.remove('rd-ignite'), 1000); };
+        };
+        el.animate([{ transform: 'scale(.3)', opacity: 0 }, { transform: 'scale(1.3)', opacity: 1 }, { transform: 'scale(1)', opacity: 1 }], { duration: 500 }).onfinish = run;
+      });
+    });
+  });
+})();
